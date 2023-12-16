@@ -1,10 +1,11 @@
+import { Link } from "react-router-dom";
 import React from "react";
 
 interface Props {}
 
 const TripCard = () => {
   return (
-    <div className="mt-3 flex flex-col md:max-w-md">
+    <Link to={"/detail-trip/1"} className="mt-3 flex flex-col md:max-w-md">
       <img
         className="h-96"
         src="https://s3-alpha-sig.figma.com/img/ff24/2392/76741dcb354cd56153b26e4907a176b6?Expires=1703462400&Signature=D8igbzaPCMQ1c7XDKaikP00dnqo6v~Edaq30r1VF4bqC9xqI0dLI1UoM7v7Dqxa5kLhZg8p9JAyLzM9gd3vxhDKlV8WoSnOJz56X1ZdusSZjMOjsEDM5hgFK9amUGZxmgWciKpdjl1g2lrWdKg6FnScrQQlDk76dOC4LLOSlGjlFGfD6jcw4xkZrz3XPbhQQrgHPzE7X4BScC9MyF3pjz0JGUvgaMG3VhTOMMWy3SSG5dwNQ15l7YmcLgsFMP~-qR0BojeYQY896GEQGNCuvbqBnsaAix6~SKoYbDFN4zMHCEDnL1fF8iNDx1pvBk4dr21drdNua192G-N7lPLGPoQ__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
@@ -67,7 +68,7 @@ const TripCard = () => {
           <p>4.8</p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

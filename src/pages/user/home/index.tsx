@@ -23,7 +23,7 @@ const Home = () => {
           clickable: true,
         }}
         modules={[EffectFade, Navigation, Pagination, Autoplay]}
-        className="h-[32rem]"
+        className="h-[25rem]"
         autoplay={{
           delay: 30000,
           disableOnInteraction: false,
