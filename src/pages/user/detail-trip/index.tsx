@@ -23,8 +23,10 @@ import Layout from "@/components/user/layout";
 import ReviewCard from "@/components/user/review-card";
 import ReviewDialog from "@/components/user/review-dialog";
 import { Separator } from "@/components/ui/separator";
+import { useNavigate } from "react-router-dom";
 
 const DetailTrip = () => {
+  const navigate = useNavigate();
   return (
     <Layout>
       <div className="flex flex-col gap-14 p-10 md:flex-row md:overflow-hidden">
@@ -304,7 +306,10 @@ const DetailTrip = () => {
                 <p className=" text-sm font-normal">Rp 22.505.000</p>
               </div>
             </div>
-            <Button className="bg-tyellow hover:bg-tyellowlight mt-7 rounded-sm text-white">
+            <Button
+              onClick={() => navigate("/booking/1")}
+              className="bg-tyellow hover:bg-tyellowlight mt-7 rounded-sm text-white"
+            >
               Book
             </Button>
           </div>
