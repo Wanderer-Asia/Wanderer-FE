@@ -3,7 +3,6 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 import { Link } from "react-router-dom";
 import Logo from "../Logo";
-import React from "react";
 import { Separator } from "../ui/separator";
 
 const Navbar = () => {
@@ -11,14 +10,14 @@ const Navbar = () => {
     <div className="bg-tyellowlight flex flex-row justify-between px-5">
       <div className="flex flex-row items-center gap-14">
         <Logo width={80} height={80} />
-        <Link to={"/"} className=" font-semibold">
+        <Link to={"/"} className=" font-semibold text-black">
           Home
         </Link>
       </div>
       <div className="flex flex-row items-center gap-8">
         <input
           type="text"
-          className=" h-8 rounded-sm p-3"
+          className=" outline-tyellow h-8 rounded-sm p-3 text-gray-800"
           placeholder="Search Trip"
         />
 
