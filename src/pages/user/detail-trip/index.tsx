@@ -1,15 +1,38 @@
+import "swiper/css";
+import "swiper/css/effect-fade";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+import { Button } from "@/components/ui/button";
 import Layout from "@/components/user/layout";
-import React from "react";
+import ReviewCard from "@/components/user/review-card";
+import ReviewDialog from "@/components/user/review-dialog";
+import { Separator } from "@/components/ui/separator";
 
 const DetailTrip = () => {
   return (
     <Layout>
-      <div className="flex flex-row p-10">
-        <div className="flex w-full flex-col">
+      <div className="flex flex-col gap-14 p-10 md:flex-row md:overflow-hidden">
+        <div className="flex-1 flex-col md:overflow-auto">
           <p className=" text-xl font-semibold">
             Jepang Winter Golden Route & Mount Fuji
           </p>
-          <div className="flex w-full flex-row justify-between">
+          <div className="mt-4 flex flex-row justify-between">
             <div className="flex flex-row gap-5">
               <div className="flex flex-row items-center gap-2">
                 <svg
@@ -38,7 +61,7 @@ const DetailTrip = () => {
                 <p className=" text-xs">10 Dec 2023</p>
               </div>
             </div>
-            <div className="flex flex-row">
+            <div className="flex flex-row items-center gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -76,8 +99,216 @@ const DetailTrip = () => {
               <p className=" text-xs">Garuda Indonesia</p>
             </div>
           </div>
+          <Separator className="bg-tyellow mt-3" />
+          <Swiper
+            spaceBetween={30}
+            effect={"fade"}
+            navigation={true}
+            pagination={{
+              clickable: true,
+            }}
+            modules={[EffectFade, Navigation, Pagination, Autoplay]}
+            className="mt-8 h-[27rem]"
+            autoplay={{
+              delay: 30000,
+              disableOnInteraction: false,
+            }}
+          >
+            {[1, 2].map((item, index) => (
+              <SwiperSlide key={index}>
+                <img
+                  src={
+                    "https://s3-alpha-sig.figma.com/img/3a8f/693a/22301507bf84abedf9e2814dd8ebb944?Expires=1703462400&Signature=LUq2RbmmE-7Gdc60eWqaCbGTFAz~tv0TMzj2QZibPfUzSYIzJaroLflnxpAOzJRFvxZcQCm~LltWIsmVual-shJ6I-ojLF4rSaR9g-KauT0N8LEqrcp9HO6iY3M74uLApprKAmWdfBouNiIhA~FydRPVOgdYOII-aLEWLtXUeyOtobUwqcwIM8mg2g8r0XEgr8q3Qnsu3ckDlQXF8JfjJ-zFkDrNIvyNwoCT~ooFPnaf6wAQQIhQ9KViuAlQDktKfl7jVEdqMAgh2S9GrqEP0QNXqQb6KEkQje8Gmokq7OP-ZrH5YwqdyobCc~XDDgKz0344vW1e4x0Z5bWFWudKMw__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
+                  }
+                  alt="banner"
+                  className="h-full w-full object-cover"
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          <div className="mt-8 flex flex-col gap-8">
+            <label className="text-xl font-semibold">Overview</label>
+            <p className=" text-justify">
+              Rayakan awal Tahun dengan Pesona Tak Terlupakan di Jepang!
+              Bergabunglah dengan Open Trip kami dalam perjalanan 6 hari yang
+              penuh petualangan. Dapatkan pengalaman berharga dan kenangan indah
+              di tanah matahari terbit. Ayo, jadikan awal tahun Anda istimewa
+              bersama kami!
+            </p>
+          </div>
+
+          <div className="mt-8 flex flex-col md:hidden">
+            <div className="border-tyellow flex flex-col items-center rounded-sm border p-5">
+              <p className=" font-semibold">RP 25.000.000/pax</p>
+              <Separator className="bg-tyellow my-6" />
+              <div className="flex flex-row gap-8">
+                <div className="flex flex-col gap-5">
+                  <p className=" text-sm font-normal">Persons</p>
+                  <p className=" text-sm font-normal">Subtotal</p>
+                  <p className=" text-sm font-normal">Admin</p>
+                  <p className=" text-sm font-normal">Discount</p>
+                </div>
+                <div className="flex flex-col gap-5">
+                  <div className="flex flex-col">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger className="bg-tyellow rounded-sm">
+                        1
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="overflow max-h-56">
+                        <DropdownMenuItem>1</DropdownMenuItem>
+                        <DropdownMenuItem>2</DropdownMenuItem>
+                        <DropdownMenuItem>3</DropdownMenuItem>
+                        <DropdownMenuItem>4</DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                  <p className=" text-sm font-normal">Rp 25.000.000</p>
+                  <p className=" text-sm font-normal">Rp 5.000</p>
+                  <p className=" text-sm font-normal">Rp 2.500.000</p>
+                </div>
+              </div>
+              <Separator className="bg-tyellow my-6" />
+              <div className="flex flex-row gap-8">
+                <div className="flex flex-col gap-5">
+                  <p className=" text-sm font-normal">Total</p>
+                </div>
+                <div className="flex flex-col gap-5">
+                  <p className=" text-sm font-normal">Rp 22.505.000</p>
+                </div>
+              </div>
+              <Button className="bg-tyellow hover:bg-tyellowlight mt-7 rounded-sm text-white">
+                Book
+              </Button>
+            </div>
+          </div>
+
+          <div className=" mt-8 flex flex-col gap-5 p-5 shadow-xl md:mx-5">
+            <label className="text-xl font-semibold">Included/Excluded</label>
+            <div className="flex flex-col gap-8 md:flex-row">
+              <div className="flex-1 flex-col">
+                {[1, 2].map((item) => (
+                  <div className="mt-3 flex flex-row items-center gap-3">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="15"
+                      viewBox="0 0 16 15"
+                      fill="none"
+                      className="fill-black dark:fill-white"
+                    >
+                      <path d="M13.065 0.677734L11.6586 2.27293L5.99236 8.43214L4.3414 6.70401L2.87389 5.10882L0 8.23274L1.46752 9.82793L4.52484 13.1512L5.93121 14.7464L7.39873 13.1512L14.5325 5.39684L16 3.80165L13.065 0.677734Z" />
+                    </svg>
+                    <p className=" text-sm font-normal">
+                      Penerbangan Pulang-Pergi
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <div className="flex-1 flex-col">
+                {[1, 2].map((item) => (
+                  <div className="mt-3 flex flex-row items-center gap-3">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="15"
+                      height="17"
+                      viewBox="0 0 15 17"
+                      fill="none"
+                      className="fill-black dark:fill-white"
+                    >
+                      <path d="M2.69427 0.503662L0 3.43233L1.3758 4.92783L4.77707 8.68733L1.3758 12.3845L0 13.8177L2.69427 16.8087L4.07006 15.3132L7.52866 11.5537L10.9299 15.3132L12.2484 16.8087L15 13.8177L13.6242 12.3845L10.1656 8.68733L13.6242 4.92783L15 3.43233L12.2484 0.503662L10.9299 1.99915L7.52866 5.69634L4.07006 1.99915L2.69427 0.503662Z" />
+                    </svg>
+                    <p className=" text-sm font-normal">
+                      Penerbangan Pulang-Pergi
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8 flex flex-col gap-5">
+            <label className="text-xl font-semibold">Itinerary</label>
+            {["Jakarta", "Japan"].map((item, index) => (
+              <Accordion
+                key={index}
+                type="single"
+                collapsible
+                className="items-center p-5 shadow-lg md:mx-5"
+              >
+                <AccordionItem
+                  value="item-1"
+                  className=" border-none fill-black"
+                >
+                  <AccordionTrigger>
+                    <div className="flex flex-row items-center gap-14">
+                      <div className="flex flex-col text-left">
+                        <h1 className="text-xl">Day {index + 1}</h1>
+                        <p className="text-xs">12 Dec 2023</p>
+                      </div>
+                      <h1 className="text-xl">{item}</h1>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua.
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            ))}
+          </div>
+
+          <div className="mt-8 flex flex-col gap-5">
+            <label className="text-xl font-semibold">Review</label>
+            <ReviewDialog />
+            <ReviewCard />
+            <ReviewCard />
+          </div>
         </div>
-        <div className="flex flex-col"></div>
+        <div className="hidden flex-col md:flex ">
+          <div className="border-tyellow flex flex-col items-center rounded-sm border p-5">
+            <p className=" font-semibold">RP 25.000.000/pax</p>
+            <Separator className="bg-tyellow my-6" />
+            <div className="flex flex-row gap-8">
+              <div className="flex flex-col gap-5">
+                <p className=" text-sm font-normal">Persons</p>
+                <p className=" text-sm font-normal">Subtotal</p>
+                <p className=" text-sm font-normal">Admin</p>
+                <p className=" text-sm font-normal">Discount</p>
+              </div>
+              <div className="flex flex-col gap-5">
+                <div className="flex flex-col">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className="bg-tyellow rounded-sm">
+                      1
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="overflow max-h-56">
+                      <DropdownMenuItem>1</DropdownMenuItem>
+                      <DropdownMenuItem>2</DropdownMenuItem>
+                      <DropdownMenuItem>3</DropdownMenuItem>
+                      <DropdownMenuItem>4</DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+                <p className=" text-sm font-normal">Rp 25.000.000</p>
+                <p className=" text-sm font-normal">Rp 5.000</p>
+                <p className=" text-sm font-normal">Rp 2.500.000</p>
+              </div>
+            </div>
+            <Separator className="bg-tyellow my-6" />
+            <div className="flex flex-row gap-8">
+              <div className="flex flex-col gap-5">
+                <p className=" text-sm font-normal">Total</p>
+              </div>
+              <div className="flex flex-col gap-5">
+                <p className=" text-sm font-normal">Rp 22.505.000</p>
+              </div>
+            </div>
+            <Button className="bg-tyellow hover:bg-tyellowlight mt-7 rounded-sm text-white">
+              Book
+            </Button>
+          </div>
+        </div>
       </div>
     </Layout>
   );
