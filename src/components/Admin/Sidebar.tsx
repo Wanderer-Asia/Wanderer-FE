@@ -4,12 +4,12 @@ import { Banknote, LayoutDashboard } from "lucide-react";
 
 const Sidebar = () => {
   return (
-    <div className="w-[250px] min-w-[270px]">
-      <div className="mt-3 flex w-full justify-center rounded-lg bg-background shadow-lg dark:border">
+    <div className="mr-8 min-h-full w-[270px] min-w-[270px] bg-background dark:border">
+      <div className="flex w-full justify-center">
         <Logo width={200} height={200} />
       </div>
 
-      <div className="mt-5 flex w-full flex-col rounded-lg bg-white p-3 shadow-lg">
+      <div className="mt-5 flex flex-col p-3">
         <NavLink
           to={"/admin"}
           className={({ isActive }) =>
@@ -23,19 +23,23 @@ const Sidebar = () => {
             <>
               <div
                 className={`flex h-7 w-7 items-center justify-center rounded-lg border p-1 ${
-                  isActive ? "border-[#0F5FC2]" : "border-black"
+                  isActive
+                    ? "border-[#0F5FC2]"
+                    : "border-black dark:border-white"
                 }`}
               >
                 <LayoutDashboard
                   className={`h-full w-full ${
-                    isActive ? "stroke-[#0F5FC2]" : "stroke-black"
+                    isActive
+                      ? "stroke-[#0F5FC2]"
+                      : "stroke-black dark:stroke-white"
                   }`}
                 />
               </div>
               <p
-                className={
-                  isActive ? "font-semibold text-[#0F5FC2]" : "font-normal"
-                }
+                className={`${
+                  isActive ? "font-bold text-[#0F5FC2]" : "font-normal"
+                }`}
               >
                 Dashboard
               </p>
@@ -55,19 +59,23 @@ const Sidebar = () => {
             <>
               <div
                 className={`flex h-7 w-7 items-center justify-center rounded-lg border p-1 ${
-                  isActive ? "border-[#0F5FC2]" : "border-black"
+                  isActive
+                    ? "border-[#0F5FC2]"
+                    : "border-black dark:border-white"
                 }`}
               >
                 <Banknote
                   className={`h-full w-full ${
-                    isActive ? "stroke-[#0F5FC2]" : "stroke-black"
+                    isActive
+                      ? "stroke-[#0F5FC2]"
+                      : "stroke-black dark:stroke-white"
                   }`}
                 />
               </div>
               <p
-                className={
-                  isActive ? "font-semibold text-[#0F5FC2]" : "font-normal"
-                }
+                className={`${
+                  isActive ? "font-bold text-[#0F5FC2]" : "font-normal"
+                }`}
               >
                 Transactions
               </p>

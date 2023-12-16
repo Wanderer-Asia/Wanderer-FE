@@ -2,13 +2,13 @@ import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 
-const Layout = () => {
+const AdminLayout = () => {
   return (
     <div className="h-screen">
       <div className="min-h-screen bg-[#f5f7fc] dark:bg-background">
         <Navbar />
-        <div className="container">
-          <div className="flex">
+        <div className="container h-screen">
+          <div className="flex min-h-screen">
             <Sidebar />
             <Outlet />
           </div>
@@ -18,4 +18,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default AdminLayout;

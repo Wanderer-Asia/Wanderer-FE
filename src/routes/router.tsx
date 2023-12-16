@@ -1,5 +1,5 @@
 import Dashboard from "@/pages/Admin/Dashboard";
-import AdminLayout from "@/components/Admin/Layout";
+import AdminLayout from "@/components/Admin/AdminLayout";
 import { createBrowserRouter } from "react-router-dom";
 import HomePage from "@/pages";
 import Transaction from "@/pages/Admin/Transaction";
