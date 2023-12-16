@@ -10,7 +10,7 @@ const Navbar = () => {
     <div className="bg-tyellowlight flex flex-row justify-between px-5">
       <div className="flex flex-row items-center gap-14">
         <Logo width={80} height={80} />
-        <Link to={"/"} className=" font-semibold text-black">
+        <Link to={"/"} className=" hidden font-semibold text-black md:flex">
           Home
         </Link>
       </div>

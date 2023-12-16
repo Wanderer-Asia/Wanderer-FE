@@ -22,6 +22,7 @@ module.exports = {
         tdarkblue: "#023047",
         tblack: "#09090B",
         tyellowlight: "#FFDE59",
+        tblueLight: "#AFC4DD",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

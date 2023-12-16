@@ -20,7 +20,7 @@ const Destionation = () => {
           clickable: true,
         }}
         modules={[EffectFade, Navigation, Pagination, Autoplay]}
-        className="h-[32rem]"
+        className="h-[25rem]"
         autoplay={{
           delay: 30000,
           disableOnInteraction: false,
@@ -36,7 +36,7 @@ const Destionation = () => {
           />
         </SwiperSlide>
       </Swiper>
-      <div className="flex flex-col gap-8 px-10 pt-10">
+      <div className="flex flex-col gap-8 px-10 pb-7 pt-10">
         <div className="flex flex-col items-center justify-center gap-6">
           <label className="text-3xl font-semibold">Japan</label>
         </div>
