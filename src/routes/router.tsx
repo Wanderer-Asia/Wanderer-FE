@@ -1,4 +1,4 @@
-import AdminLayout from "@/components/Admin/Layout";
+import AdminLayout from "@/components/Admin/AdminLayout";
 import BestDeals from "@/pages/user/best-deals";
 import Dashboard from "@/pages/Admin/Dashboard";
 import Destionation from "@/pages/user/destination";
