@@ -17,6 +17,11 @@ module.exports = {
     },
     extend: {
       colors: {
+        tblue: "#1E81B3",
+        tyellow: "#FFB703",
+        tdarkblue: "#023047",
+        tblack: "#09090B",
+        tyellowlight: "#FFDE59",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
