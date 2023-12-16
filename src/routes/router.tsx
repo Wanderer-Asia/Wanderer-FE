@@ -1,5 +1,6 @@
 import AdminLayout from "@/components/Admin/AdminLayout";
 import BestDeals from "@/pages/user/best-deals";
+import Booking from "@/pages/user/booking";
 import Dashboard from "@/pages/Admin/Dashboard";
 import Destionation from "@/pages/user/destination";
 import DetailTrip from "@/pages/user/detail-trip";
@@ -23,6 +24,10 @@ export const router = createBrowserRouter([
   {
     path: "/detail-trip/:tripId",
     element: <DetailTrip />,
+  },
+  {
+    path: "/booking/:tripId",
+    element: <Booking />,
   },
   {
     path: "/admin",
