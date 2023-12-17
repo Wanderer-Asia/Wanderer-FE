@@ -7,6 +7,7 @@ import DetailTrip from "@/pages/user/detail-trip";
 import HomePage from "@/pages/user/home";
 import { createBrowserRouter } from "react-router-dom";
 import TransactionsPage from "@/pages/Admin/Transactions/TransactionsPage";
+import ToursPage from "@/pages/Admin/Tours/ToursPage";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ export const router = createBrowserRouter([
       {
         path: "transactions",
         element: <TransactionsPage />,
+      },
+      {
+        path: "tours",
+        element: <ToursPage />,
       },
     ],
   },

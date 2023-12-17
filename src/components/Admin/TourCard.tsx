@@ -5,7 +5,7 @@ const TourCard = () => {
     "https://images.unsplash.com/photo-1528164344705-47542687000d?q=80&w=2092&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
   return (
-    <div className="w-fit rounded-lg bg-background p-5 shadow-lg hover:cursor-pointer dark:border">
+    <div className="w-fit rounded-lg bg-background p-5 shadow-lg dark:border">
       <div className="relative aspect-[16/9] w-[300px] rounded-lg">
         <div className="absolute bottom-2 right-2 flex items-center gap-1 rounded-full bg-white/10 px-[4px] py-[2px] text-base font-medium backdrop-blur-sm">
           <MapPin className="h-[14px] w-[14px] stroke-white fill-green-500" />
