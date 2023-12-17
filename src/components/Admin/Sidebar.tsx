@@ -26,7 +26,7 @@ const LinkList: LinkListType = [
 
 const Sidebar = () => {
   return (
-    <div className="mr-8 min-h-full w-[270px] min-w-[270px] bg-background dark:border">
+    <div className="sticky top-[60px] mr-8 hidden h-[calc(100vh-60px)] w-[270px] min-w-[270px] bg-background dark:border xl:block">
       <div className="flex w-full justify-center">
         <Logo width={200} height={200} />
       </div>
@@ -34,6 +34,7 @@ const Sidebar = () => {
       <div className="mt-5 flex flex-col p-3">
         {LinkList.map((link) => (
           <NavLink
+            key={link.title}
             to={link.to}
             className={({ isActive }) =>
               isActive
