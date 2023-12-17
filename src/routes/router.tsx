@@ -5,8 +5,8 @@ import Dashboard from "@/pages/Admin/Dashboard";
 import Destionation from "@/pages/user/destination";
 import DetailTrip from "@/pages/user/detail-trip";
 import HomePage from "@/pages/user/home";
-import Transaction from "@/pages/Admin/Transaction";
 import { createBrowserRouter } from "react-router-dom";
+import TransactionsPage from "@/pages/Admin/Transactions/TransactionsPage";
 
 export const router = createBrowserRouter([
   {
@@ -39,7 +39,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "transactions",
-        element: <Transaction />,
+        element: <TransactionsPage />,
       },
     ],
   },
