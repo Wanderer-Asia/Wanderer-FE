@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import Logo from "../Logo";
-import { Banknote, LayoutDashboard, LucideIcon } from "lucide-react";
+import { Banknote, LayoutDashboard, LucideIcon, Plane, Settings } from "lucide-react";
 
 type LinkListType = {
   title: string;
@@ -21,6 +21,18 @@ const LinkList: LinkListType = [
     to: "transactions",
     end: false,
     icon: Banknote,
+  },
+  {
+    title: "Tours",
+    to: "tours",
+    end: false,
+    icon: Plane,
+  },
+  {
+    title: "Settings",
+    to: "settings",
+    end: false,
+    icon: Settings,
   },
 ];
 

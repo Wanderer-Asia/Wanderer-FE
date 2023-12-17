@@ -1,18 +1,9 @@
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { MoreHorizontal } from "lucide-react";
 
 import { ITransaction, statuses } from "@/components/Admin/transactionData";
 import { DataTableColumnHeader } from "./DataTableColumnHeaders";
 import { ColumnDef } from "@tanstack/react-table";
+import DropDownActions from "./DropdownActions";
 
 export const Columns: ColumnDef<ITransaction>[] = [
   {
@@ -68,7 +59,7 @@ export const Columns: ColumnDef<ITransaction>[] = [
 
       if (status.value === "approved") {
         return (
-          <Badge className="flex w-fit items-center bg-green-500 ">
+          <Badge className="flex w-fit items-center bg-green-500 hover:cursor-default">
             <status.icon className="mr-2 h-4 w-4" />
             <p className="capitalize text-white">{status.label}</p>
           </Badge>
@@ -77,7 +68,7 @@ export const Columns: ColumnDef<ITransaction>[] = [
 
       if (status.value === "canceled") {
         return (
-          <Badge className="flex w-fit items-center bg-gray-500 ">
+          <Badge className="flex w-fit items-center bg-gray-500 hover:cursor-default">
             <status.icon className="mr-2 h-4 w-4" />
             <p className="capitalize text-white">{status.label}</p>
           </Badge>
@@ -86,7 +77,7 @@ export const Columns: ColumnDef<ITransaction>[] = [
 
       if (status.value === "pending") {
         return (
-          <Badge className="flex w-fit items-center bg-blue-400 ">
+          <Badge className="flex w-fit items-center bg-blue-400 hover:cursor-default">
             <status.icon className="mr-2 h-4 w-4" />
             <p className="capitalize text-white">{status.label}</p>
           </Badge>
@@ -95,7 +86,7 @@ export const Columns: ColumnDef<ITransaction>[] = [
 
       if (status.value === "refund") {
         return (
-          <Badge className="flex w-fit items-center bg-red-400 ">
+          <Badge className="flex w-fit items-center bg-red-400 hover:cursor-default">
             <status.icon className="mr-2 h-4 w-4" />
             <p className="capitalize text-white">{status.label}</p>
           </Badge>
@@ -104,7 +95,10 @@ export const Columns: ColumnDef<ITransaction>[] = [
 
       if (status.value === "refunded") {
         return (
-          <Badge variant={"destructive"} className="flex w-fit items-center">
+          <Badge
+            variant={"destructive"}
+            className="flex w-fit items-center hover:cursor-default"
+          >
             <status.icon className="mr-2 h-4 w-4" />
             <p className="capitalize text-white">{status.label}</p>
           </Badge>
@@ -121,29 +115,9 @@ export const Columns: ColumnDef<ITransaction>[] = [
     cell: ({ row }) => {
       const transaction = row.original;
 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-full p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() =>
-                navigator.clipboard.writeText(transaction.bookingCode)
-              }
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
+      if (transaction.status === "refund") {
+        return <DropDownActions bookingCode={transaction.bookingCode} />;
+      }
     },
   },
 ];
