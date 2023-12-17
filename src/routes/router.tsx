@@ -5,9 +5,11 @@ import Dashboard from "@/pages/Admin/Dashboard";
 import Destionation from "@/pages/user/destination";
 import DetailTrip from "@/pages/user/detail-trip";
 import HomePage from "@/pages/user/home";
-import { createBrowserRouter } from "react-router-dom";
-import TransactionsPage from "@/pages/Admin/Transactions/TransactionsPage";
+import OrderSuccess from "@/pages/user/order-success";
+import Payment from "@/pages/user/payment";
 import ToursPage from "@/pages/Admin/Tours/ToursPage";
+import TransactionsPage from "@/pages/Admin/Transactions/TransactionsPage";
+import { createBrowserRouter } from "react-router-dom";
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +31,14 @@ export const router = createBrowserRouter([
   {
     path: "/booking/:tripId",
     element: <Booking />,
+  },
+  {
+    path: "/payment/:tripId",
+    element: <Payment />,
+  },
+  {
+    path: "/order-success",
+    element: <OrderSuccess />,
   },
   {
     path: "/admin",
