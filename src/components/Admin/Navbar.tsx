@@ -18,8 +18,8 @@ const Navbar = () => {
   const { setTheme } = useTheme();
 
   return (
-    <div className="bg-yellow-main">
-      <div className="container flex h-[60px] items-center justify-end w-full">
+    <div className="sticky top-0 bg-yellow-main z-50">
+      <div className="container flex h-[60px] w-full items-center justify-end">
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Avatar>

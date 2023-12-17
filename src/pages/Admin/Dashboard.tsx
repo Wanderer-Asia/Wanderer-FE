@@ -10,6 +10,12 @@ import BarChart from "@/components/Admin/BarChart";
 
 import { Banknote, Palmtree, PlaneTakeoff, Users } from "lucide-react";
 
+import TourCard from "@/components/Admin/TourCard";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Scrollbar } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/scrollbar";
+
 const invoices = [
   {
     bookingCode: "INV001",
@@ -45,7 +51,7 @@ const invoices = [
 
 const Dashboard = () => {
   return (
-    <div className="mt-5 h-full w-full">
+    <div className="mt-5 min-h-screen w-full">
       {/* <p className="text-gray-main text-[24px] font-medium">Hi, Admin 👋🏼</p> */}
       <div className="grid h-[155px] w-full grid-cols-4 rounded-xl bg-background shadow-lg dark:border">
         <div className="flex items-center justify-center gap-5">
@@ -119,7 +125,7 @@ const Dashboard = () => {
             </TableHeader>
             <TableBody>
               {invoices.map((inv, index) => (
-                <TableRow>
+                <TableRow key={inv.bookingCode}>
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>{inv.bookingCode}</TableCell>
                   <TableCell>{inv.location}</TableCell>
@@ -129,6 +135,24 @@ const Dashboard = () => {
             </TableBody>
           </Table>
         </div>
+      </div>
+
+      <div className="mt-5 grid w-full grid-cols-1 rounded-lg bg-background shadow-lg dark:border">
+        <p className="pl-5 pt-5 font-medium">Top 5 Tour Destinations</p>
+        <Swiper
+          slidesPerView={3}
+          scrollbar={{
+            hide: true,
+          }}
+          modules={[Scrollbar]}
+          className="mySwiper rounded-lg"
+        >
+          {Array.from({ length: 5 }, (v, k) => (
+            <SwiperSlide className="py-4" key={k}>
+              <TourCard />
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
     </div>
   );
