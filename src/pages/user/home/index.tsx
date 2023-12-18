@@ -16,32 +16,33 @@ const Home = () => {
   return (
     <Layout>
       <div className="overflow-auto">
-        <Swiper
-          spaceBetween={30}
-          effect={"fade"}
-          navigation={true}
-          pagination={{
-            clickable: true,
-          }}
-          modules={[EffectFade, Navigation, Pagination, Autoplay]}
-          className="h-[25rem]"
-          autoplay={{
-            delay: 30000,
-            disableOnInteraction: false,
-          }}
-        >
-          {[1, 2].map((item, index) => (
-            <SwiperSlide key={index}>
-              <img
-                src={
-                  "https://s3-alpha-sig.figma.com/img/768b/47ba/e78f40c2746f08f60008a758a2830ba5?Expires=1703462400&Signature=TH2zJsFIwt-lwG~~sJn~fjc4sUx78KZEivoKbpMuhLSFxTu42n23oy-HAI7Wvbby3gx4FuF72~TIWpTbq0RTyC7TC5JkRxI5ZtbpAQ4Iv0H42rU~6KC7RdskoSXB0TDqGHco9MZjVaBjd2nwGNT0-83ze~eWjduS0zqZEDHHnnqnk198fZMiCeXHmCmlA5Ylw7-kFRPPBvW9mPUA0N~i3e9dgB75jglLUrLAfwO0zNE5FJjt7~tyevfzVf~XOtfQEG-RtQ3Zv3JmLJHnDNDdwonX6X~wHFEPBxCxhe8GSbr3HOsn656-I6JIwD25CJyCOd~f1MoHO1M6OV6lZtcZ6Q__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
-                }
-                alt="banner"
-                className="h-full w-full object-fill"
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        <div className="h-[25rem] w-full">
+          <Swiper
+            spaceBetween={30}
+            effect={"fade"}
+            navigation={true}
+            pagination={{
+              clickable: true,
+            }}
+            modules={[EffectFade, Navigation, Pagination, Autoplay]}
+            autoplay={{
+              delay: 30000,
+              disableOnInteraction: false,
+            }}
+          >
+            {[1, 2].map((item, index) => (
+              <SwiperSlide key={index}>
+                <img
+                  src={
+                    "https://s3-alpha-sig.figma.com/img/632b/1f72/bc2e905f3f59e57cfd99f7de8a7024fe?Expires=1704067200&Signature=R4XMQMYvIXNXgu~uDQkN4c01pugfgoCKdvDjFGcXsDub6QJ1MHKNo3iK~UOSH8ym1NKmY9w96HR8B636L2Ldx7GSj5iEvaJLnPWhIGnF6DNV-vcCISvxZZXQv5fRx2YgKepoDvSu3bGgHRakcGZrV9Ckz-K-SLdRJAeYo5UQb7RZwatZ86F~S9c1o4tS4uUlHCC1kSP431SE5a6ogYvRkGx5LcGwPe6Z6u-bG0rQ3sqzciy8Pm-Io5OPKT7bcjYkgzdO7xSMmtUtxQnV~6oOMQfKTdc5St4t9lIhMrq1AhsO2iGg~FTyhE2ufeE1AkI8h7tP7IUrekJHKTJH7Ua7Fg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
+                  }
+                  alt="banner"
+                  className="h-full w-full object-fill"
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
         <div className="flex flex-col px-10 pt-10">
           <div className="flex flex-col">
             <div className="flex flex-row items-center justify-between">
@@ -68,9 +69,9 @@ const Home = () => {
         </div>
         <div className="flex flex-col gap-8 px-10 pt-10">
           <div className="flex flex-row items-center gap-6">
-            <Separator className="bg-tyellow flex-1" />
+            <Separator className="flex-1 bg-tyellow" />
             <label className="text-3xl font-semibold">Destination</label>
-            <Separator className="bg-tyellow flex-1" />
+            <Separator className="flex-1 bg-tyellow" />
           </div>
           <div className="grid grid-cols-2 justify-items-center gap-4 md:grid-cols-3 lg:grid-cols-5">
             <DestinationCard />
