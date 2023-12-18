@@ -52,22 +52,30 @@ const AddTour = () => {
       start: undefined,
       finish: undefined,
       quota: "",
-      thumbnail: "",
+      thumbnail: undefined,
       airline_id: "",
       include_facility: [""],
-      itinerary: [{ location: "", description: "" }],
+      itinerary: [],
     },
   });
+
+  const [tourDuration, setTourDuration] = useState(0);
 
   useEffect(() => {
     const formSubscribe = form.watch((value) => {
       setTourDuration(differenceInDays(value.finish!, value.start!) + 1);
     });
+    const itWatch = form.watch("itinerary");
+
+    if (itWatch.length > tourDuration) {
+      itWatch.splice(
+        itWatch.length - tourDuration,
+        itWatch.length - tourDuration,
+      );
+    }
 
     return () => formSubscribe.unsubscribe();
-  }, [form]);
-
-  const [tourDuration, setTourDuration] = useState(0);
+  }, [form, tourDuration]);
 
   const submitTourHandler = async (data: ICreateTour) => {
     console.log(data);
@@ -356,47 +364,49 @@ const AddTour = () => {
             )}
           />
 
-          <FormField
-            control={form.control}
-            name="itinerary"
-            render={() => (
-              <>
-                {Array.from({ length: tourDuration }, (v, k) => (
-                  <>
-                    <FormItem className="mb-3 w-[300px]">
-                      <FormLabel>Day {k + 1} Location</FormLabel>
+          <>
+            {Array.from({ length: tourDuration }, (v, k) => (
+              <div key={k}>
+                <FormField
+                  key={k}
+                  control={form.control}
+                  name={`itinerary.${k}.location`}
+                  render={({ field }) => (
+                    <FormItem className="mb-3 w-[400px]">
+                      <FormLabel>Day {k + 1}</FormLabel>
                       <FormControl>
                         <Input
-                          key={k}
+                          key={field.name}
                           placeholder="Location"
                           className="w-full"
-                          {...form.register(`itinerary.${k}.location`, {
-                            shouldUnregister: false,
-                          })}
+                          {...form.register(`itinerary.${k}.location`)}
                         />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
-
-                    <FormItem className="mb-3 w-[300px]">
-                      <FormLabel>Day {k + 1} Description</FormLabel>
+                  )}
+                />
+                <FormField
+                  key={k + 1}
+                  control={form.control}
+                  name={`itinerary.${k}.description`}
+                  render={({ field }) => (
+                    <FormItem className="mb-6 w-full">
                       <FormControl>
-                        <Input
-                          key={k}
+                        <Textarea
+                          key={field.name}
                           placeholder="Description"
                           className="w-full"
-                          {...form.register(`itinerary.${k}.description`, {
-                            shouldUnregister: false,
-                          })}
+                          {...form.register(`itinerary.${k}.description`)}
                         />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
-                  </>
-                ))}
-              </>
-            )}
-          />
+                  )}
+                />
+              </div>
+            ))}
+          </>
 
           <Button type="submit">Submit</Button>
         </form>

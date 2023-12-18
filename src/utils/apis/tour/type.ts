@@ -3,12 +3,12 @@ import * as z from "zod";
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
 
 export const createTourSchema = z.object({
-  title: z.string({ required_error: "Enter tour title" }),
-  location_id: z.string(),
-  description: z.string({ required_error: "Enter tour description" }),
-  price: z.string({ required_error: "Enter tour price" }),
+  title: z.string().min(1, { message: "Enter tour title" }),
+  location_id: z.string().min(1, { message: "Select location" }),
+  description: z.string().min(1, { message: "Enter tour description" }),
+  price: z.string().min(1, { message: "Enter tour price" }),
   discount: z.string().optional(),
-  admin_fee: z.string({ required_error: "Enter admin fee" }),
+  admin_fee: z.string().min(1, { message: "Enter admin fee" }),
   start: z.date({
     required_error: "Enter tour departure date",
     invalid_type_error: "Input must be valid date",
@@ -17,27 +17,33 @@ export const createTourSchema = z.object({
     required_error: "Enter tour finish date",
     invalid_type_error: "Input must be valid date",
   }),
-  airline_id: z.string({ required_error: "Choose Airline" }),
-  quota: z.string({ required_error: "Enter tour quota" }),
+  airline_id: z.string().min(1, { message: "Choose airline" }),
+  quota: z.string().min(1, { message: "Enter tour quota" }),
   thumbnail: z
     .any()
-    .refine((file) => file?.length == 1, "File is required.")
+    .refine((file) => file?.length == 1, "Thumbnail is required.")
     .refine(
       (file) => ACCEPTED_IMAGE_TYPES.includes(file?.[0]?.type),
       "Only .jpg, .jpeg, .png formats are supported",
     )
     .refine((file) => file[0]?.size <= 3000000, `Max image size is 3MB`)
-    .optional()
-    .or(z.literal("")),
+    // .optional()
+    // .or(z.literal(""))
+    ,
   itinerary: z
     .object({
-      location: z.string({ required_error: "Enter itinerary location" }),
-      description: z.string({ required_error: "Enter itinerary description" }),
+      location: z
+        .string({ required_error: "Enter itinerary location" })
+        .min(1, { message: "Enter itinerary location" }),
+      description: z
+        .string({ required_error: "Enter itinerary description" })
+        .min(1, { message: "Enter itinerary description" }),
     })
     .array(),
   include_facility: z
-    .string({ required_error: "Enter included facility" })
-    .array(),
+    .string()
+    .array()
+    .min(1, { message: "Enter included facility" }),
 });
 
 export type ICreateTour = z.infer<typeof createTourSchema>;

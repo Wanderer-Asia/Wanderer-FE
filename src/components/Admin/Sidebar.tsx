@@ -1,6 +1,12 @@
 import { NavLink } from "react-router-dom";
 import Logo from "../Logo";
-import { Banknote, LayoutDashboard, LucideIcon, Plane, Settings } from "lucide-react";
+import {
+  Banknote,
+  LayoutDashboard,
+  LucideIcon,
+  Plane,
+  Settings,
+} from "lucide-react";
 
 type LinkListType = {
   title: string;
