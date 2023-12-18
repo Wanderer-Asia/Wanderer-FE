@@ -10,8 +10,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Layout from "@/components/user/layout";
 import PaymentDialog from "@/components/user/payment-dialog";
 import { Separator } from "@/components/ui/separator";
+import { useNavigate } from "react-router-dom";
 
 const Booking = () => {
+  const navigate = useNavigate();
   return (
     <Layout>
       <div className="container overflow-auto p-10">
@@ -23,7 +25,7 @@ const Booking = () => {
               key={index}
               type="single"
               collapsible
-              className="border-tyellow mt-5 items-center border px-5 shadow-lg"
+              className="mt-5 items-center border border-tyellow px-5 shadow-lg"
             >
               <AccordionItem value="item-1" className=" border-none fill-black">
                 <AccordionTrigger>
@@ -32,25 +34,25 @@ const Booking = () => {
                 <AccordionContent className="grid grid-cols-2 gap-8">
                   <div className="flex flex-row items-center ">
                     <p className=" w-64 text-sm font-normal">Greeting</p>
-                    <input className=" bg-tblueLight w-full rounded-sm p-2 text-gray-800 outline-none" />
+                    <input className=" w-full rounded-sm bg-tblueLight p-2 text-gray-800 outline-none" />
                   </div>
                   <div className="flex flex-row items-center ">
                     <p className="w-64 text-sm font-normal">Nationality</p>
-                    <input className=" bg-tblueLight w-full rounded-sm p-2 text-gray-800 outline-none" />
+                    <input className=" w-full rounded-sm bg-tblueLight p-2 text-gray-800 outline-none" />
                   </div>
                   <div className="flex flex-row items-center ">
                     <p className="w-64 text-sm font-normal">Name</p>
-                    <input className=" bg-tblueLight w-full rounded-sm p-2 text-gray-800 outline-none" />
+                    <input className=" w-full rounded-sm bg-tblueLight p-2 text-gray-800 outline-none" />
                   </div>
                   <div className="flex flex-row items-center ">
                     <p className="w-64 text-sm font-normal">NIK/NO Passport</p>
-                    <input className=" bg-tblueLight w-full rounded-sm p-2 text-gray-800 outline-none" />
+                    <input className=" w-full rounded-sm bg-tblueLight p-2 text-gray-800 outline-none" />
                   </div>
                   <div className="flex flex-row items-center ">
                     <p className="w-64 text-sm font-normal">Birth Date</p>
                     <input
                       type="date"
-                      className=" bg-tblueLight w-full rounded-sm p-2 text-gray-800 outline-none"
+                      className=" w-full rounded-sm bg-tblueLight p-2 text-gray-800 outline-none"
                     />
                   </div>
                 </AccordionContent>
@@ -58,7 +60,7 @@ const Booking = () => {
             </Accordion>
           ))}
 
-          <div className="border-tyellow mt-5 items-center border shadow-lg">
+          <div className="mt-5 items-center border border-tyellow shadow-lg">
             <div className="m-5 grid grid-cols-2 gap-8">
               <div className="flex flex-row">
                 <p className=" w-64 font-semibold">Subtotal</p>
@@ -75,7 +77,7 @@ const Booking = () => {
                 </div>
               </div>
             </div>
-            <Separator className="bg-tyellow my-6" />
+            <Separator className="my-6 bg-tyellow" />
             <div className="m-5 grid grid-cols-2 gap-8">
               <div className="flex flex-row">
                 <p className=" w-64 font-semibold">Total</p>
@@ -84,7 +86,7 @@ const Booking = () => {
             </div>
           </div>
 
-          <div className="border-tyellow mt-5 flex flex-row items-center justify-between border p-5 shadow-lg">
+          <div className="mt-5 flex flex-row items-center justify-between border border-tyellow p-5 shadow-lg">
             <p className=" w-64 font-semibold">Total</p>
 
             <PaymentDialog />
@@ -105,7 +107,8 @@ const Booking = () => {
             <Button
               type="button"
               variant="secondary"
-              className=" bg-tyellow hover:bg-tyellowlight px-10"
+              className=" bg-tyellow px-10 hover:bg-tyellowlight"
+              onClick={() => navigate("/payment/1")}
             >
               Pay Now
             </Button>
