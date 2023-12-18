@@ -1,6 +1,6 @@
 type IProps = {
-  height: number;
-  width: number;
+  height?: number;
+  width?: number;
 };
 
 const Logo = (props: IProps) => {

@@ -11,6 +11,7 @@ import AddTour from "@/pages/Admin/Tours/Modules/AddTour";
 import OrderSuccess from "@/pages/user/order-success";
 import Payment from "@/pages/user/payment";
 import { createBrowserRouter } from "react-router-dom";
+import AuthLayout from "@/pages/Auth/AuthLayout";
 
 export const router = createBrowserRouter([
   {
@@ -67,5 +68,13 @@ export const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <AuthLayout />,
+  },
+  {
+    path: "/register",
+    element: <AuthLayout />,
   },
 ]);
