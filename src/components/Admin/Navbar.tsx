@@ -11,15 +11,21 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Computer, Moon, Sun } from "lucide-react";
+import { Computer, Menu, Moon, Sun } from "lucide-react";
 import { useTheme } from "@/utils/context/theme-provider";
+import SidebarMobile from "./SidebarMobile";
 
 const Navbar = () => {
   const { setTheme } = useTheme();
 
   return (
-    <div className="sticky top-0 bg-yellow-main z-50">
-      <div className="container flex h-[60px] w-full items-center justify-end">
+    <div className="sticky top-0 z-50 bg-yellow-main">
+      <div className="container flex h-[60px] w-full items-center justify-between xl:justify-end">
+        <div className="block xl:hidden">
+          <SidebarMobile>
+            <Menu />
+          </SidebarMobile>
+        </div>
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Avatar>

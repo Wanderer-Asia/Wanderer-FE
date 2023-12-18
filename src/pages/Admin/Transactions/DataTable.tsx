@@ -78,11 +78,7 @@ export function DataTable<TData, TValue>({
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button
-              variant="outline"
-              size="sm"
-              className="ml-auto hidden h-8 lg:flex"
-            >
+            <Button variant="outline" size="sm" className="ml-auto flex h-8">
               <SlidersHorizontalIcon className="mr-2 h-4 w-4" />
               View
             </Button>
@@ -92,6 +88,17 @@ export function DataTable<TData, TValue>({
               .getAllColumns()
               .filter((column) => column.getCanHide())
               .map((column) => {
+                let col = column.id;
+                if (column.id === "bookingCode") {
+                  col = "Booking Code";
+                }
+                if (column.id === "touristName") {
+                  col = "Name";
+                }
+                if (column.id === "tourPackage") {
+                  col = "Tour Package";
+                }
+                
                 return (
                   <DropdownMenuCheckboxItem
                     key={column.id}
@@ -101,7 +108,7 @@ export function DataTable<TData, TValue>({
                       column.toggleVisibility(!!value)
                     }
                   >
-                    {column.id}
+                    {col}
                   </DropdownMenuCheckboxItem>
                 );
               })}

@@ -1,49 +1,26 @@
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { ReactNode } from "react";
+
+import Logo from "@/assets/Wanderer.svg";
+import { LinkList } from "./Sidebar";
 import { NavLink } from "react-router-dom";
-import Logo from "../Logo";
-import { Banknote, LayoutDashboard, LucideIcon, Plane, Settings } from "lucide-react";
 
-type LinkListType = {
-  title: string;
-  to: string;
-  end: boolean | undefined;
-  icon: LucideIcon;
-}[];
+interface IProps {
+  children: ReactNode;
+}
 
-export const LinkList: LinkListType = [
-  {
-    title: "Dashboard",
-    to: "/admin",
-    end: true,
-    icon: LayoutDashboard,
-  },
-  {
-    title: "Transactions",
-    to: "transactions",
-    end: false,
-    icon: Banknote,
-  },
-  {
-    title: "Tours",
-    to: "tours",
-    end: false,
-    icon: Plane,
-  },
-  {
-    title: "Settings",
-    to: "settings",
-    end: false,
-    icon: Settings,
-  },
-];
+const SidebarMobile = (props: IProps) => {
+  const { children } = props;
 
-const Sidebar = () => {
   return (
-    <div className="sticky top-[60px] mr-8 hidden h-[calc(100vh-60px)] w-[270px] min-w-[270px] bg-background dark:border xl:block">
-      <div className="flex w-full justify-center">
-        <Logo width={200} height={200} />
-      </div>
+    <Sheet>
+      <SheetTrigger>{children}</SheetTrigger>
+      <SheetContent side="left" className="w-[325px]">
+        <div className="w-full flex items-center justify-center">
+          <img src={Logo} alt="logo" className="w-[200px]" />
+        </div>
 
-      <div className="mt-5 flex flex-col p-3">
+        <div className="mt-5 flex flex-col p-3">
         {LinkList.map((link) => (
           <NavLink
             key={link.title}
@@ -84,8 +61,9 @@ const Sidebar = () => {
           </NavLink>
         ))}
       </div>
-    </div>
+      </SheetContent>
+    </Sheet>
   );
 };
 
-export default Sidebar;
+export default SidebarMobile;

@@ -1,13 +1,14 @@
 import AdminLayout from "@/components/Admin/AdminLayout";
 import BestDeals from "@/pages/user/best-deals";
 import Booking from "@/pages/user/booking";
-import Dashboard from "@/pages/Admin/Dashboard";
+import Dashboard from "@/pages/Admin";
 import Destionation from "@/pages/user/destination";
 import DetailTrip from "@/pages/user/detail-trip";
 import HomePage from "@/pages/user/home";
 import { createBrowserRouter } from "react-router-dom";
-import TransactionsPage from "@/pages/Admin/Transactions/TransactionsPage";
+import TransactionsPage from "@/pages/Admin/Transactions";
 import ToursPage from "@/pages/Admin/Tours/ToursPage";
+import AddTour from "@/pages/Admin/Tours/Modules/AddTour";
 
 export const router = createBrowserRouter([
   {
@@ -44,7 +45,16 @@ export const router = createBrowserRouter([
       },
       {
         path: "tours",
-        element: <ToursPage />,
+        children: [
+          {
+            index: true,
+            element: <ToursPage />,
+          },
+          {
+            path: "add-tour",
+            element: <AddTour />,
+          },
+        ],
       },
     ],
   },
