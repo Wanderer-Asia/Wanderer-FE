@@ -1,10 +1,13 @@
 import { Outlet } from "react-router-dom";
+
+import { Toaster } from "@/components/ui/toaster";
+
 import Sidebar from "./Sidebar";
 import Navbar from "./Navbar";
 
 const AdminLayout = () => {
   return (
-    <div className="h-screen relative">
+    <div className="relative h-screen">
       <div className="min-h-screen bg-[#f5f7fc] dark:bg-background">
         <Navbar />
         <div className="container">
@@ -14,6 +17,7 @@ const AdminLayout = () => {
           </div>
         </div>
       </div>
+      <Toaster />
     </div>
   );
 };

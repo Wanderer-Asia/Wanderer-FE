@@ -1,4 +1,4 @@
-import { createTourSchema, ICreateTour } from "./type";
+import { createTourSchema, ICreateTour, ITours } from "./type";
 
 export { createTourSchema };
-export type { ICreateTour };
+export type { ICreateTour, ITours };

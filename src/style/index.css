@@ -95,3 +95,33 @@
   min-height: 0;
   min-width: 0;
 }
+
+.dark .react-select__value-container {
+  background: #020817;
+  border-color: #1e293b;
+}
+
+.dark .react-select-container .react-select__indicator {
+  background: #020817;
+  border-color: #1e293b;
+}
+
+.dark .react-select__control {
+  background: #020817;
+  border-color: #1e293b;
+  overflow: hidden;
+}
+
+.dark .react-select__menu {
+  border-color: #1e293b;
+}
+
+.dark .react-select__menu-list {
+  background-color: #0c1f4e;
+  border-color: #1e293b;
+  color: rgb(201, 201, 201);
+}
+
+.dark .react-select__option:hover {
+  background-color: #18398b;
+}

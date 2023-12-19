@@ -1,5 +1,19 @@
 import * as z from "zod";
 
+export interface ITours {
+  tour_id: number;
+  title: string;
+  quota: number;
+  discount: number;
+  rating: number;
+  price: number;
+  thumbnail: string;
+  start: string;
+  location: {
+    name: string;
+  };
+}
+
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
 
 export const createTourSchema = z.object({
@@ -26,10 +40,9 @@ export const createTourSchema = z.object({
       (file) => ACCEPTED_IMAGE_TYPES.includes(file?.[0]?.type),
       "Only .jpg, .jpeg, .png formats are supported",
     )
-    .refine((file) => file[0]?.size <= 3000000, `Max image size is 3MB`)
-    // .optional()
-    // .or(z.literal(""))
-    ,
+    .refine((file) => file[0]?.size <= 3000000, `Max image size is 3MB`),
+  // .optional()
+  // .or(z.literal(""))
   itinerary: z
     .object({
       location: z
@@ -44,6 +57,17 @@ export const createTourSchema = z.object({
     .string()
     .array()
     .min(1, { message: "Enter included facility" }),
+  picture: z
+    .any()
+    .refine((file) => file?.length == 1, "Picture is required.")
+    .refine(
+      (file) => ACCEPTED_IMAGE_TYPES.includes(file?.[0]?.type),
+      "Only .jpg, .jpeg, .png formats are supported",
+    )
+    .refine((file) => file[0]?.size <= 3000000, `Max image size is 3MB`)
+    .array(),
+  // .optional()
+  // .or(z.literal(""))
 });
 
 export type ICreateTour = z.infer<typeof createTourSchema>;

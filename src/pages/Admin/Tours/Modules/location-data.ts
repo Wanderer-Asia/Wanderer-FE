@@ -6,22 +6,24 @@ export interface ILocationData {
 export const locationData = [
   {
     value: "1",
-    label: "Japan",
+    label: "Penerbangan Pulang-Pergi",
   },
   {
     value: "2",
-    label: "Korea",
+    label: "Akomodasi penginapan serta sarapan",
   },
   {
     value: "3",
-    label: "Thailand",
+    label: "Tour leader dari Indonesia",
   },
   {
     value: "4",
-    label: "Bangkok",
+    label:
+      "Visa Jepang E-Passport IDR 500.000 / orang [estimasi proses 7-10 hari kerja]",
   },
   {
     value: "5",
-    label: "Turey",
+    label:
+      "Pengeluaran pribadi seperti mini bar, phone, room service, laundry, dan pengeluaran lainnya yang bersifat pribadi.",
   },
 ];
