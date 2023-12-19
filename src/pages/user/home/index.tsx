@@ -5,6 +5,8 @@ import "swiper/css/pagination";
 
 import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Trip, getTrip } from "@/utils/apis/trip";
+import { useEffect, useState } from "react";
 
 import DestinationCard from "@/components/user/destination-card";
 import Layout from "@/components/user/layout";
@@ -13,6 +15,22 @@ import { Separator } from "@/components/ui/separator";
 import TripCard from "@/components/user/trip-card";
 
 const Home = () => {
+  const [trip, setTrip] = useState<Trip[]>([]);
+
+  useEffect(() => {
+    fetchTour();
+  }, []);
+
+  const fetchTour = async () => {
+    try {
+      const result = await getTrip("", 0, 3, "discount");
+      console.log(result);
+
+      setTrip(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <Layout>
       <div className="overflow-auto">
@@ -61,9 +79,9 @@ const Home = () => {
               </Link>
             </div>
             <div className="grid justify-items-center gap-4 md:grid-cols-2 lg:grid-cols-3">
-              <TripCard />
-              <TripCard />
-              <TripCard />
+              {trip.map((item, index) => (
+                <TripCard data={item} key={index} />
+              ))}
             </div>
           </div>
         </div>
