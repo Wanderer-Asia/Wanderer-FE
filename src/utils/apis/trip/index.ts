@@ -1,6 +1,5 @@
-import { Location, Trip } from "./type";
+import { Review, Trip, TripDetail } from "./type";
+import { getTrip, getTripDetail } from "./api";
 
-import { getTrip } from "./api";
-
-export { getTrip };
-export type { Trip, Location };
+export { getTrip, getTripDetail };
+export type { Trip, TripDetail, Review };
