@@ -37,8 +37,6 @@ import { cn } from "@/utils/utils";
 import { Calendar } from "@/components/ui/calendar";
 import { useEffect, useState } from "react";
 
-const animatedComponents = makeAnimated();
-
 const AddTour = () => {
   const form = useForm<ICreateTour>({
     resolver: zodResolver(createTourSchema),
@@ -59,23 +57,45 @@ const AddTour = () => {
     },
   });
 
+  const animatedComponents = makeAnimated();
+  const thumbnailWatch = form.watch("thumbnail");
+  const pictureGalleryWatch = form.watch("picture");
   const [tourDuration, setTourDuration] = useState(0);
+  const [thumbnailPict, setThumbnailPict] = useState("");
+  const [pictureGallery, setPictureGallery] = useState("");
+
+  console.log(pictureGallery)
 
   useEffect(() => {
     const formSubscribe = form.watch((value) => {
       setTourDuration(differenceInDays(value.finish!, value.start!) + 1);
     });
-    const itWatch = form.watch("itinerary");
+    const itineraryWatch = form.watch("itinerary");
 
-    if (itWatch.length > tourDuration) {
-      itWatch.splice(
-        itWatch.length - tourDuration,
-        itWatch.length - tourDuration,
+    if (itineraryWatch.length > tourDuration) {
+      itineraryWatch.splice(
+        itineraryWatch.length - tourDuration,
+        itineraryWatch.length - tourDuration,
       );
     }
 
+    if (pictureGalleryWatch?.length > 0) {
+      setPictureGallery((prevState) => {
+        return [
+          ...prevState,
+          URL.createObjectURL(
+            pictureGalleryWatch?.[pictureGalleryWatch.length - 1],
+          ),
+        ];
+      });
+    }
+
+    if (thumbnailWatch?.length > 0) {
+      setThumbnailPict(URL.createObjectURL(thumbnailWatch?.[0]));
+    }
+
     return () => formSubscribe.unsubscribe();
-  }, [form, tourDuration]);
+  }, [form, tourDuration, thumbnailWatch, pictureGalleryWatch]);
 
   const submitTourHandler = async (data: ICreateTour) => {
     console.log(data);
@@ -286,6 +306,8 @@ const AddTour = () => {
                 <FormLabel>Facility</FormLabel>
                 <FormControl>
                   <Select
+                    className="react-select-container"
+                    classNamePrefix="react-select"
                     closeMenuOnSelect={false}
                     components={animatedComponents}
                     isMulti
@@ -356,10 +378,36 @@ const AddTour = () => {
                   <Input
                     type="file"
                     accept="image/jpg, image/jpeg, image/png"
+                    multiple
                     {...form.register("thumbnail")}
                   />
                 </FormControl>
                 <FormMessage />
+                <img src={thumbnailPict} />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="picture"
+            render={() => (
+              <FormItem className="mb-3 w-[300px]">
+                <FormLabel>Gallery Picture</FormLabel>
+                <FormControl>
+                  <Input
+                    type="file"
+                    accept="image/jpg, image/jpeg, image/png"
+                    multiple
+                    {...form.register("picture")}
+                  />
+                </FormControl>
+                <FormMessage />
+                <div className="h-[200px] w-[400px] border border-dashed">
+                  <div className="flex h-full w-full items-center justify-center">
+                    <p className="text-neutral-400">Upload Tour Image</p>
+                  </div>
+                </div>
               </FormItem>
             )}
           />
