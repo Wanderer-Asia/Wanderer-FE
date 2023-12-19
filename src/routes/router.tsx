@@ -24,7 +24,7 @@ export const router = createBrowserRouter([
     element: <BestDeals />,
   },
   {
-    path: "/destination/:destination",
+    path: "/destination/:locationId",
     element: <Destionation />,
   },
   {

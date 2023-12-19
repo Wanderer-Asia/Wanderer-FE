@@ -4,6 +4,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
+import { Location, getLocation } from "@/utils/apis/location";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Trip, getTrip } from "@/utils/apis/trip";
 import { useEffect, useState } from "react";
@@ -16,9 +17,11 @@ import TripCard from "@/components/user/trip-card";
 
 const Home = () => {
   const [trip, setTrip] = useState<Trip[]>([]);
+  const [locationData, setLocationData] = useState<Location[]>([]);
 
   useEffect(() => {
     fetchTour();
+    fetchLocation();
   }, []);
 
   const fetchTour = async () => {
@@ -27,6 +30,16 @@ const Home = () => {
       console.log(result);
 
       setTrip(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchLocation = async () => {
+    try {
+      const result = await getLocation("", 5);
+
+      setLocationData(result.data);
     } catch (error) {
       console.log(error);
     }
@@ -85,18 +98,16 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-8 px-10 pt-10">
+        <div className="mb-10 flex flex-col gap-8 px-10 pt-10">
           <div className="flex flex-row items-center gap-6">
             <Separator className="flex-1 bg-tyellow" />
             <label className="text-3xl font-semibold">Destination</label>
             <Separator className="flex-1 bg-tyellow" />
           </div>
           <div className="grid grid-cols-2 justify-items-center gap-4 md:grid-cols-3 lg:grid-cols-5">
-            <DestinationCard />
-            <DestinationCard />
-            <DestinationCard />
-            <DestinationCard />
-            <DestinationCard />
+            {locationData.map((item, index) => (
+              <DestinationCard key={index} data={item} />
+            ))}
           </div>
         </div>
       </div>

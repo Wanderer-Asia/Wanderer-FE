@@ -1,5 +1,6 @@
+import { Trip, TripDetail } from "./type";
+
 import { Response } from "@/utils/types/api";
-import { Trip } from "./type";
 import axiosWithConfig from "../axiosWithConfig";
 
 export const getTrip = async (
@@ -10,10 +11,20 @@ export const getTrip = async (
 ) => {
   try {
     const response = await axiosWithConfig.get(
-      `https://virtserver.swaggerhub.com/GALIHP83/Wanderer/1.0.0/tours?keyword=${keyword}start=${page}&limit=${limit}&sort=${sort}`,
+      `/tours?keyword=${keyword}start=${page}&limit=${limit}&sort=${sort}`,
     );
 
     return response.data as Response<Trip[]>;
+  } catch (error: any) {
+    throw Error(error.response.data.message);
+  }
+};
+
+export const getTripDetail = async (id: string) => {
+  try {
+    const response = await axiosWithConfig.get(`/tours/${id}`);
+
+    return response.data as Response<TripDetail>;
   } catch (error: any) {
     throw Error(error.response.data.message);
   }
