@@ -28,10 +28,12 @@ import ReviewDialog from "@/components/user/review-dialog";
 import { Separator } from "@/components/ui/separator";
 import { format } from "date-fns";
 import { formattedAmount } from "@/utils/formattedAmount";
+import { useToken } from "@/utils/context/token";
 
 const DetailTrip = () => {
   const navigate = useNavigate();
   const { tripId } = useParams();
+  const { token } = useToken();
   const [trip, setTrip] = useState<TripDetail>();
   const [persons, setPersons] = useState<number>(1);
 
@@ -47,14 +49,6 @@ const DetailTrip = () => {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const sumTotalPrice = (
-    price: number,
-    adminFee: number,
-    discount: number,
-  ): number => {
-    return price * persons + adminFee - discount;
   };
 
   return (
@@ -341,7 +335,9 @@ const DetailTrip = () => {
                 </div>
               </div>
               <Button
-                onClick={() => navigate("/booking/1")}
+                onClick={() =>
+                  token ? navigate(`/booking/${tripId}`) : navigate("/login")
+                }
                 className="mt-7 rounded-sm bg-tyellow text-white hover:bg-tyellowlight"
               >
                 Book
