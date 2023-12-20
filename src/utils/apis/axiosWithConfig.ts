@@ -10,9 +10,7 @@ export const setAxiosConfig = (token: string) => {
 
 axiosWithConfig.interceptors.request.use((axiosConfig) => {
   axiosConfig.baseURL = import.meta.env.VITE_BASE_URL;
-  
-  // axiosConfig.headers.Authorization = `Bearer ${bearerToken}`;
-  axiosConfig.headers.Authorization = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MDMwOTI5MzEyMjUsImlhdCI6MTcwMzA4NTczMTIyNSwiaWQiOjN9.WOxFkQBClqiAZcQAfnM-T6dIRVYhll3lG83OuVQH9Bc`;
+  axiosConfig.headers.Authorization = `Bearer ${bearerToken}`;
 
   return axiosConfig;
 });
