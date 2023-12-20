@@ -12,11 +12,11 @@ import { MoreHorizontal } from "lucide-react";
 import EditStatusDialog from "./EditStatusDialog";
 
 interface IProps {
-  bookingCode: string;
+  booking_code: string;
 }
 
 const DropDownActions = (props: IProps) => {
-  const { bookingCode } = props;
+  const { booking_code } = props;
   const [editDialogiOpen, setEditDialogOpen] = useState(false);
 
   return (
@@ -36,7 +36,7 @@ const DropDownActions = (props: IProps) => {
         </DropdownMenuContent>
       </DropdownMenu>
       <EditStatusDialog
-        bookingCode={bookingCode}
+        booking_code={booking_code}
         open={editDialogiOpen}
         onOpenChange={setEditDialogOpen}
       />

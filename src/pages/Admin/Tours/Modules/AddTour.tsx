@@ -30,12 +30,13 @@ import { Textarea } from "@/components/ui/textarea";
 
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
-import { locationData } from "./location-data";
 
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/utils/utils";
 import { Calendar } from "@/components/ui/calendar";
 import { useEffect, useState } from "react";
+import { ILocations, getLocations } from "@/utils/apis/locations";
+import { INewFacilities, getFacilities } from "@/utils/apis/facilities";
 
 const AddTour = () => {
   const form = useForm<ICreateTour>({
@@ -60,18 +61,47 @@ const AddTour = () => {
   const animatedComponents = makeAnimated();
   const thumbnailWatch = form.watch("thumbnail");
   const pictureGalleryWatch = form.watch("picture");
+
   const [tourDuration, setTourDuration] = useState(0);
   const [thumbnailPict, setThumbnailPict] = useState("");
-  const [pictureGallery, setPictureGallery] = useState("");
+  // const [pictureGallery, setPictureGallery] = useState("");
 
-  console.log(pictureGallery)
+  const [locations, setLocations] = useState<ILocations[] | undefined>([]);
+  const [facilities, setFacilities] = useState<INewFacilities[] | undefined>(
+    [],
+  );
+
+  const fetcLocations = async () => {
+    try {
+      const res = await getLocations();
+
+      setLocations(res?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchFacilities = async () => {
+    try {
+      const res = await getFacilities();
+
+      const newFacilities = res?.data.map((data) => {
+        return {
+          value: data.facility_id.toString(),
+          label: data.name,
+        };
+      });
+
+      setFacilities(newFacilities);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    const formSubscribe = form.watch((value) => {
-      setTourDuration(differenceInDays(value.finish!, value.start!) + 1);
-    });
+    fetcLocations();
+    fetchFacilities();
     const itineraryWatch = form.watch("itinerary");
-
     if (itineraryWatch.length > tourDuration) {
       itineraryWatch.splice(
         itineraryWatch.length - tourDuration,
@@ -79,20 +109,13 @@ const AddTour = () => {
       );
     }
 
-    if (pictureGalleryWatch?.length > 0) {
-      setPictureGallery((prevState) => {
-        return [
-          ...prevState,
-          URL.createObjectURL(
-            pictureGalleryWatch?.[pictureGalleryWatch.length - 1],
-          ),
-        ];
-      });
-    }
-
     if (thumbnailWatch?.length > 0) {
       setThumbnailPict(URL.createObjectURL(thumbnailWatch?.[0]));
     }
+
+    const formSubscribe = form.watch((value) => {
+      setTourDuration(differenceInDays(value.finish!, value.start!) + 1);
+    });
 
     return () => formSubscribe.unsubscribe();
   }, [form, tourDuration, thumbnailWatch, pictureGalleryWatch]);
@@ -137,9 +160,14 @@ const AddTour = () => {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="1">Japan</SelectItem>
-                      <SelectItem value="2">Korea</SelectItem>
-                      <SelectItem value="3">Bangkok</SelectItem>
+                      {locations?.map((location) => (
+                        <SelectItem
+                          value={location?.location_id?.toString()}
+                          key={location?.location_id}
+                        >
+                          {location.name}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </SelectShad>
                   <FormMessage />
@@ -311,12 +339,12 @@ const AddTour = () => {
                     closeMenuOnSelect={false}
                     components={animatedComponents}
                     isMulti
-                    options={locationData}
+                    options={facilities}
                     name={name}
                     ref={ref}
                     onBlur={onBlur}
                     onChange={(val) => onChange(val.map((c) => c.value))}
-                    value={locationData.filter((c) => value.includes(c.value))}
+                    value={facilities?.filter((c) => value.includes(c.value))}
                   />
                 </FormControl>
                 <FormMessage />

@@ -9,13 +9,13 @@ import {
 import { Dispatch, SetStateAction } from "react";
 
 interface IProps {
-  bookingCode: string;
+  booking_code: string;
   open: boolean;
   onOpenChange: Dispatch<SetStateAction<boolean>>;
 }
 
 const EditStatusDialog = (props: IProps) => {
-  const { bookingCode, open, onOpenChange } = props;
+  const { booking_code, open, onOpenChange } = props;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -25,7 +25,7 @@ const EditStatusDialog = (props: IProps) => {
         </DialogHeader>
         <div>
           <p className="font-semibold">Booking Code</p>
-          <p className="mt-2 text-[14px]">{bookingCode}</p>
+          <p className="mt-2 text-[14px]">{booking_code}</p>
         </div>
         <DialogFooter>
           <Button type="submit">Save changes</Button>

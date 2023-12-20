@@ -59,15 +59,14 @@ export const createTourSchema = z.object({
     .min(1, { message: "Enter included facility" }),
   picture: z
     .any()
-    .refine((file) => file?.length == 1, "Picture is required.")
-    .refine(
-      (file) => ACCEPTED_IMAGE_TYPES.includes(file?.[0]?.type),
-      "Only .jpg, .jpeg, .png formats are supported",
-    )
-    .refine((file) => file[0]?.size <= 3000000, `Max image size is 3MB`)
-    .array(),
-  // .optional()
-  // .or(z.literal(""))
+    .refine((file) => file?.length > 0, "Picture is required.")
+    // .refine((file) =>
+    //   Array.from({ length: file?.length }, (v, k) => {
+    //     if (ACCEPTED_IMAGE_TYPES.includes(file[k].type)) {
+    //       return "Only .jpg, .jpeg, .png formats are supported";
+    //     }
+    //   }),
+    // ),
 });
 
 export type ICreateTour = z.infer<typeof createTourSchema>;
