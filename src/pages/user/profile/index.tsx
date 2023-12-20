@@ -1,7 +1,6 @@
 import Layout from "@/components/user/layout";
 import ProfileHeader from "./profile-header";
 import ProfileTable from "./profile-table";
-import React from "react";
 
 const ProfilePage = () => {
   return (

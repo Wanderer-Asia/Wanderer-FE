@@ -9,7 +9,10 @@ interface Props {
 const TripCard = (props: Props) => {
   const { data } = props;
   return (
-    <Link to={"/detail-trip/1"} className="mt-3 flex flex-col md:max-w-md">
+    <Link
+      to={`/detail-trip/${data.tour_id}`}
+      className="mt-3 flex flex-col md:max-w-md"
+    >
       <img className="h-96" src={data.thumbnail} />
       <div className="mt-3 flex flex-row items-center gap-3 text-xs">
         <svg

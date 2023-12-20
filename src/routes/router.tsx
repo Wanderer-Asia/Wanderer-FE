@@ -28,11 +28,11 @@ export const router = createBrowserRouter([
     element: <Destionation />,
   },
   {
-    path: "/detail-trip/:tripId",
+    path: "/detail-trip/:tripId/:bookingId?",
     element: <DetailTrip />,
   },
   {
-    path: "/booking/:tripId",
+    path: "/booking/:tripId/:bookingId?",
     element: <Booking />,
   },
   {
