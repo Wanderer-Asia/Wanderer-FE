@@ -89,7 +89,7 @@ export function DataTable<TData, TValue>({
               .filter((column) => column.getCanHide())
               .map((column) => {
                 let col = column.id;
-                if (column.id === "bookingCode") {
+                if (column.id === "booking_code") {
                   col = "Booking Code";
                 }
                 if (column.id === "touristName") {
@@ -98,7 +98,7 @@ export function DataTable<TData, TValue>({
                 if (column.id === "tourPackage") {
                   col = "Tour Package";
                 }
-                
+
                 return (
                   <DropdownMenuCheckboxItem
                     key={column.id}

@@ -4,7 +4,7 @@ import { Table } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-import { statuses } from "@/components/Admin/transactionData";
+import { statuses } from "@/utils/constants";
 import { DataTableFacetedFilter } from "./DataTableFacetedFilter";
 
 interface DataTableToolbarProps<TData> {
@@ -22,10 +22,10 @@ export function DataTableToolbar<TData>({
         <Input
           placeholder="Filter Booking Code..."
           value={
-            (table.getColumn("bookingCode")?.getFilterValue() as string) ?? ""
+            (table.getColumn("booking_code")?.getFilterValue() as number) ?? ""
           }
           onChange={(event) =>
-            table.getColumn("bookingCode")?.setFilterValue(event.target.value)
+            table.getColumn("booking_code")?.setFilterValue(event.target.value)
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />

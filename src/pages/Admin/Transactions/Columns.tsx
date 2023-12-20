@@ -1,11 +1,12 @@
 import { Badge } from "@/components/ui/badge";
 
-import { ITransaction, statuses } from "@/components/Admin/transactionData";
 import { DataTableColumnHeader } from "./DataTableColumnHeaders";
 import { ColumnDef } from "@tanstack/react-table";
 import DropDownActions from "./DropdownActions";
+import { statuses } from "@/utils/constants";
+import { newITransactions } from ".";
 
-export const Columns: ColumnDef<ITransaction>[] = [
+export const Columns: ColumnDef<newITransactions>[] = [
   {
     id: "no",
     header: "No.",
@@ -14,31 +15,34 @@ export const Columns: ColumnDef<ITransaction>[] = [
     },
   },
   {
-    accessorKey: "bookingCode",
+    accessorKey: "booking_code",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Booking Code" />
     ),
   },
   {
-    accessorKey: "touristName",
+    accessorKey: "name",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Name" />
     ),
   },
   {
-    accessorKey: "tourPackage",
+    accessorKey: "tour_package",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Tour Package" />
     ),
   },
   {
-    accessorKey: "duration",
+    accessorKey: "durations",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Duration" />
+      <DataTableColumnHeader column={column} title="Durations" />
     ),
+    cell: ({row}) => {
+      return <p className="text-center">{row.getValue("durations")}</p>
+    }
   },
   {
-    accessorKey: "price",
+    accessorKey: "total",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Price" />
     ),
@@ -116,7 +120,7 @@ export const Columns: ColumnDef<ITransaction>[] = [
       const transaction = row.original;
 
       if (transaction.status === "refund") {
-        return <DropDownActions bookingCode={transaction.bookingCode} />;
+        return <DropDownActions booking_code={transaction.booking_code} />;
       }
     },
   },
