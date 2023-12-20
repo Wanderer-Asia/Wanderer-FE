@@ -1,2 +1,4 @@
-import { Profile } from "./type";
-export type { Profile };
+import { EditUserSchema, Profile, editUserSchema } from "./type";
+
+export { editUserSchema };
+export type { Profile, EditUserSchema };
