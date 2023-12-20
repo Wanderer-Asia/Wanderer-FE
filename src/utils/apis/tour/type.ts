@@ -41,8 +41,6 @@ export const createTourSchema = z.object({
       "Only .jpg, .jpeg, .png formats are supported",
     )
     .refine((file) => file[0]?.size <= 3000000, `Max image size is 3MB`),
-  // .optional()
-  // .or(z.literal(""))
   itinerary: z
     .object({
       location: z

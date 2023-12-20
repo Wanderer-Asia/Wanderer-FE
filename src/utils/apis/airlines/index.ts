@@ -1,5 +1,23 @@
-import { IAirlines, INewAirlines } from "./type";
-import { getAirlines } from "./api";
+import {
+  IAirlines,
+  ICreateAirline,
+  createAirlineSchema,
+  IUpdateAirline,
+  updateAirlineSchema,
+} from "./type";
+import {
+  getAirlines,
+  createAirline,
+  updateAirline,
+  deleteAirline,
+} from "./api";
 
-export { getAirlines };
-export type { IAirlines, INewAirlines };
+export {
+  getAirlines,
+  createAirline,
+  updateAirline,
+  deleteAirline,
+  createAirlineSchema,
+  updateAirlineSchema,
+};
+export type { IAirlines, ICreateAirline, IUpdateAirline };

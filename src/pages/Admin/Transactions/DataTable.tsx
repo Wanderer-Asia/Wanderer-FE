@@ -92,10 +92,7 @@ export function DataTable<TData, TValue>({
                 if (column.id === "booking_code") {
                   col = "Booking Code";
                 }
-                if (column.id === "touristName") {
-                  col = "Name";
-                }
-                if (column.id === "tourPackage") {
+                if (column.id === "tour_package") {
                   col = "Tour Package";
                 }
 

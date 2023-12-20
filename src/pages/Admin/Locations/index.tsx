@@ -10,21 +10,21 @@ import {
 } from "@/components/ui/table";
 
 import { useToast } from "@/components/ui/use-toast";
-import { IAirlines, getAirlines } from "@/utils/apis/airlines";
 import { PenBox, PlusCircle, Trash2 } from "lucide-react";
 import Loading from "@/components/Loading";
-import AddAirlines from "./Modules/AddAirlines";
-import DeleteAirlines from "./Modules/DeleteAirlines";
-import EditAirlines from "./Modules/EditAirlines";
+import { Location, getLocation } from "@/utils/apis/location";
+import AddLocations from "./Modules/AddLocations";
+import DeleteLocations from "./Modules/DeleteLocations";
+import EditLocations from "./Modules/EditLocations";
 
-const AirlinesPage = () => {
+const LocationsPage = () => {
   const { toast } = useToast();
 
-  const fetchAirlines = async () => {
+  const fetchLocations = async () => {
     try {
-      const res = await getAirlines();
+      const res = await getLocation("");
 
-      setAirlines(res?.data);
+      setLocations(res?.data);
     } catch (error) {
       if (error instanceof Error) {
         toast({
@@ -38,10 +38,10 @@ const AirlinesPage = () => {
   };
 
   useEffect(() => {
-    fetchAirlines();
+    fetchLocations();
   }, []);
 
-  const [airlines, setAirlines] = useState<IAirlines[] | undefined>([]);
+  const [locations, setLocations] = useState<Location[] | undefined>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   return (
@@ -51,49 +51,49 @@ const AirlinesPage = () => {
       ) : (
         <div className="mt-5 w-[800px]">
           <div className="mb-5 flex gap-5">
-            <p className="text-[22px] font-semibold">Airlines Info</p>
-            <AddAirlines>
-              <PlusCircle className="mr-2 h-4 w-4 stroke-black" /> Add Airlines
-            </AddAirlines>
+            <p className="text-[22px] font-semibold">Locations Info</p>
+            <AddLocations>
+              <PlusCircle className="mr-2 h-4 w-4 stroke-black" /> Add Locations
+            </AddLocations>
           </div>
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>ID. </TableHead>
-                <TableHead>Airlines</TableHead>
-                <TableHead>Logo</TableHead>
+                <TableHead>Locations</TableHead>
+                <TableHead>Thumbnail</TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {airlines?.map((airline) => (
-                <TableRow key={airline.airline_id}>
+              {locations?.map((location) => (
+                <TableRow key={location.location_id}>
                   <TableCell className="font-medium">
-                    {airline.airline_id}
+                    {location.location_id}
                   </TableCell>
-                  <TableCell>{airline.name}</TableCell>
+                  <TableCell>{location.name}</TableCell>
                   <TableCell>
                     <img
-                      src={airline.logo}
-                      alt={airline.name}
+                      src={location.image}
+                      alt={location.name}
                       className="h-[80px] w-[80px] object-contain"
                     />
                   </TableCell>
                   <TableCell>
                     <div className="flex h-full w-full items-center">
-                      <EditAirlines
-                        airlane_name={airline.name}
-                        id={airline.airline_id.toString()}
+                      <EditLocations
+                        location_name={location.name}
+                        id={location.location_id.toString()}
                       >
                         <PenBox className="mr-2 stroke-blue-400" />
-                      </EditAirlines>
+                      </EditLocations>
 
-                      <DeleteAirlines
-                        id={airline?.airline_id.toString()}
-                        airlane_name={airline?.name}
+                      <DeleteLocations
+                        id={location?.location_id.toString()}
+                        location_name={location?.name}
                       >
                         <Trash2 className=" stroke-red-400 hover:cursor-pointer" />
-                      </DeleteAirlines>
+                      </DeleteLocations>
                     </div>
                   </TableCell>
                 </TableRow>
@@ -106,4 +106,4 @@ const AirlinesPage = () => {
   );
 };
 
-export default AirlinesPage;
+export default LocationsPage;
