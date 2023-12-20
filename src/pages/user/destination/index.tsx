@@ -3,16 +3,18 @@ import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
 import { Trip, getTrip } from "@/utils/apis/trip";
 import { useEffect, useState } from "react";
 
 import Layout from "@/components/user/layout";
+import { LocationDetail } from "@/utils/apis/location";
 import TripCard from "@/components/user/trip-card";
+import { getDetailLocation } from "@/utils/apis/location/api";
+import { useParams } from "react-router-dom";
 
 const Destionation = () => {
-  const [trip, setTrip] = useState<Trip[]>([]);
+  const { locationId } = useParams();
+  const [locationData, setLocationData] = useState<LocationDetail>();
 
   useEffect(() => {
     fetchTour();
@@ -20,10 +22,9 @@ const Destionation = () => {
 
   const fetchTour = async () => {
     try {
-      const result = await getTrip("japan", 0, 0, "discount");
-      console.log(result);
+      const result = await getDetailLocation(locationId as string);
 
-      setTrip(result.data);
+      setLocationData(result.data);
     } catch (error) {
       console.log(error);
     }
@@ -42,9 +43,10 @@ const Destionation = () => {
           <label className="text-3xl font-semibold">Japan</label>
         </div>
         <div className="grid justify-items-center gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {trip.map((item, index) => (
-            <TripCard data={item} key={index} />
-          ))}
+          {locationData &&
+            locationData?.tours.map((item, index) => (
+              <TripCard data={item} key={index} />
+            ))}
         </div>
       </div>
     </Layout>
