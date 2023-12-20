@@ -79,7 +79,7 @@ export const LinkList: LinkListType = [
 export const MoreLink: LinkListType = [
   {
     title: "Airplanes",
-    to: "airplanes",
+    to: "airlines",
     end: false,
     icon: Plane,
   },

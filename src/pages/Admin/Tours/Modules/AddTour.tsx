@@ -37,6 +37,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { useEffect, useState } from "react";
 import { ILocations, getLocations } from "@/utils/apis/locations";
 import { INewFacilities, getFacilities } from "@/utils/apis/facilities";
+import { INewAirlines, getAirlines } from "@/utils/apis/airlines";
 
 const AddTour = () => {
   const form = useForm<ICreateTour>({
@@ -70,8 +71,9 @@ const AddTour = () => {
   const [facilities, setFacilities] = useState<INewFacilities[] | undefined>(
     [],
   );
+  const [airlines, setAirlines] = useState<INewAirlines[] | undefined>([]);
 
-  const fetcLocations = async () => {
+  const fetchLocations = async () => {
     try {
       const res = await getLocations();
 
@@ -98,9 +100,27 @@ const AddTour = () => {
     }
   };
 
+  const fetchAirlines = async () => {
+    try {
+      const res = await getAirlines();
+
+      const newAirlines = res?.data.map((data) => {
+        return {
+          value: data.airline_id.toString(),
+          label: data.name,
+        };
+      });
+
+      setAirlines(newAirlines);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    fetcLocations();
+    fetchLocations();
     fetchFacilities();
+    fetchAirlines();
     const itineraryWatch = form.watch("itinerary");
     if (itineraryWatch.length > tourDuration) {
       itineraryWatch.splice(
@@ -368,9 +388,11 @@ const AddTour = () => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="1">Lion Air</SelectItem>
-                    <SelectItem value="2">Garuda Indonesia</SelectItem>
-                    <SelectItem value="3">Air Asia</SelectItem>
+                    {airlines?.map((airline) => (
+                      <SelectItem value={airline.value} key={airline.label}>
+                        {airline.label}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </SelectShad>
                 <FormMessage />

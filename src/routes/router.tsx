@@ -10,9 +10,11 @@ import HomePage from "@/pages/user/home";
 import OrderSuccess from "@/pages/user/order-success";
 import Payment from "@/pages/user/payment";
 import ProfilePage from "@/pages/user/profile";
-import ToursPage from "@/pages/Admin/Tours/ToursPage";
+import ToursPage from "@/pages/Admin/Tours";
 import TransactionsPage from "@/pages/Admin/Transactions";
 import { createBrowserRouter } from "react-router-dom";
+import SettingsPage from "@/pages/Admin/Settings";
+import AirlinesPage from "@/pages/Admin/Airlines";
 
 export const router = createBrowserRouter([
   {
@@ -71,6 +73,14 @@ export const router = createBrowserRouter([
             element: <AddTour />,
           },
         ],
+      },
+      {
+        path: "settings",
+        element: <SettingsPage />,
+      },
+      {
+        path: "airlines",
+        element: <AirlinesPage />,
       },
     ],
   },
