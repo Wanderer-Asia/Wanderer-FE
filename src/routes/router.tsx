@@ -15,6 +15,7 @@ import TransactionsPage from "@/pages/Admin/Transactions";
 import { createBrowserRouter } from "react-router-dom";
 import SettingsPage from "@/pages/Admin/Settings";
 import AirlinesPage from "@/pages/Admin/Airlines";
+import LocationsPage from "@/pages/Admin/Locations";
 
 export const router = createBrowserRouter([
   {
@@ -81,6 +82,10 @@ export const router = createBrowserRouter([
       {
         path: "airlines",
         element: <AirlinesPage />,
+      },
+      {
+        path: "locations",
+        element: <LocationsPage />,
       },
     ],
   },

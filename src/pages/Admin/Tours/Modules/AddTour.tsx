@@ -35,9 +35,9 @@ import { CalendarIcon } from "lucide-react";
 import { cn } from "@/utils/utils";
 import { Calendar } from "@/components/ui/calendar";
 import { useEffect, useState } from "react";
-import { ILocations, getLocations } from "@/utils/apis/locations";
 import { INewFacilities, getFacilities } from "@/utils/apis/facilities";
-import { INewAirlines, getAirlines } from "@/utils/apis/airlines";
+import { IAirlines, getAirlines } from "@/utils/apis/airlines";
+import { Location, getLocation } from "@/utils/apis/location";
 
 const AddTour = () => {
   const form = useForm<ICreateTour>({
@@ -67,15 +67,15 @@ const AddTour = () => {
   const [thumbnailPict, setThumbnailPict] = useState("");
   // const [pictureGallery, setPictureGallery] = useState("");
 
-  const [locations, setLocations] = useState<ILocations[] | undefined>([]);
+  const [locations, setLocations] = useState<Location[] | undefined>([]);
   const [facilities, setFacilities] = useState<INewFacilities[] | undefined>(
     [],
   );
-  const [airlines, setAirlines] = useState<INewAirlines[] | undefined>([]);
+  const [airlines, setAirlines] = useState<IAirlines[] | undefined>([]);
 
   const fetchLocations = async () => {
     try {
-      const res = await getLocations();
+      const res = await getLocation("", undefined);
 
       setLocations(res?.data);
     } catch (error) {
@@ -104,14 +104,7 @@ const AddTour = () => {
     try {
       const res = await getAirlines();
 
-      const newAirlines = res?.data.map((data) => {
-        return {
-          value: data.airline_id.toString(),
-          label: data.name,
-        };
-      });
-
-      setAirlines(newAirlines);
+      setAirlines(res?.data);
     } catch (error) {
       console.log(error);
     }
@@ -389,8 +382,11 @@ const AddTour = () => {
                   </FormControl>
                   <SelectContent>
                     {airlines?.map((airline) => (
-                      <SelectItem value={airline.value} key={airline.label}>
-                        {airline.label}
+                      <SelectItem
+                        value={airline.airline_id.toString()}
+                        key={airline.airline_id}
+                      >
+                        {airline.name}
                       </SelectItem>
                     ))}
                   </SelectContent>

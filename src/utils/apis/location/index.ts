@@ -1,6 +1,16 @@
-import { Location, LocationDetail } from "./type";
+import {
+  Location,
+  LocationDetail,
+  ICreateLocation,
+  IUpdateLocation,
+} from "./type";
 
-import { getLocation } from "./api";
+import {
+  getLocation,
+  createLocation,
+  updateLocation,
+  deleteLocation,
+} from "./api";
 
-export { getLocation };
-export type { Location, LocationDetail };
+export { getLocation, createLocation, updateLocation, deleteLocation };
+export type { Location, LocationDetail, ICreateLocation, IUpdateLocation };
