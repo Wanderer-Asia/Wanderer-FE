@@ -27,7 +27,6 @@ const Home = () => {
   const fetchTour = async () => {
     try {
       const result = await getTrip("", 0, 3, "discount");
-      console.log(result);
 
       setTrip(result.data);
     } catch (error) {
@@ -92,9 +91,8 @@ const Home = () => {
               </Link>
             </div>
             <div className="grid justify-items-center gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {trip.map((item, index) => (
-                <TripCard data={item} key={index} />
-              ))}
+              {trip &&
+                trip.map((item, index) => <TripCard data={item} key={index} />)}
             </div>
           </div>
         </div>
@@ -105,9 +103,10 @@ const Home = () => {
             <Separator className="flex-1 bg-tyellow" />
           </div>
           <div className="grid grid-cols-2 justify-items-center gap-4 md:grid-cols-3 lg:grid-cols-5">
-            {locationData.map((item, index) => (
-              <DestinationCard key={index} data={item} />
-            ))}
+            {locationData &&
+              locationData.map((item, index) => (
+                <DestinationCard key={index} data={item} />
+              ))}
           </div>
         </div>
       </div>
