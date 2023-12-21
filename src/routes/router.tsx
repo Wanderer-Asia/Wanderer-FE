@@ -17,6 +17,7 @@ import SettingsPage from "@/pages/Admin/Settings";
 import AirlinesPage from "@/pages/Admin/Airlines";
 import LocationsPage from "@/pages/Admin/Locations";
 import FacilitiesPage from "@/pages/Admin/Facilities";
+import EditTour from "@/pages/Admin/Tours/Modules/EditTour";
 
 export const router = createBrowserRouter([
   {
@@ -73,6 +74,10 @@ export const router = createBrowserRouter([
           {
             path: "add-tour",
             element: <AddTour />,
+          },
+          {
+            path: "edit-tour/:id",
+            element: <EditTour />,
           },
         ],
       },

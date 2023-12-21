@@ -1,5 +1,19 @@
 import { ITours } from "@/utils/apis/tour";
-import { Banknote, MapPin, Star, UsersIcon } from "lucide-react";
+import {
+  Banknote,
+  MapPin,
+  MoreHorizontal,
+  Star,
+  UsersIcon,
+} from "lucide-react";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Link } from "react-router-dom";
 
 interface IProps {
   tourData: ITours;
@@ -9,13 +23,29 @@ const TourCard = (props: IProps) => {
   const { tourData } = props;
 
   return (
-    <div className="w-fit rounded-lg bg-background p-5 shadow-lg dark:border">
+    <div className="w-fit rounded-lg bg-background px-5 pb-5 shadow-lg dark:border">
+      <div className="flex w-full justify-end p-1">
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <MoreHorizontal className="h-full" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <Link to={`/admin/tours/edit-tour/${tourData.tour_id}`}>
+              <DropdownMenuItem>Edit Tour</DropdownMenuItem>
+            </Link>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
       <div className="relative rounded-lg">
         <div className="absolute bottom-2 right-2 flex items-center gap-1 rounded-full bg-white/10 px-[4px] py-[2px] text-base font-medium backdrop-blur-sm">
           <MapPin className="h-[14px] w-[14px] fill-green-500 stroke-white" />
           <p className="text-[12px] text-white">{tourData.location?.name}</p>
         </div>
-        <img src={tourData.thumbnail} alt="japan" className="rounded-lg aspect-[1/1] object-cover" />
+        <img
+          src={tourData.thumbnail}
+          alt="japan"
+          className="aspect-[1/1] rounded-lg object-cover"
+        />
       </div>
       <div className="mt-2 px-2">
         <p className="text-left text-[14px] font-medium">{tourData.title}</p>
