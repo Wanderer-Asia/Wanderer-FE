@@ -14,7 +14,6 @@ const BestDeals = () => {
   const fetchTour = async () => {
     try {
       const result = await getTrip("", 0, 0, "discount");
-      console.log(result);
 
       setTrip(result.data);
     } catch (error) {
@@ -28,9 +27,8 @@ const BestDeals = () => {
           <label className="text-3xl font-semibold">Best Deals</label>
         </div>
         <div className="grid justify-items-center gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {trip.map((item, index) => (
-            <TripCard data={item} key={index} />
-          ))}
+          {trip &&
+            trip.map((item, index) => <TripCard data={item} key={index} />)}
         </div>
       </div>
     </Layout>
