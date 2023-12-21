@@ -1,4 +1,5 @@
-import { ICreateTour, createTourSchema } from "@/utils/apis/tour";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { ICreateTour, createTour, createTourSchema } from "@/utils/apis/tour";
 
 import { differenceInDays, format } from "date-fns";
 
@@ -38,6 +39,7 @@ import { useEffect, useState } from "react";
 import { INewFacilities, getFacilities } from "@/utils/apis/facilities";
 import { IAirlines, getAirlines } from "@/utils/apis/airlines";
 import { Location, getLocation } from "@/utils/apis/location";
+import { useToast } from "@/components/ui/use-toast";
 
 const AddTour = () => {
   const form = useForm<ICreateTour>({
@@ -58,6 +60,8 @@ const AddTour = () => {
       itinerary: [],
     },
   });
+
+  const { toast } = useToast();
 
   const animatedComponents = makeAnimated();
   const thumbnailWatch = form.watch("thumbnail");
@@ -134,7 +138,46 @@ const AddTour = () => {
   }, [form, tourDuration, thumbnailWatch, pictureGalleryWatch]);
 
   const submitTourHandler = async (data: ICreateTour) => {
-    console.log(data);
+    console.log(data.itinerary[0]);
+    try {
+      const formData = new FormData();
+
+      formData.append("title", data.title);
+      formData.append("location_id", data.location_id);
+      formData.append("description", data.description);
+      formData.append("price", data.price);
+      formData.append("discount", data.discount as string);
+      formData.append("admin_fee", data.admin_fee);
+      formData.append("start", data.start.toISOString() as any);
+      formData.append("finish", data.finish.toISOString() as any);
+      formData.append("airline_id", data.airline_id);
+      formData.append("quota", data.quota);
+      formData.append("include_facility", data.include_facility as any);
+      formData.append("thumbnail", data.thumbnail[0]);
+
+      for (let i = 0; i < data.picture.length; i++) {
+        formData.append(`picture`, data.picture[i]);
+      }
+
+      for (let i = 0; i < data.itinerary.length; i++) {
+        formData.append(`itinerary[${i}].location`, data.itinerary[i].location as any);
+        formData.append(`itinerary[${i}].description`, data.itinerary[i].description as any);
+      }
+
+      const res = await createTour(formData as any);
+
+      toast({
+        title: "Success",
+        description: res?.message,
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        toast({
+          description: error.message,
+          variant: "destructive",
+        });
+      }
+    }
   };
 
   return (

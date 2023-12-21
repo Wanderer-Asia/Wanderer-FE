@@ -1,5 +1,3 @@
-import { ReactNode } from "react";
-
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,36 +10,36 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/components/ui/use-toast";
-import { deleteAirline } from "@/utils/apis/airlines";
+import { deleteFacility } from "@/utils/apis/facilities";
+import { ReactNode } from "react";
 
 interface IProps {
-  id: string;
-  airlane_name: string;
   children: ReactNode;
+  facility_name: string;
+  id: string;
 }
 
-const DeleteAirlines = (props: IProps) => {
-  const { id, airlane_name, children } = props;
+const DeleteFacility = (props: IProps) => {
+  const { id, facility_name, children } = props;
   const { toast } = useToast();
 
-  const deleteAirlineHandler = async () => {
+  const deleteFaciltyHandler = async () => {
     try {
-      const res = await deleteAirline(id);
+      const res = await deleteFacility(id);
 
       toast({
-        description: <p className="capitalize">{res?.message}</p>,
         title: "Success",
+        description: <p className="capitalize">{res?.message}</p>,
       });
     } catch (error) {
       if (error instanceof Error) {
         toast({
           variant: "destructive",
-          description: error.message,
+          description: <p className="capitalize">{error.message}</p>,
         });
       }
     }
   };
-
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
@@ -50,15 +48,15 @@ const DeleteAirlines = (props: IProps) => {
           <AlertDialogTitle>Are you sure ?</AlertDialogTitle>
           <AlertDialogDescription>
             This action cannot be undone. This will permanently delete{" "}
-            <span className="font-medium text-red-500">{airlane_name}</span> and
-            remove{" "}
-            <span className="font-medium text-red-500">{airlane_name}</span>{" "}
+            <span className="font-medium text-red-500">{facility_name}</span>{" "}
+            and remove{" "}
+            <span className="font-medium text-red-500">{facility_name}</span>{" "}
             from our servers.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={deleteAirlineHandler}>
+          <AlertDialogAction onClick={deleteFaciltyHandler}>
             Continue
           </AlertDialogAction>
         </AlertDialogFooter>
@@ -67,4 +65,4 @@ const DeleteAirlines = (props: IProps) => {
   );
 };
 
-export default DeleteAirlines;
+export default DeleteFacility;

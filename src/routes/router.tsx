@@ -7,6 +7,7 @@ import Booking from "@/pages/user/booking";
 import Dashboard from "@/pages/Admin";
 import Destionation from "@/pages/user/destination";
 import DetailTrip from "@/pages/user/detail-trip";
+import FacilitiesPage from "@/pages/Admin/Facilities";
 import HomePage from "@/pages/user/home";
 import LocationsPage from "@/pages/Admin/Locations";
 import OrderSuccess from "@/pages/user/order-success";
@@ -86,6 +87,10 @@ export const router = createBrowserRouter([
       {
         path: "locations",
         element: <LocationsPage />,
+      },
+      {
+        path: "facilities",
+        element: <FacilitiesPage />,
       },
     ],
   },
