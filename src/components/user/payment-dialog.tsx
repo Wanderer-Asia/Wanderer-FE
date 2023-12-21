@@ -7,28 +7,31 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { Button } from "@/components/ui/button";
+import { cn } from "@/utils/utils";
 
 interface Props {
   onSelect: (value: string) => void;
+  isValid: boolean;
 }
 
 const PaymentDialog = (props: Props) => {
-  const { onSelect } = props;
+  const { onSelect, isValid } = props;
 
   const handleSelect = (value: string) => {
     onSelect(value);
   };
+
   return (
     <Dialog>
-      <DialogTrigger>
-        <Button
-          type="button"
-          variant="secondary"
-          className=" bg-tyellow hover:bg-tyellowlight"
-        >
-          Select Payment Method
-        </Button>
+      <DialogTrigger
+        className={cn(
+          "rounded-lg p-3 hover:cursor-pointer font-medium",
+          !isValid ? "bg-tyellow/50 text-black/50" : " bg-tyellow",
+        )}
+        disabled={!isValid}
+        aria-disabled={!isValid}
+      >
+        Select Payment Method
       </DialogTrigger>
       <DialogContent>
         <DialogHeader className=" items-center">

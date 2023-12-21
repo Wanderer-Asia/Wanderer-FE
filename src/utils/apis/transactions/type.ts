@@ -1,7 +1,7 @@
 export interface ITransactions {
   booking_code: number;
   user: {
-    name: string;
+    fullname: string;
   };
   tour: {
     title: string;

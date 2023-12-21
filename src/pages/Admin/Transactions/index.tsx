@@ -27,7 +27,7 @@ const TransactionsPage = () => {
             booking_code: data.booking_code.toString(),
             tour_package: data.tour.title,
             total: data.total,
-            name: data.user.name,
+            name: data.user.fullname,
             status: data.status,
             durations:
               differenceInDays(

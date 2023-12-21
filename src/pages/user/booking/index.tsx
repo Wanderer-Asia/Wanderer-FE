@@ -28,6 +28,7 @@ const Booking = () => {
     detail: [],
   });
   const [term, setTerm] = useState<boolean>(false);
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const handlePayment = (value: string) => {
     setData({ ...data, payment_method: value });
@@ -83,6 +84,20 @@ const Booking = () => {
 
     const updatedDetail = [...data.detail];
     updatedDetail[index][field] = updatedValue;
+    data.detail.map((d) => {
+      if (
+        d.dob.length > 0 &&
+        d.greeting.length > 0 &&
+        d.name.length > 0 &&
+        d.nationality.length > 0 &&
+        d.document_number.length > 0
+      ) {
+        setIsFormValid(true);
+      } else {
+        setIsFormValid(false);
+      }
+    });
+
     setData({ ...data, detail: updatedDetail });
   };
 
@@ -90,7 +105,6 @@ const Booking = () => {
     try {
       const result = await createBooking(data);
       console.log(result);
-
       if (result.data) {
         navigate(`/payment/${tripId}/${result.data.booking_code}`);
       }
@@ -212,7 +226,7 @@ const Booking = () => {
           <div className="mt-5 flex flex-row items-center justify-between border border-tyellow p-5 shadow-lg">
             <p className=" w-64 font-semibold"></p>
 
-            <PaymentDialog onSelect={handlePayment} />
+            <PaymentDialog onSelect={handlePayment} isValid={isFormValid} />
           </div>
 
           <div className="mt-14 flex items-center space-x-2">

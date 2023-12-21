@@ -17,12 +17,7 @@ import SettingsPage from "@/pages/Admin/Settings";
 import ToursPage from "@/pages/Admin/Tours";
 import TransactionsPage from "@/pages/Admin/Transactions";
 import { createBrowserRouter } from "react-router-dom";
-import SettingsPage from "@/pages/Admin/Settings";
-import AirlinesPage from "@/pages/Admin/Airlines";
-import LocationsPage from "@/pages/Admin/Locations";
-import FacilitiesPage from "@/pages/Admin/Facilities";
 import EditTour from "@/pages/Admin/Tours/Modules/EditTour";
-
 
 export const router = createBrowserRouter([
   {
