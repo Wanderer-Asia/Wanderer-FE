@@ -18,6 +18,8 @@ import DeleteAirlines from "./Modules/DeleteAirlines";
 import EditAirlines from "./Modules/EditAirlines";
 
 const AirlinesPage = () => {
+  const [airlines, setAirlines] = useState<IAirlines[] | undefined>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
   const fetchAirlines = async () => {
@@ -40,9 +42,6 @@ const AirlinesPage = () => {
   useEffect(() => {
     fetchAirlines();
   }, []);
-
-  const [airlines, setAirlines] = useState<IAirlines[] | undefined>([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   return (
     <>
