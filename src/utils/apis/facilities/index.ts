@@ -1,5 +1,21 @@
-import { IFacilities, INewFacilities } from "./type";
-import { getFacilities } from "./api";
+import {
+  IFacilities,
+  INewFacilities,
+  ICreateFacility,
+  createFacilitySchema,
+} from "./type";
+import {
+  getFacilities,
+  createFacility,
+  updateFacility,
+  deleteFacility,
+} from "./api";
 
-export { getFacilities };
-export type { IFacilities, INewFacilities };
+export {
+  createFacilitySchema,
+  getFacilities,
+  createFacility,
+  updateFacility,
+  deleteFacility,
+};
+export type { IFacilities, INewFacilities, ICreateFacility };

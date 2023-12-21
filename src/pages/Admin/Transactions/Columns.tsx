@@ -37,9 +37,14 @@ export const Columns: ColumnDef<newITransactions>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Durations" />
     ),
-    cell: ({row}) => {
-      return <p className="text-center">{row.getValue("durations")}</p>
-    }
+    cell: ({ row }) => {
+      return (
+        <p className="text-center">
+          {row.getValue("durations")} Days{" "}
+          {parseInt(row.getValue("durations")) - 1} Night
+        </p>
+      );
+    },
   },
   {
     accessorKey: "total",
