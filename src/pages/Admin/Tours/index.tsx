@@ -62,10 +62,18 @@ const ToursPage = () => {
           </div>
 
           <p className="mt-3 text-[22px] font-semibold">Tours List</p>
-          <div className="mb-5 mt-2 grid w-full grid-cols-1 justify-items-start gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {tourData.map((tour) => (
-              <TourCard key={tour.tour_id} tourData={tour} />
-            ))}
+          <div className="w-full">
+            {tourData !== null ? (
+              <>
+                {tourData.map((tour) => (
+                  <div className="mb-5 mt-2 grid w-full grid-cols-1 justify-items-start gap-5 md:grid-cols-2 lg:grid-cols-3" key={tour.tour_id}>
+                    <TourCard key={tour.tour_id} tourData={tour} />
+                  </div>
+                ))}
+              </>
+            ) : (
+              <p className="w-full text-center mt-8 font-bold">No Tour Data</p>
+            )}
           </div>
         </div>
       )}

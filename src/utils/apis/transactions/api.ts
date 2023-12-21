@@ -7,8 +7,6 @@ export const getTransactions = async () => {
   try {
     const res = await axiosWithConfig.get("/bookings");
 
-    console.log(res.data)
-
     return res.data as IResponse<ITransactions[]>;
   } catch (error) {
     if (error instanceof AxiosError) {
