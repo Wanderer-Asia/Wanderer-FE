@@ -4,23 +4,111 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { BookingData, Persons, createBooking } from "@/utils/apis/booking";
+import { TripDetail, getTripDetail } from "@/utils/apis/trip";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import Layout from "@/components/user/layout";
 import PaymentDialog from "@/components/user/payment-dialog";
 import { Separator } from "@/components/ui/separator";
-import { useNavigate } from "react-router-dom";
+import { formattedAmount } from "@/utils/formattedAmount";
+import { useToast } from "@/components/ui/use-toast";
 
 const Booking = () => {
+  const { toast } = useToast();
+  const { tripId, persons } = useParams();
   const navigate = useNavigate();
+  const [trip, setTrip] = useState<TripDetail>();
+  const [data, setData] = useState<BookingData>({
+    tour_id: Number(tripId),
+    payment_method: "",
+    detail: [],
+  });
+  const [term, setTerm] = useState<boolean>(false);
+
+  const handlePayment = (value: string) => {
+    setData({ ...data, payment_method: value });
+  };
+
+  useEffect(() => {
+    updatePerson();
+    fetchDetailTrip();
+  }, []);
+
+  const fetchDetailTrip = async () => {
+    try {
+      const result = await getTripDetail(tripId as string);
+
+      setTrip(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updatePerson = () => {
+    const arr: Persons[] = [];
+    for (let i = 0; i < Number(persons); i++) {
+      arr.push({
+        document_number: "",
+        greeting: "",
+        name: "",
+        nationality: "",
+        dob: "",
+      });
+    }
+    setData({ ...data, detail: arr });
+  };
+
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+    field: keyof Persons,
+  ) => {
+    // const updatedDetail = [...data.detail];
+    // updatedDetail[index][field] = event.target.value;
+    // setData({ ...data, detail: updatedDetail });
+    const { value } = event.target;
+
+    let updatedValue: string | Date = value;
+
+    if (field === "dob") {
+      const date = new Date(value);
+      const formattedDate = date.toISOString();
+
+      updatedValue = formattedDate;
+    }
+
+    const updatedDetail = [...data.detail];
+    updatedDetail[index][field] = updatedValue;
+    setData({ ...data, detail: updatedDetail });
+  };
+
+  const handleBooking = async () => {
+    try {
+      const result = await createBooking(data);
+      console.log(result);
+
+      if (result.data) {
+        navigate(`/payment/${tripId}/${result.data.booking_code}`);
+      }
+    } catch (error) {
+      toast({
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      });
+    }
+  };
+
   return (
     <Layout>
       <div className="container overflow-auto p-10">
         <label className="text-2xl font-semibold">Detail Booking</label>
         <div className="mt-10 flex flex-col">
           <label className="text-xl font-semibold">Passenger Details</label>
-          {["adult 1", "adult 2"].map((item, index) => (
+          {data.detail.map((item, index) => (
             <Accordion
               key={index}
               type="single"
@@ -34,25 +122,47 @@ const Booking = () => {
                 <AccordionContent className="grid grid-cols-2 gap-8">
                   <div className="flex flex-row items-center ">
                     <p className=" w-64 text-sm font-normal">Greeting</p>
-                    <input className=" w-full rounded-sm bg-tblueLight p-2 text-gray-800 outline-none" />
+                    <input
+                      className=" w-full rounded-sm bg-tblueLight p-2 text-gray-800 outline-none"
+                      value={item.greeting}
+                      onChange={(e) => handleInputChange(e, index, "greeting")}
+                    />
                   </div>
                   <div className="flex flex-row items-center ">
                     <p className="w-64 text-sm font-normal">Nationality</p>
-                    <input className=" w-full rounded-sm bg-tblueLight p-2 text-gray-800 outline-none" />
+                    <input
+                      className=" w-full rounded-sm bg-tblueLight p-2 text-gray-800 outline-none"
+                      value={item.nationality}
+                      onChange={(e) =>
+                        handleInputChange(e, index, "nationality")
+                      }
+                    />
                   </div>
                   <div className="flex flex-row items-center ">
                     <p className="w-64 text-sm font-normal">Name</p>
-                    <input className=" w-full rounded-sm bg-tblueLight p-2 text-gray-800 outline-none" />
+                    <input
+                      className=" w-full rounded-sm bg-tblueLight p-2 text-gray-800 outline-none"
+                      value={item.name}
+                      onChange={(e) => handleInputChange(e, index, "name")}
+                    />
                   </div>
                   <div className="flex flex-row items-center ">
                     <p className="w-64 text-sm font-normal">NIK/NO Passport</p>
-                    <input className=" w-full rounded-sm bg-tblueLight p-2 text-gray-800 outline-none" />
+                    <input
+                      className=" w-full rounded-sm bg-tblueLight p-2 text-gray-800 outline-none"
+                      value={item.document_number}
+                      onChange={(e) =>
+                        handleInputChange(e, index, "document_number")
+                      }
+                    />
                   </div>
                   <div className="flex flex-row items-center ">
                     <p className="w-64 text-sm font-normal">Birth Date</p>
                     <input
                       type="date"
-                      className=" w-full rounded-sm bg-tblueLight p-2 text-gray-800 outline-none"
+                      className="w-full rounded-sm bg-tblueLight p-2 text-gray-800 outline-none"
+                      value={item.dob ? item.dob.split("T")[0] : ""}
+                      onChange={(e) => handleInputChange(e, index, "dob")}
                     />
                   </div>
                 </AccordionContent>
@@ -64,16 +174,22 @@ const Booking = () => {
             <div className="m-5 grid grid-cols-2 gap-8">
               <div className="flex flex-row">
                 <p className=" w-64 font-semibold">Subtotal</p>
-                <p className="font-semibold">RP. 25.000.000</p>
+                <p className="font-semibold">
+                  {trip && formattedAmount(trip.price * Number(persons))}
+                </p>
               </div>
               <div className="flex flex-col gap-5">
                 <div className="flex flex-row items-center ">
                   <p className=" w-64 font-semibold">Admin</p>
-                  <p className="font-semibold">RP. 5.000</p>
+                  <p className="font-semibold">
+                    {trip && formattedAmount(trip.admin_fee)}
+                  </p>
                 </div>
                 <div className="flex flex-row items-center ">
                   <p className=" w-64 font-semibold">Discount</p>
-                  <p className="font-semibold">RP. 2.500.000</p>
+                  <p className="font-semibold">
+                    {trip && formattedAmount(trip.discount)}
+                  </p>
                 </div>
               </div>
             </div>
@@ -81,19 +197,29 @@ const Booking = () => {
             <div className="m-5 grid grid-cols-2 gap-8">
               <div className="flex flex-row">
                 <p className=" w-64 font-semibold">Total</p>
-                <p className="font-semibold">RP. 22.505.000</p>
+                <p className="font-semibold">
+                  {trip &&
+                    formattedAmount(
+                      trip.price * Number(persons) +
+                        trip.admin_fee -
+                        trip.discount * Number(persons),
+                    )}
+                </p>
               </div>
             </div>
           </div>
 
           <div className="mt-5 flex flex-row items-center justify-between border border-tyellow p-5 shadow-lg">
-            <p className=" w-64 font-semibold">Total</p>
+            <p className=" w-64 font-semibold"></p>
 
-            <PaymentDialog />
+            <PaymentDialog onSelect={handlePayment} />
           </div>
 
           <div className="mt-14 flex items-center space-x-2">
-            <Checkbox id="terms" />
+            <Checkbox
+              id="terms"
+              onCheckedChange={(value: boolean) => setTerm(value)}
+            />
             <label
               htmlFor="terms"
               className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -108,7 +234,8 @@ const Booking = () => {
               type="button"
               variant="secondary"
               className=" bg-tyellow px-10 hover:bg-tyellowlight"
-              onClick={() => navigate("/payment/1")}
+              disabled={!term}
+              onClick={handleBooking}
             >
               Pay Now
             </Button>
