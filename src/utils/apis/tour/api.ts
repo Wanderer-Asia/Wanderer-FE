@@ -41,7 +41,7 @@ export const getTourDetail = async (id: string | undefined) => {
 
 export const updateTour = async (id: string | undefined, body: IUpdateTour) => {
   try {
-    const res = await axiosWithConfig.post(`/tours/${id}`, body);
+    const res = await axiosWithConfig.put(`/tours/${id}`, body);
 
     return res.data as IResponse;
   } catch (error) {

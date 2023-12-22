@@ -18,7 +18,7 @@ import { useToken } from "@/utils/context/token";
 
 const Navbar = () => {
   const { setTheme } = useTheme();
-  const { changeToken } = useToken();
+  const { changeToken, user } = useToken();
 
   return (
     <div className="sticky top-0 z-50 bg-yellow-main">
@@ -31,7 +31,7 @@ const Navbar = () => {
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarImage src={user.image} />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>

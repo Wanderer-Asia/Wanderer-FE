@@ -37,7 +37,7 @@ export function TokenProvider({ children }: Readonly<Props>) {
   const { toast } = useToast();
 
   const [token, setToken] = useState(localStorage.getItem("token") ?? "");
-  const [user, setUser] = useState<Partial<Profile>>(null);
+  const [user, setUser] = useState<Partial<Profile>>({});
 
   useEffect(() => {
     setAxiosConfig(token);

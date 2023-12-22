@@ -60,8 +60,8 @@ const EditTour = () => {
       price: tourData ? tourData.price.toString() : "",
       discount: tourData ? tourData.discount!.toString() : "",
       admin_fee: tourData ? tourData.admin_fee.toString() : "",
-      start: tourData ? tourData.start.toString() : "",
-      finish: tourData ? tourData.finish.toString() : "",
+      start: tourData ? new Date(tourData.start.toString()) : "",
+      finish: tourData ? new Date(tourData.finish.toString()) : "",
       quota: tourData ? tourData.quota.toString() : "",
       thumbnail: tourData ? tourData.thumbnail : "",
       airline_id: tourData ? tourData.airline_id : "",
@@ -70,7 +70,7 @@ const EditTour = () => {
     },
   });
 
-  console.log(tourData?.location_id)
+  // console.log(tourData?.location_id)
 
   const { toast } = useToast();
   const { id } = useParams();
@@ -170,7 +170,6 @@ const EditTour = () => {
   }, [form, tourDuration, thumbnailWatch, pictureGalleryWatch]);
 
   const submitTourHandler = async (data: IUpdateTour) => {
-    console.log(data.itinerary[0]);
     try {
       const formData = new FormData();
 
@@ -180,8 +179,14 @@ const EditTour = () => {
       formData.append("price", data.price);
       formData.append("discount", data.discount as string);
       formData.append("admin_fee", data.admin_fee);
-      formData.append("start", data.start.toString() as any);
-      formData.append("finish", data.finish.toString() as any);
+      formData.append(
+        "start",
+        new Date(data.start.toString()).toISOString() as any,
+      );
+      formData.append(
+        "finish",
+        new Date(data.finish.toString()).toISOString() as any,
+      );
       formData.append("airline_id", data.airline_id);
       formData.append("quota", data.quota);
       formData.append("include_facility", data.include_facility as any);
@@ -201,8 +206,8 @@ const EditTour = () => {
           data.itinerary[i].description as any,
         );
       }
-
-      const res = await updateTour(id?.toString(), formData as any);
+      console.log(tourData?.thumbnail);
+      // const res = await updateTour(id?.toString(), formData as any);
 
       toast({
         title: "Success",
