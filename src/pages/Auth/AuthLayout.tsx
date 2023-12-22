@@ -20,8 +20,6 @@ const AuthLayout = () => {
   const { pathname } = useLocation();
   const { setTheme, theme } = useTheme();
 
-  console.log(pathname);
-
   return (
     <div
       className={cn(

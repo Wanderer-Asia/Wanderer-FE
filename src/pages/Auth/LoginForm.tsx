@@ -13,13 +13,14 @@ import { Button } from "@/components/ui/button";
 import CustomFormField from "@/components/custom-formfield";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { postLogin } from "@/utils/apis/auth/api";
 import { useForm } from "react-hook-form";
 import { useToken } from "@/utils/context/token";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useToast } from "@/components/ui/use-toast";
 
 const LoginForm = () => {
+  const { toast } = useToast();
   const { changeToken } = useToken();
   const navigate = useNavigate();
   const form = useForm<LoginSchema>({
@@ -34,12 +35,20 @@ const LoginForm = () => {
     try {
       const result = await postLogin(data);
       changeToken(result.data.token);
-      const token = result.data.token;
-      if (token) {
+
+      if (result.data.role === "admin") {
+        return navigate("/admin");
+      }
+      if (result.data.role === "user") {
         navigate("/");
       }
     } catch (error) {
-      console.log(error);
+      if (error instanceof Error) {
+        toast({
+          description: error.message,
+          variant: "destructive",
+        });
+      }
     }
   };
   return (
@@ -77,7 +86,7 @@ const LoginForm = () => {
                 />
               )}
             </CustomFormField>
-            <Link to={`/login`}>
+            <Link to={`/admin`}>
               <p className="mt-2 text-[12px] text-blue-600">Forgot Password?</p>
             </Link>
           </CardContent>

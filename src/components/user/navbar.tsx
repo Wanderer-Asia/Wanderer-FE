@@ -125,9 +125,20 @@ const Navbar = () => {
             </Link>
             {token ? (
               <>
-                <Link to={"/profile"} className=" font-semibold">
-                  Profile
-                </Link>
+                {user.role === "admin" && (
+                  <>
+                    <Link to={"/admin"} className=" font-semibold">
+                      Dashboard
+                    </Link>
+                  </>
+                )}
+                {user.role === "user" && (
+                  <>
+                    <Link to={"/profile"} className=" font-semibold">
+                      Profile
+                    </Link>
+                  </>
+                )}
                 <Separator />
                 <p
                   onClick={handleLogout}

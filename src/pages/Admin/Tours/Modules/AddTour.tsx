@@ -138,8 +138,7 @@ const AddTour = () => {
   }, [form, tourDuration, thumbnailWatch, pictureGalleryWatch]);
 
   const submitTourHandler = async (data: ICreateTour) => {
-    console.log(data.itinerary[0]);
-    try {
+      try {
       const formData = new FormData();
 
       formData.append("title", data.title);
@@ -152,16 +151,28 @@ const AddTour = () => {
       formData.append("finish", data.finish.toISOString() as any);
       formData.append("airline_id", data.airline_id);
       formData.append("quota", data.quota);
-      formData.append("include_facility", data.include_facility as any);
       formData.append("thumbnail", data.thumbnail[0]);
 
       for (let i = 0; i < data.picture.length; i++) {
         formData.append(`picture`, data.picture[i]);
       }
 
+      for (let i = 0; i < data.include_facility.length; i++) {
+        formData.append(
+          `include_facility[${i}]`,
+          data.include_facility[i] as any,
+        );
+      }
+
       for (let i = 0; i < data.itinerary.length; i++) {
-        formData.append(`itinerary[${i}].location`, data.itinerary[i].location as any);
-        formData.append(`itinerary[${i}].description`, data.itinerary[i].description as any);
+        formData.append(
+          `itinerary[${i}].location`,
+          data.itinerary[i].location as any,
+        );
+        formData.append(
+          `itinerary[${i}].description`,
+          data.itinerary[i].description as any,
+        );
       }
 
       const res = await createTour(formData as any);

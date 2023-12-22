@@ -14,9 +14,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Computer, Menu, Moon, Sun } from "lucide-react";
 import { useTheme } from "@/utils/context/theme-provider";
 import SidebarMobile from "./SidebarMobile";
+import { useToken } from "@/utils/context/token";
 
 const Navbar = () => {
   const { setTheme } = useTheme();
+  const { changeToken } = useToken();
 
   return (
     <div className="sticky top-0 z-50 bg-yellow-main">
@@ -68,7 +70,12 @@ const Navbar = () => {
             </DropdownMenuSub>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Home</DropdownMenuItem>
-            <DropdownMenuItem>Logout</DropdownMenuItem>
+            <DropdownMenuItem
+              className="hover:cursor-pointer"
+              onClick={() => changeToken("")}
+            >
+              Logout
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
