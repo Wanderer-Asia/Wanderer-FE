@@ -20,6 +20,7 @@ import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { useToast } from "../ui/use-toast";
+import { useToken } from "@/utils/context/token";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 interface Props {
@@ -27,6 +28,7 @@ interface Props {
   fetchTrip: () => void;
 }
 const ReviewDialog = (props: Props) => {
+  const { user } = useToken();
   const { id, fetchTrip } = props;
   const { toast } = useToast();
   const [open, setOpen] = useState<boolean>(false);
@@ -78,13 +80,14 @@ const ReviewDialog = (props: Props) => {
               <div className="mt-5 flex flex-row gap-5">
                 <Avatar className="h-14 w-14">
                   <AvatarImage
-                    src="https://s3-alpha-sig.figma.com/img/b4a6/4fb0/a04c59373f6a86de0bb2267a573adb75?Expires=1703462400&Signature=Oad1hCR-aUIrHDMc2jrXDMdspXf5iUH9RBTtCJqYXPYivPsNLiOBfHVaYK4AC0kBWs5gJbXIHysdrHtKVndeQWXAQAYbFmWm6K929jUJgUG3NzQ-~cklTytraojqfj1xyVk3oUfBmPqsNow5Rnzw1AZpd8a42PqKDtmK8GsZhS5QQicqtuRKSgNXEEHRMrGJLPSqTsZVNFA4BBU-TpivzijmJxWA~yH2MSESQ4W91viuFsmEYKtOJcvFJKxFKqOnF5Rg-lxI5TMPPMqDPc3irxOc9QHQAoEWIvBp0s7pANeBdRii1RvmK5PMzYMLVFqlSq44taxC37MDu3Aa8sM8lg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
+                    src={user.image}
                     alt="photo profile"
+                    className=" object-cover"
                   />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
                 <div className="mt-2 flex flex-col">
-                  <label className=" font-semibold">Jhon</label>
+                  <label className=" font-semibold">{user.fullname}</label>
                   <p className=" text-xs">
                     Posting for the public, your comment can be seen by others.
                   </p>
