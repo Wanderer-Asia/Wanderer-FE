@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useToken } from "@/utils/context/token";
 
@@ -19,9 +18,20 @@ const ProfileTable = () => {
           type="button"
           variant="outline"
           className=" w-24 text-red-600 outline outline-red-600"
-          onClick={() => navigate(`/booking/${tour_id}/${booking_code}`)}
+          onClick={() => navigate(`/payment/${tour_id}/${booking_code}`)}
         >
           Pay Now
+        </Button>
+      );
+    } else if (status === "refund" || status === "refunded") {
+      buttonTable = (
+        <Button
+          type="button"
+          variant="outline"
+          className=" outline-t-yellow w-24 capitalize text-tyellow outline"
+          onClick={() => navigate(`/detail-trip/${tour_id}/${booking_code}`)}
+        >
+          {status}
         </Button>
       );
     } else {
@@ -30,9 +40,9 @@ const ProfileTable = () => {
           type="button"
           variant="outline"
           className=" outline-t-yellow w-24 text-tyellow outline"
-          onClick={() => navigate(`/detail-trip/${booking_code}`)}
+          onClick={() => navigate(`/detail-trip/${tour_id}/${booking_code}`)}
         >
-          {status}
+          Paid
         </Button>
       );
     }

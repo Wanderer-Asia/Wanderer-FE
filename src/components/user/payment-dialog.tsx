@@ -25,7 +25,7 @@ const PaymentDialog = (props: Props) => {
     <Dialog>
       <DialogTrigger
         className={cn(
-          "rounded-lg p-3 hover:cursor-pointer font-medium",
+          "rounded-lg p-3 font-medium hover:cursor-pointer",
           !isValid ? "bg-tyellow/50 text-black/50" : " bg-tyellow",
         )}
         disabled={!isValid}
@@ -73,15 +73,6 @@ const PaymentDialog = (props: Props) => {
               <img
                 className="h-6 w-16"
                 src="https://s3-alpha-sig.figma.com/img/b3ee/2a72/1ac9c2dc8109129ae737af6f0760eb11?Expires=1703462400&Signature=cJKjPsNmPR6VaY21f9JdpGHzYGdkwF8-1wa8~bDu1j83zHludfCnrf~r8T2pZ4K0s80jEiaxAdhWqIVgUFDE1bP64Pamnb7CWk0MmXV7ws4CxrSq7WR8nrVjWgbquq~EM80W3Uh7~tSQva40M-A5SdyvWdqkpjJq6ygdjpPGyS3NaBgx-V6o16KjJ3IqcnsSuKARGcQ1HkpuoJfbT52Trq-PjqHmCCha39yBCris~2WZ1jp3J3zR7tXS7qaKFtkm7W-NghlQUJ9rdsthCaP0GWrnrbCYEDNas1tZYfj~vWJLrYTBWTgMtFqhBbNLtK8TcfPsNnaNn6Sl-d7IGPjizA__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
-              />
-            </div>
-            <div
-              onClick={() => handleSelect("maybank")}
-              className="flex cursor-pointer rounded-sm border border-black p-2 hover:bg-tyellow dark:border-white"
-            >
-              <img
-                className="h-6 w-16"
-                src="https://s3-alpha-sig.figma.com/img/1c85/3775/91c3093ea4a597600a0e87a03cb2a29c?Expires=1703462400&Signature=ahC0muytVf-Ufzka8MsCK2mXWRGudOKDzZHh-tSlBXrgj16LqkqylXalVFEDg5elAutSTzBJnMu6sA12BGX3LCXW6TzvG1lI9MNQbKZ~jliKnYSX3~GRQye6QvSIPmLteswvZHBJX5m2~uBGIrr7e5ikh1MmdR6RUQ6dYqwsk9s~ixm87HrBTwaqilrXlgoogQAMz~sxE1AF-6mamZDxWG8gEJDcW1g45hMVmhTGFmrxwqZ7CPu2de9Fdr1UGCeNFwUZBo6AY0Xp99CgW~FLxGOkxD8ayciCZX5s~cl5xnJJL7VGZfohTFV5VI5GflshTDtmNfR3LfpbIlH0i53XMg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
               />
             </div>
           </div>
