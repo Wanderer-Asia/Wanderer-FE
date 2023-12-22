@@ -176,6 +176,8 @@ const EditProfile = () => {
                 type="submit"
                 variant="secondary"
                 className=" bg-tyellow hover:bg-tyellowlight"
+                disabled={form.formState.isSubmitting}
+                aria-disabled={form.formState.isSubmitting}
               >
                 Save
               </Button>

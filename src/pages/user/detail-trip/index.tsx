@@ -108,6 +108,19 @@ const DetailTrip = () => {
                 <div className="flex flex-row items-center gap-2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="18"
+                    viewBox="0 0 14 18"
+                    fill="none"
+                    className=" h-4 w-4 fill-black dark:fill-white"
+                  >
+                    <path d="M6.75 0C3.015 0 0 3.015 0 6.75C0 11.25 6.75 18 6.75 18C6.75 18 13.5 11.25 13.5 6.75C13.5 3.015 10.485 0 6.75 0ZM6.75 2.25C9.2475 2.25 11.25 4.275 11.25 6.75C11.25 9.2475 9.2475 11.25 6.75 11.25C4.275 11.25 2.25 9.2475 2.25 6.75C2.25 4.275 4.275 2.25 6.75 2.25Z" />
+                  </svg>
+                  <p className=" text-xs">{trip?.location.name}</p>
+                </div>
+                <div className="flex flex-row items-center gap-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
                     width="24"
                     height="24"
                     viewBox="0 0 24 24"
@@ -116,7 +129,7 @@ const DetailTrip = () => {
                   >
                     <path d="M0.27002 9.35999L6.15002 15.09L4.77002 23.16L12 19.35L19.23 23.16L17.85 15.09L23.73 9.35999L15.63 8.19L12 0.869995L8.37002 8.19L0.27002 9.35999Z" />
                   </svg>
-                  <p className=" text-xs">{trip?.location.name}</p>
+                  <p className=" text-xs">{trip?.rating}</p>
                 </div>
                 <div className="flex flex-row items-center gap-2">
                   <svg
@@ -363,7 +376,10 @@ const DetailTrip = () => {
             <div className="mt-8 flex flex-col gap-5">
               <label className="text-xl font-semibold">Review</label>
               {bookingData?.booking_code === Number(bookingId) && (
-                <ReviewDialog />
+                <ReviewDialog
+                  id={tripId as string}
+                  fetchTrip={fetchDetailTrip}
+                />
               )}
               {trip?.reviews &&
                 trip?.reviews.map((item, index) => (
