@@ -7,6 +7,7 @@ export interface Profile {
   tour_count: number;
   review_count: number;
   bookings: Booking[];
+  role: string;
 }
 interface Booking {
   booking_code: number;

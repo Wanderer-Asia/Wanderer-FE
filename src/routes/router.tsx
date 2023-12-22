@@ -18,6 +18,7 @@ import ToursPage from "@/pages/Admin/Tours";
 import TransactionsPage from "@/pages/Admin/Transactions";
 import { createBrowserRouter } from "react-router-dom";
 import EditTour from "@/pages/Admin/Tours/Modules/EditTour";
+import ProtectedRoutes from "./protectedRoutes";
 
 export const router = createBrowserRouter([
   {
@@ -53,58 +54,63 @@ export const router = createBrowserRouter([
     element: <ProfilePage />,
   },
   {
-    path: "/admin",
-    element: <AdminLayout />,
+    element: <ProtectedRoutes />,
     children: [
       {
-        index: true,
-        element: <Dashboard />,
-      },
-      {
-        path: "transactions",
-        element: <TransactionsPage />,
-      },
-      {
-        path: "tours",
+        path: "/admin",
+        element: <AdminLayout />,
         children: [
           {
             index: true,
-            element: <ToursPage />,
+            element: <Dashboard />,
           },
           {
-            path: "add-tour",
-            element: <AddTour />,
+            path: "transactions",
+            element: <TransactionsPage />,
           },
           {
-            path: "edit-tour/:id",
-            element: <EditTour />,
+            path: "tours",
+            children: [
+              {
+                index: true,
+                element: <ToursPage />,
+              },
+              {
+                path: "add-tour",
+                element: <AddTour />,
+              },
+              {
+                path: "edit-tour/:id",
+                element: <EditTour />,
+              },
+            ],
+          },
+          {
+            path: "settings",
+            element: <SettingsPage />,
+          },
+          {
+            path: "airlines",
+            element: <AirlinesPage />,
+          },
+          {
+            path: "locations",
+            element: <LocationsPage />,
+          },
+          {
+            path: "facilities",
+            element: <FacilitiesPage />,
           },
         ],
       },
       {
-        path: "settings",
-        element: <SettingsPage />,
+        path: "/login",
+        element: <AuthLayout />,
       },
       {
-        path: "airlines",
-        element: <AirlinesPage />,
-      },
-      {
-        path: "locations",
-        element: <LocationsPage />,
-      },
-      {
-        path: "facilities",
-        element: <FacilitiesPage />,
+        path: "/register",
+        element: <AuthLayout />,
       },
     ],
-  },
-  {
-    path: "/login",
-    element: <AuthLayout />,
-  },
-  {
-    path: "/register",
-    element: <AuthLayout />,
   },
 ]);

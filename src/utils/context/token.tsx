@@ -35,7 +35,7 @@ export function TokenProvider({ children }: Readonly<Props>) {
   const { toast } = useToast();
 
   const [token, setToken] = useState(localStorage.getItem("token") ?? "");
-  const [user, setUser] = useState<Partial<Profile>>({});
+  const [user, setUser] = useState<Partial<Profile>>(null);
 
   useEffect(() => {
     setAxiosConfig(token);
@@ -56,20 +56,20 @@ export function TokenProvider({ children }: Readonly<Props>) {
   const fetchProfile = useCallback(async () => {
     try {
       const result = await getProfile();
-      setUser(result.data);
-    } catch (error: any) {
-      toast({
-        title: "Oops! Something went wrong.",
-        description: error.message.toString(),
-        variant: "destructive",
-      });
+      setUser(result?.data);
+    } catch (error) {
+      if (error instanceof Error) {
+        toast({
+          title: "Oops! Something went wrong.",
+          description: error.message.toString(),
+          variant: "destructive",
+        });
+      }
     }
   }, [token]);
 
   const changeToken = useCallback(
     (token?: string) => {
-      console.log(token);
-
       const newToken = token ?? ""; // const newToken = token ? token : "";
       setToken(newToken);
       if (token) {

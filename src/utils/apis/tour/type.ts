@@ -63,7 +63,7 @@ export const updateTourSchema = z.object({
   location_id: z.string().min(1, { message: "Select location" }),
   description: z.string().min(1, { message: "Enter tour description" }),
   price: z.string().min(1, { message: "Enter tour price" }),
-  discount: z.string().optional(),
+  discount: z.string().optional().or(z.literal("")),
   admin_fee: z.string().min(1, { message: "Enter admin fee" }),
   start: z
     .date({
