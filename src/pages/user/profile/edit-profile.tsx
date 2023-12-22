@@ -23,7 +23,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 const EditProfile = () => {
   const { toast } = useToast();
-  const { user } = useToken();
+  const { user, fetchProfile } = useToken();
 
   const form = useForm<IEditUser>({
     resolver: zodResolver(editUserSchema),
@@ -40,12 +40,11 @@ const EditProfile = () => {
     if (user) {
       form.setValue("email", user.email || "");
       form.setValue("fullname", user.fullname || "");
+      form.setValue("phone", user.phone || "");
     }
   }, [form, user]);
 
-  const [avatarImage, setAvatarImage] = useState<string>(
-    "https://avatars.githubusercontent.com/u/124599?v=4",
-  );
+  const [avatarImage, setAvatarImage] = useState<string>("");
 
   const imageWatcher = form.watch("image");
 
@@ -62,6 +61,7 @@ const EditProfile = () => {
         toast({
           description: result.message,
         });
+        fetchProfile();
       }
     } catch (error) {
       console.log(error);
@@ -92,8 +92,12 @@ const EditProfile = () => {
                         htmlFor="image"
                         className="relative h-40 w-40 hover:cursor-pointer"
                       >
-                        <Avatar className="h-full w-full rounded-full object-cover">
-                          <AvatarImage src={avatarImage} alt="photo profile" />
+                        <Avatar className="h-full w-full rounded-full">
+                          <AvatarImage
+                            src={avatarImage}
+                            alt="photo profile"
+                            className="object-cover"
+                          />
                           <AvatarFallback>CN</AvatarFallback>
                         </Avatar>
                         <div className="absolute bottom-0 right-5 rounded-full bg-black p-1 dark:bg-white">
@@ -172,6 +176,8 @@ const EditProfile = () => {
                 type="submit"
                 variant="secondary"
                 className=" bg-tyellow hover:bg-tyellowlight"
+                disabled={form.formState.isSubmitting}
+                aria-disabled={form.formState.isSubmitting}
               >
                 Save
               </Button>

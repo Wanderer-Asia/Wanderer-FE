@@ -11,7 +11,7 @@ export const getTrip = async (
 ) => {
   try {
     const response = await axiosWithConfig.get(
-      `/tours?keyword=${keyword}start=${page}&limit=${limit}&sort=${sort}`,
+      `/tours?keyword=${keyword}&start=${page}&limit=${limit}&sort=${sort}`,
     );
 
     return response.data as Response<Trip[]>;

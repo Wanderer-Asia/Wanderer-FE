@@ -8,6 +8,8 @@ export interface Profile {
   review_count: number;
   bookings: Booking[];
   role: string;
+  phone: string;
+
 }
 interface Booking {
   booking_code: number;
@@ -18,7 +20,6 @@ interface Booking {
 interface Tour {
   tour_id: number;
   title: string;
-  status: number;
 }
 
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];

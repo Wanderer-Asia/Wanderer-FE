@@ -18,7 +18,7 @@ export const putProfile = async (body: EditUserSchema) => {
     var bodyFormData = new FormData();
     bodyFormData.append("fullname", body.fullname);
     bodyFormData.append("email", body.email);
-    bodyFormData.append("image", body.image);
+    bodyFormData.append("image", body.image[0]);
     if (body.password) {
       bodyFormData.append("password", body.password);
     }

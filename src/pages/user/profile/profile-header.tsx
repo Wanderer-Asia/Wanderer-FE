@@ -9,7 +9,11 @@ const ProfileHeader = () => {
     <div className="flex flex-row items-center justify-between bg-tblueLight p-20 text-black">
       <div className="flex flex-row">
         <Avatar className="h-40 w-40">
-          <AvatarImage src={user.image} alt="photo profile" />
+          <AvatarImage
+            src={user.image}
+            alt="photo profile"
+            className="object-cover"
+          />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <div className="ml-16 flex flex-col">
@@ -18,7 +22,7 @@ const ProfileHeader = () => {
           <div className="mt-10 flex flex-row gap-10">
             <div className="flex flex-col text-center">
               <div className=" font-semibold">Review</div>
-              <div>{user.tour_count}</div>
+              <div>{user.review_count}</div>
             </div>
             <div className="flex flex-col text-center">
               <div className=" font-semibold">Trip</div>

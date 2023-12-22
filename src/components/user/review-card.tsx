@@ -15,9 +15,9 @@ const ReviewCard = (props: Props) => {
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
       <div className="mt-2 flex flex-col">
-        <label className=" font-semibold">{data.user.name}</label>
+        <label className=" font-semibold">{data.user.fullname}</label>
         <p className=" text-xs">
-          {/* {format(new Date(data.created_at), "d MMM yyyy")} */}
+          {format(new Date(data.created_at), "d MMM yyyy")}
         </p>
         <p className=" mt-2 text-justify">{data.text}</p>
       </div>

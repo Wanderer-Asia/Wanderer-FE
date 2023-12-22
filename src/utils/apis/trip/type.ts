@@ -32,7 +32,7 @@ export interface Review {
   created_at: string;
 }
 interface User {
-  name: string;
+  fullname: string;
   image: string;
 }
 interface Itinerary {
