@@ -248,7 +248,7 @@ const Booking = () => {
               type="button"
               variant="secondary"
               className=" bg-tyellow px-10 hover:bg-tyellowlight"
-              disabled={!term}
+              disabled={!term || !isFormValid}
               onClick={handleBooking}
             >
               Pay Now

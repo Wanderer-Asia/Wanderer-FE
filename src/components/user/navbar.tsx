@@ -21,7 +21,7 @@ import { useToken } from "@/utils/context/token";
 const Navbar = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { changeToken, token } = useToken();
+  const { changeToken, token, user } = useToken();
   const { setTheme } = useTheme();
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [searchResults, setSearchResults] = useState<Trip[]>([]);
@@ -67,19 +67,20 @@ const Navbar = () => {
           />
           {searchQuery && searchResults.length > 0 && (
             <ul className="absolute left-0 right-0 top-10 z-10 mr-4 rounded-md border-2 border-solid border-gray-100 bg-white outline-none dark:border-gray-800 dark:bg-gray-900">
-              {searchResults.map((item, index) => (
-                <li
-                  key={index}
-                  className="cursor-pointer px-2 py-1 text-xs hover:bg-gray-100 dark:hover:bg-gray-700"
-                  onClick={() => {
-                    setSearchQuery("");
-                    setSearchResults([]);
-                    navigate(`/detail-trip/${item.tour_id}`);
-                  }}
-                >
-                  {item.title}
-                </li>
-              ))}
+              {searchResults &&
+                searchResults.map((item, index) => (
+                  <li
+                    key={index}
+                    className="cursor-pointer px-2 py-1 text-xs hover:bg-gray-100 dark:hover:bg-gray-700"
+                    onClick={() => {
+                      setSearchQuery("");
+                      setSearchResults([]);
+                      navigate(`/detail-trip/${item.tour_id}`);
+                    }}
+                  >
+                    {item.title}
+                  </li>
+                ))}
             </ul>
           )}
         </div>
@@ -111,8 +112,9 @@ const Navbar = () => {
           <PopoverTrigger className=" mr-5">
             <Avatar className="h-14 w-14">
               <AvatarImage
-                src="https://s3-alpha-sig.figma.com/img/b4a6/4fb0/a04c59373f6a86de0bb2267a573adb75?Expires=1703462400&Signature=Oad1hCR-aUIrHDMc2jrXDMdspXf5iUH9RBTtCJqYXPYivPsNLiOBfHVaYK4AC0kBWs5gJbXIHysdrHtKVndeQWXAQAYbFmWm6K929jUJgUG3NzQ-~cklTytraojqfj1xyVk3oUfBmPqsNow5Rnzw1AZpd8a42PqKDtmK8GsZhS5QQicqtuRKSgNXEEHRMrGJLPSqTsZVNFA4BBU-TpivzijmJxWA~yH2MSESQ4W91viuFsmEYKtOJcvFJKxFKqOnF5Rg-lxI5TMPPMqDPc3irxOc9QHQAoEWIvBp0s7pANeBdRii1RvmK5PMzYMLVFqlSq44taxC37MDu3Aa8sM8lg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
+                src={user.image}
                 alt="photo profile"
+                className="object-cover"
               />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>

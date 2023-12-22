@@ -1,5 +1,7 @@
 import * as z from "zod";
 
+import { Trip } from "@/utils/apis/trip";
+
 const paymentMethods = ["BCA", "Method 2", "Method 3"] as const;
 export const bookingSchema = z.object({
   tour_id: z.number(),
@@ -28,4 +30,17 @@ export interface Persons {
   name: string;
   nationality: string;
   dob: string;
+}
+
+export interface BookingDetail {
+  booking_code: number;
+  detail_count: number;
+  status: string;
+  total: number;
+  payment_method: string;
+  virtual_number: string;
+  payment_expired: string;
+  code_bill: string;
+  key_bill: string;
+  tour: Trip;
 }

@@ -17,6 +17,7 @@ interface Context {
   token: string;
   user: Partial<Profile>;
   changeToken: (token?: string) => void;
+  fetchProfile: () => void;
 }
 
 interface Props {
@@ -27,6 +28,7 @@ const contextValue = {
   token: "",
   user: {},
   changeToken: () => {},
+  fetchProfile: () => {},
 };
 
 const TokenContext = createContext<Context>(contextValue);
@@ -87,8 +89,9 @@ export function TokenProvider({ children }: Readonly<Props>) {
       token,
       user,
       changeToken,
+      fetchProfile,
     }),
-    [token, user, changeToken],
+    [token, user, changeToken, fetchProfile],
   );
 
   return (
