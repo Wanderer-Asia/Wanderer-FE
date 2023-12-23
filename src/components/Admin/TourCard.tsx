@@ -14,6 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Link } from "react-router-dom";
+import { Skeleton } from "../ui/skeleton";
 
 interface IProps {
   tourData: ITours;
@@ -41,11 +42,15 @@ const TourCard = (props: IProps) => {
           <MapPin className="h-[14px] w-[14px] fill-green-500 stroke-white" />
           <p className="text-[12px] text-white">{tourData.location?.name}</p>
         </div>
-        <img
-          src={tourData.thumbnail}
-          alt="japan"
-          className="aspect-[1/1] rounded-lg object-cover"
-        />
+        {tourData.thumbnail ? (
+          <img
+            src={tourData.thumbnail}
+            alt="japan"
+            className="aspect-[1/1] rounded-lg object-cover"
+          />
+        ) : (
+          <Skeleton className="aspect-[1/1] rounded-lg object-cover"  />
+        )}
       </div>
       <div className="mt-2 px-2">
         <p className="text-left text-[14px] font-medium">{tourData.title}</p>

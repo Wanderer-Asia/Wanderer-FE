@@ -3,13 +3,34 @@ import * as z from "zod";
 export interface ITours {
   tour_id: number;
   title: string;
-  quota: number;
-  discount: number;
-  rating: number;
+  description: string;
   price: number;
-  thumbnail: string;
+  admin_fee: number;
+  discount: number;
   start: string;
+  finish: string;
+  quota: number;
+  rating: number;
+  available: number;
+  thumbnail: string;
+  picture: string[];
+  facility: {
+    include_id: number[];
+    include: string[];
+    exclude: string[];
+  };
+  itinerary: [
+    {
+      location: string;
+      description: string;
+    },
+  ];
   location: {
+    location_id: number;
+    name: string;
+  };
+  airline: {
+    airline_id: number;
     name: string;
   };
 }
@@ -88,7 +109,7 @@ export const updateTourSchema = z.object({
     )
     .refine((file) => file[0]?.size <= 3000000, `Max image size is 3MB`)
     .optional()
-    .or(z.literal("")),
+    .or(z.string()),
   itinerary: z
     .object({
       location: z
@@ -100,7 +121,7 @@ export const updateTourSchema = z.object({
     })
     .array(),
   include_facility: z
-    .string()
+    .number()
     .array()
     .min(1, { message: "Enter included facility" }),
   picture: z

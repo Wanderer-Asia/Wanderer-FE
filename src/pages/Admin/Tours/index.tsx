@@ -2,23 +2,42 @@ import TourCard from "@/components/Admin/TourCard";
 import { Button } from "@/components/ui/button";
 
 import { Input } from "@/components/ui/input";
-import { ChevronDown, PlusCircle, Search } from "lucide-react";
-import DropdownSortTours from "./DropdownSortTours";
-import { Link } from "react-router-dom";
+import { ChevronLeft, ChevronRight, PlusCircle, Search } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+import { Link, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getTours } from "@/utils/apis/tour/api";
-import { ITours } from "@/utils/apis/tour";
+import { ITours, getToursAdmin } from "@/utils/apis/tour";
 import Loading from "@/components/Loading";
+import { Pagination } from "@/utils/types/api";
+import { cn } from "@/utils/utils";
 
 const ToursPage = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [tourData, setToursData] = useState<ITours[]>([]);
+  const [tourData, setToursData] = useState<ITours[]>();
+  const [pagination, setPagination] = useState<Pagination>();
+  const [tourUrl, setTourUrl] = useState<string | undefined>(
+    "https://api.wanderer.asia/tours?start=0&limit=3",
+  );
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     const fetchTours = async () => {
-      try {
-        const res = await getTours();
+      const query: { [key: string]: string } = {};
+      for (const entry of searchParams.entries()) {
+        query[entry[0]] = entry[1];
+      }
 
+      try {
+        const res = await getToursAdmin(tourUrl, { ...query });
+        console.log({ ...query });
+        setPagination(res!.pagination);
         setToursData(res!.data);
       } catch (error) {
         if (error instanceof Error) {
@@ -30,14 +49,19 @@ const ToursPage = () => {
     };
 
     fetchTours();
-  }, []);
+  }, [tourUrl, searchParams]);
+
+  const sortingHandler = (value: string) => {
+    searchParams.set("sort", value);
+    setSearchParams(searchParams);
+  };
 
   return (
     <>
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="mt-5 w-full">
+        <div className="mt-5 h-full w-full">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-7">
               <Link to={"add-tour"}>
@@ -53,12 +77,17 @@ const ToursPage = () => {
               </span>
             </div>
 
-            <DropdownSortTours>
-              <Button className="h-8 p-2" variant="outline">
-                Sort by
-                <ChevronDown className="ml-1 h-4" />
-              </Button>
-            </DropdownSortTours>
+            <Select onValueChange={(value) => sortingHandler(value)}>
+              <SelectTrigger className="w-[150px]">
+                <SelectValue placeholder="Sort By" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="price&dir=false">Lowest Price</SelectItem>
+                <SelectItem value="price&dir=true">Highest Price</SelectItem>
+                <SelectItem value="rating">Rating</SelectItem>
+                <SelectItem value="sold">Sold</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           <p className="mt-3 text-[22px] font-semibold">Tours List</p>
@@ -66,7 +95,7 @@ const ToursPage = () => {
             {tourData !== null ? (
               <>
                 <div className="mb-5 mt-2 grid w-full grid-cols-1 justify-items-start gap-5 md:grid-cols-2 lg:grid-cols-3">
-                  {tourData.map((tour) => (
+                  {tourData?.map((tour) => (
                     <TourCard key={tour.tour_id} tourData={tour} />
                   ))}
                 </div>
@@ -74,6 +103,27 @@ const ToursPage = () => {
             ) : (
               <p className="mt-8 w-full text-center font-bold">No Tour Data</p>
             )}
+          </div>
+
+          <div className="mb-5 flex w-full justify-center gap-5">
+            <Button
+              className={cn(
+                "h-9 w-10 bg-yellow-main p-2 hover:bg-tyellow disabled:bg-yellow-main/50",
+              )}
+              disabled={pagination?.prev === null}
+              onClick={() => setTourUrl(pagination!.prev)}
+            >
+              <ChevronLeft className="stroke-black" />
+            </Button>
+            <Button
+              className={cn(
+                "h-9 w-10 bg-yellow-main p-2 hover:bg-tyellow disabled:bg-yellow-main/50",
+              )}
+              disabled={pagination?.next === null}
+              onClick={() => setTourUrl(pagination!.next)}
+            >
+              <ChevronRight className="stroke-black" />
+            </Button>
           </div>
         </div>
       )}

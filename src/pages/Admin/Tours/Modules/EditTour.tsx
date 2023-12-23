@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
+  ITours,
   IUpdateTour,
   getTourDetail,
   updateTour,
@@ -49,28 +50,29 @@ import { useParams } from "react-router-dom";
 import Loading from "@/components/Loading";
 
 const EditTour = () => {
-  const [tourData, setTourData] = useState<IUpdateTour>();
+  const [tourData, setTourData] = useState<ITours>();
 
   const form = useForm<IUpdateTour>({
     resolver: zodResolver(updateTourSchema),
     values: {
       title: tourData ? tourData?.title : "",
-      location_id: tourData ? tourData.location_id : "",
+      location_id: tourData ? tourData.location.location_id.toString() : "",
       description: tourData ? tourData.description : "",
       price: tourData ? tourData.price.toString() : "",
-      discount: tourData ? tourData.discount!.toString() : "",
+      discount: tourData ? (tourData.price / tourData.discount).toString() : "",
       admin_fee: tourData ? tourData.admin_fee.toString() : "",
       start: tourData ? new Date(tourData.start.toString()) : "",
       finish: tourData ? new Date(tourData.finish.toString()) : "",
-      quota: tourData ? tourData.quota.toString() : "",
-      thumbnail: tourData ? tourData.thumbnail : "",
-      airline_id: tourData ? tourData.airline_id : "",
-      include_facility: tourData ? tourData.include_facility : "",
-      itinerary: tourData ? tourData.itinerary : "",
+      quota: tourData ? tourData.available.toString() : "",
+      thumbnail: "",
+      airline_id: tourData ? tourData.airline.airline_id.toString() : "",
+      include_facility: tourData ? tourData.facility.include_id : [],
+      itinerary: tourData
+        ? tourData.itinerary
+        : [{ location: "", description: "" }],
+      picture: "",
     },
   });
-
-  // console.log(tourData?.location_id)
 
   const { toast } = useToast();
   const { id } = useParams();
@@ -78,16 +80,17 @@ const EditTour = () => {
 
   const animatedComponents = makeAnimated();
   const thumbnailWatch = form.watch("thumbnail");
-  const pictureGalleryWatch = form.watch("picture");
+  // const pictureGalleryWatch = form.watch("picture");
 
   const [tourDuration, setTourDuration] = useState(0);
-  const [thumbnailPict, setThumbnailPict] = useState("");
+  // const [thumbnailPict, setThumbnailPict] = useState("");
   // const [pictureGallery, setPictureGallery] = useState("");
 
   const [locations, setLocations] = useState<Location[] | undefined>([]);
   const [facilities, setFacilities] = useState<INewFacilities[] | undefined>(
     [],
   );
+
   const [airlines, setAirlines] = useState<IAirlines[] | undefined>([]);
 
   const fetchTourData = async () => {
@@ -167,11 +170,14 @@ const EditTour = () => {
     });
 
     return () => formSubscribe.unsubscribe();
-  }, [form, tourDuration, thumbnailWatch, pictureGalleryWatch]);
+  }, [form, tourDuration, thumbnailWatch]);
 
   const submitTourHandler = async (data: IUpdateTour) => {
+    console.log(data.include_facility);
     try {
       const formData = new FormData();
+
+      console.log(data.include_facility);
 
       formData.append("title", data.title);
       formData.append("location_id", data.location_id);
@@ -189,8 +195,14 @@ const EditTour = () => {
       );
       formData.append("airline_id", data.airline_id);
       formData.append("quota", data.quota);
-      formData.append("include_facility", data.include_facility as any);
       formData.append("thumbnail", data.thumbnail[0]);
+
+      for (let i = 0; i < data.include_facility.length; i++) {
+        formData.append(
+          `include_facility[${i}]`,
+          data.include_facility[i] as any,
+        );
+      }
 
       for (let i = 0; i < data.picture.length; i++) {
         formData.append(`picture`, data.picture[i]);
@@ -206,8 +218,7 @@ const EditTour = () => {
           data.itinerary[i].description as any,
         );
       }
-      console.log(tourData?.thumbnail);
-      // const res = await updateTour(id?.toString(), formData as any);
+      const res = await updateTour(id?.toString(), formData as any);
 
       toast({
         title: "Success",
@@ -259,7 +270,11 @@ const EditTour = () => {
                       <FormLabel>Location</FormLabel>
                       <SelectShad
                         onValueChange={field.onChange}
-                        defaultValue={tourData ? tourData?.location_id : ""}
+                        defaultValue={
+                          tourData
+                            ? tourData?.location.location_id.toString()
+                            : ""
+                        }
                       >
                         <FormControl>
                           <SelectTrigger>
@@ -269,7 +284,7 @@ const EditTour = () => {
                         <SelectContent>
                           {locations?.map((location) => (
                             <SelectItem
-                              value={location?.location_id?.toString()}
+                              value={location?.location_id.toString()}
                               key={location?.location_id}
                             >
                               {location.name}
@@ -287,7 +302,7 @@ const EditTour = () => {
                 control={form.control}
                 name="description"
                 render={({ field }) => (
-                  <FormItem className="mb-3 w-full">
+                  <FormItem className="mb-3 mt-5 w-full">
                     <FormLabel>Description</FormLabel>
                     <FormControl>
                       <Textarea
@@ -301,7 +316,7 @@ const EditTour = () => {
                 )}
               />
 
-              <div className="mb-3 flex gap-3">
+              <div className="mb-3 mt-5 flex gap-3">
                 <FormField
                   control={form.control}
                   name="price"
@@ -357,7 +372,7 @@ const EditTour = () => {
                 />
               </div>
 
-              <div className="mb-3 flex w-[800px] gap-3">
+              <div className="mb-3 mt-5 flex w-[800px] gap-3">
                 <FormField
                   control={form.control}
                   name="start"
@@ -440,8 +455,8 @@ const EditTour = () => {
               <FormField
                 control={form.control}
                 name="include_facility"
-                render={({ field: { onChange, onBlur, name, ref, value } }) => (
-                  <FormItem className="mb-3 w-full">
+                render={({ field: { onChange, onBlur, name, ref } }) => (
+                  <FormItem className="mb-3 mt-5 w-full">
                     <FormLabel>Facility</FormLabel>
                     <FormControl>
                       <Select
@@ -456,7 +471,9 @@ const EditTour = () => {
                         onBlur={onBlur}
                         onChange={(val) => onChange(val.map((c) => c.value))}
                         value={facilities?.filter((c) =>
-                          value.includes(c.value),
+                          tourData!.facility.include_id.includes(
+                            parseInt(c.value),
+                          ),
                         )}
                       />
                     </FormControl>
@@ -469,11 +486,11 @@ const EditTour = () => {
                 control={form.control}
                 name="airline_id"
                 render={({ field }) => (
-                  <FormItem className="mb-3 w-[300px]">
+                  <FormItem className="mt5 mb-3 w-[300px]">
                     <FormLabel>Airline</FormLabel>
                     <SelectShad
                       onValueChange={field.onChange}
-                      defaultValue={field.value}
+                      defaultValue={tourData?.airline.airline_id.toString()}
                     >
                       <FormControl>
                         <SelectTrigger>
@@ -500,7 +517,7 @@ const EditTour = () => {
                 control={form.control}
                 name="quota"
                 render={({ field }) => (
-                  <FormItem className="mb-3 w-[300px]">
+                  <FormItem className="mb-3 mt-5 w-[300px]">
                     <FormLabel>Total Pax</FormLabel>
                     <FormControl>
                       <Input
@@ -518,18 +535,16 @@ const EditTour = () => {
                 control={form.control}
                 name="thumbnail"
                 render={() => (
-                  <FormItem className="mb-3 w-[300px]">
+                  <FormItem className="mb-3 mt-5 w-[300px]">
                     <FormLabel>Thumbnail Picture</FormLabel>
                     <FormControl>
                       <Input
                         type="file"
                         accept="image/jpg, image/jpeg, image/png"
-                        multiple
                         {...form.register("thumbnail")}
                       />
                     </FormControl>
                     <FormMessage />
-                    <img src={thumbnailPict} />
                   </FormItem>
                 )}
               />
@@ -538,7 +553,7 @@ const EditTour = () => {
                 control={form.control}
                 name="picture"
                 render={() => (
-                  <FormItem className="mb-3 w-[300px]">
+                  <FormItem className="mb-3 mt-5 w-[300px]">
                     <FormLabel>Gallery Picture</FormLabel>
                     <FormControl>
                       <Input
