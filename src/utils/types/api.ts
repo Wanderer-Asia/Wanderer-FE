@@ -5,7 +5,7 @@ export type Response<T = any> = {
 };
 
 export type Pagination = {
-  prev: string | null;
+  prev: string;
   next: string;
 };
 
@@ -13,3 +13,8 @@ export type IResponse<T = any> = {
   message: string;
   data: T;
 };
+
+export interface Request {
+  keywoard?: string;
+  sort?: "price" | "rating";
+}

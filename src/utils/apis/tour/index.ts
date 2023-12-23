@@ -5,12 +5,13 @@ import {
   ITours,
   IUpdateTour,
 } from "./type";
-import { getTourDetail, createTour, updateTour } from "./api";
+import { getTourDetail, createTour, updateTour, getToursAdmin } from "./api";
 
 export {
   createTourSchema,
   createTour,
   updateTourSchema,
+  getToursAdmin,
   getTourDetail,
   updateTour,
 };

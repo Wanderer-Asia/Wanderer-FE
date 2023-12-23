@@ -22,9 +22,7 @@ const DropdownSortTours = (props: IProps) => {
         <DropdownMenuRadioGroup value={sortBy} onValueChange={setSortBy}>
           <DropdownMenuRadioItem value="price">Price</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="rating">Rating</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="location">
-            Location
-          </DropdownMenuRadioItem>
+
         </DropdownMenuRadioGroup>
       </DropdownMenuContent>
     </DropdownMenu>

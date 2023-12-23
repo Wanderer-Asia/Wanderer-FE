@@ -32,7 +32,7 @@ import { Textarea } from "@/components/ui/textarea";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, Loader2 } from "lucide-react";
 import { cn } from "@/utils/utils";
 import { Calendar } from "@/components/ui/calendar";
 import { useEffect, useState } from "react";
@@ -138,7 +138,7 @@ const AddTour = () => {
   }, [form, tourDuration, thumbnailWatch, pictureGalleryWatch]);
 
   const submitTourHandler = async (data: ICreateTour) => {
-      try {
+    try {
       const formData = new FormData();
 
       formData.append("title", data.title);
@@ -192,7 +192,7 @@ const AddTour = () => {
   };
 
   return (
-    <div className="mt-5 w-full">
+    <div className="mt-5 w-[800px]">
       <p className="mb-3 text-[22px] font-semibold">Add Tour</p>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(submitTourHandler)}>
@@ -247,7 +247,7 @@ const AddTour = () => {
             control={form.control}
             name="description"
             render={({ field }) => (
-              <FormItem className="mb-3 w-full">
+              <FormItem className="mb-3 mt-5 w-full">
                 <FormLabel>Description</FormLabel>
                 <FormControl>
                   <Textarea
@@ -261,7 +261,7 @@ const AddTour = () => {
             )}
           />
 
-          <div className="mb-3 flex gap-3">
+          <div className="mb-3 mt-5 flex gap-3">
             <FormField
               control={form.control}
               name="price"
@@ -313,7 +313,7 @@ const AddTour = () => {
             />
           </div>
 
-          <div className="mb-3 flex w-[800px] gap-3">
+          <div className="mb-3 mt-5 flex w-[800px] gap-3">
             <FormField
               control={form.control}
               name="start"
@@ -397,7 +397,7 @@ const AddTour = () => {
             control={form.control}
             name="include_facility"
             render={({ field: { onChange, onBlur, name, ref, value } }) => (
-              <FormItem className="mb-3 w-full">
+              <FormItem className="mb-3 mt-5 w-full">
                 <FormLabel>Facility</FormLabel>
                 <FormControl>
                   <Select
@@ -423,7 +423,7 @@ const AddTour = () => {
             control={form.control}
             name="airline_id"
             render={({ field }) => (
-              <FormItem className="mb-3 w-[300px]">
+              <FormItem className="mb-3 mt-5 w-[300px]">
                 <FormLabel>Airline</FormLabel>
                 <SelectShad
                   onValueChange={field.onChange}
@@ -454,7 +454,7 @@ const AddTour = () => {
             control={form.control}
             name="quota"
             render={({ field }) => (
-              <FormItem className="mb-3 w-[300px]">
+              <FormItem className="mb-3 mt-5 w-[300px]">
                 <FormLabel>Total Pax</FormLabel>
                 <FormControl>
                   <Input
@@ -472,7 +472,7 @@ const AddTour = () => {
             control={form.control}
             name="thumbnail"
             render={() => (
-              <FormItem className="mb-3 w-[300px]">
+              <FormItem className="mb-3 mt-5 w-[300px]">
                 <FormLabel>Thumbnail Picture</FormLabel>
                 <FormControl>
                   <Input
@@ -492,7 +492,7 @@ const AddTour = () => {
             control={form.control}
             name="picture"
             render={() => (
-              <FormItem className="mb-3 w-[300px]">
+              <FormItem className="mb-3 mt-5 w-[300px]">
                 <FormLabel>Gallery Picture</FormLabel>
                 <FormControl>
                   <Input
@@ -556,7 +556,18 @@ const AddTour = () => {
             ))}
           </>
 
-          <Button type="submit">Submit</Button>
+          <Button
+            type="submit"
+            className="mb-6 mt-5 w-[200px] bg-yellow-main text-black"
+            disabled={form.formState.isSubmitting}
+            aria-disabled={form.formState.isSubmitting}
+          >
+            {form.formState.isSubmitting ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              "Submit"
+            )}
+          </Button>
         </form>
       </Form>
     </div>

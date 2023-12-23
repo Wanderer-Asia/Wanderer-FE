@@ -51,6 +51,11 @@ export const Columns: ColumnDef<newITransactions>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Price" />
     ),
+    cell: ({row}) => {
+      return (
+        <p>Rp. {new Intl.NumberFormat('id-ID').format(row.getValue("total"))}</p>
+      )
+    }
   },
   {
     accessorKey: "status",
