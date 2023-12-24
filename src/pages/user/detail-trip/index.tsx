@@ -25,6 +25,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { BookingDetail } from "@/utils/apis/booking/type";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/user/layout";
+import Loading from "@/components/Loading";
 import ReviewCard from "@/components/user/review-card";
 import ReviewDialog from "@/components/user/review-dialog";
 import { Separator } from "@/components/ui/separator";
@@ -99,7 +100,9 @@ const DetailTrip = () => {
 
   return (
     <Layout>
-      {trip && (
+      {!trip ? (
+        <Loading />
+      ) : (
         <div className="flex flex-col gap-14 p-10 md:flex-row md:overflow-hidden">
           <div className="flex-1 flex-col md:overflow-auto">
             <p className=" text-xl font-semibold">{trip?.title}</p>

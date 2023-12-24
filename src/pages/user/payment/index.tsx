@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { BookingDetail } from "@/utils/apis/booking/type";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/user/layout";
+import Loading from "@/components/Loading";
 import { differenceInHours } from "date-fns";
 import { formattedAmount } from "@/utils/formattedAmount";
 import { getBookingDetail } from "@/utils/apis/booking";
@@ -14,6 +15,7 @@ const Payment = () => {
   const { fetchProfile } = useToken();
   const { bookingId } = useParams();
   const [bookingData, setBookingData] = useState<BookingDetail>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     fetchBooking();
@@ -21,12 +23,15 @@ const Payment = () => {
 
   const fetchBooking = async () => {
     try {
+      setIsLoading(true);
       const result = await getBookingDetail(bookingId as string);
 
       if (result?.data) {
         setBookingData(result.data);
+        setIsLoading(false);
       }
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
     }
   };
@@ -68,56 +73,62 @@ const Payment = () => {
 
   return (
     <Layout>
-      <div className="flex h-screen flex-col items-center justify-center">
-        {bookingData && paymentLogo(bookingData?.payment_method)}
-        <div className="mt-16 flex flex-col items-center gap-3">
-          {bookingData?.payment_method === "mandiri" ? (
-            <>
-              <p className=" text-lg font-normal">Biller Code</p>
-              <p className=" text-2xl font-semibold">
-                {bookingData?.code_bill}
-              </p>
-              <p className=" text-lg font-normal">Bill Key</p>
-              <p className=" text-2xl font-semibold">{bookingData?.key_bill}</p>
-            </>
-          ) : (
-            <>
-              {" "}
-              <p className=" text-lg font-normal">Virtual Account</p>
-              <p className=" text-2xl font-semibold">
-                {bookingData?.virtual_number}
-              </p>
-            </>
-          )}
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div className="flex h-screen flex-col items-center justify-center">
+          {bookingData && paymentLogo(bookingData?.payment_method)}
+          <div className="mt-16 flex flex-col items-center gap-3">
+            {bookingData?.payment_method === "mandiri" ? (
+              <>
+                <p className=" text-lg font-normal">Biller Code</p>
+                <p className=" text-2xl font-semibold">
+                  {bookingData?.code_bill}
+                </p>
+                <p className=" text-lg font-normal">Bill Key</p>
+                <p className=" text-2xl font-semibold">
+                  {bookingData?.key_bill}
+                </p>
+              </>
+            ) : (
+              <>
+                {" "}
+                <p className=" text-lg font-normal">Virtual Account</p>
+                <p className=" text-2xl font-semibold">
+                  {bookingData?.virtual_number}
+                </p>
+              </>
+            )}
 
-          <div className="flex flex-row gap-10">
-            <p className=" text-lg font-semibold">Total need to pay</p>
-            <p className=" text-lg font-semibold">
-              {bookingData && formattedAmount(bookingData?.total)}
-            </p>
+            <div className="flex flex-row gap-10">
+              <p className=" text-lg font-semibold">Total need to pay</p>
+              <p className=" text-lg font-semibold">
+                {bookingData && formattedAmount(bookingData?.total)}
+              </p>
+            </div>
+            <Button
+              type="button"
+              variant="secondary"
+              className=" mt-4 bg-tyellow hover:bg-tyellowlight"
+              onClick={() => {
+                fetchProfile();
+                navigate("/profile");
+              }}
+            >
+              Check Payment Status
+            </Button>
           </div>
-          <Button
-            type="button"
-            variant="secondary"
-            className=" mt-4 bg-tyellow hover:bg-tyellowlight"
-            onClick={() => {
-              fetchProfile();
-              navigate("/profile");
-            }}
-          >
-            Check Payment Status
-          </Button>
+          <p className="mt-36">
+            Please finish the payment before{" "}
+            {bookingData &&
+              differenceInHours(
+                new Date(bookingData?.payment_expired),
+                new Date(),
+              )}{" "}
+            Hours
+          </p>
         </div>
-        <p className="mt-36">
-          Please finish the payment before{" "}
-          {bookingData &&
-            differenceInHours(
-              new Date(bookingData?.payment_expired),
-              new Date(),
-            )}{" "}
-          Hours
-        </p>
-      </div>
+      )}
     </Layout>
   );
 };

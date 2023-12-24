@@ -11,7 +11,11 @@ const ReviewCard = (props: Props) => {
   return (
     <div className="flex flex-row gap-5">
       <Avatar className="h-14 w-14">
-        <AvatarImage src={data.user.image} alt="photo profile" />
+        <AvatarImage
+          src={data.user.image}
+          alt="photo profile"
+          className=" object-cover"
+        />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
       <div className="mt-2 flex flex-col">

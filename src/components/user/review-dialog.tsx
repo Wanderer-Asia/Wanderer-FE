@@ -3,7 +3,6 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -14,10 +13,8 @@ import { ReviewSchema, postReview } from "@/utils/apis/review";
 import { Button } from "../ui/button";
 import CustomFormField from "../custom-formfield";
 import { Form } from "../ui/form";
-import { Input } from "../ui/input";
 import { reviewSchema } from "@/utils/apis/review/type";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { useToast } from "../ui/use-toast";
 import { useToken } from "@/utils/context/token";
