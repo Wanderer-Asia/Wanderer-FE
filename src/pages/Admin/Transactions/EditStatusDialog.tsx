@@ -116,6 +116,7 @@ const EditStatusDialog = (props: IProps) => {
               <SelectValue placeholder="Status" />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem value="approved">Approved</SelectItem>
               <SelectItem value="refund">Refund</SelectItem>
               <SelectItem value="refunded">Refunded</SelectItem>
             </SelectContent>
