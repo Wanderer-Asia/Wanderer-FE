@@ -192,7 +192,7 @@ const AddTour = () => {
   };
 
   return (
-    <div className="mt-5 w-[800px]">
+    <div className="mt-5 w-full lg:w-[800px]">
       <p className="mb-3 text-[22px] font-semibold">Add Tour</p>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(submitTourHandler)}>
@@ -313,7 +313,7 @@ const AddTour = () => {
             />
           </div>
 
-          <div className="mb-3 mt-5 flex w-[800px] gap-3">
+          <div className="mb-3 mt-5 flex w-full lg:w-[800px] gap-3">
             <FormField
               control={form.control}
               name="start"

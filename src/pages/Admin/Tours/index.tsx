@@ -70,7 +70,7 @@ const ToursPage = () => {
         <Loading />
       ) : (
         <div className="mt-5 h-full w-full">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col items-start gap-2 md:flex-row md:justify-between">
             <div className="flex items-center gap-7">
               <Link to={"add-tour"}>
                 <Button className="h-8 rounded-full bg-yellow-main px-2 text-black hover:bg-tyellow">
@@ -78,35 +78,37 @@ const ToursPage = () => {
                 </Button>
               </Link>
             </div>
-            <div className="relative flex">
-              <Input
-                placeholder="Search..."
-                className="h-9 w-[250px]"
-                onChange={(value) => searchingHandler(value)}
-              />
-              <span className="absolute right-2 flex h-full items-center">
-                <Search className="h-4" />
-              </span>
-            </div>
+            <div className="flex items-center gap-2 w-full md:w-fit">
+              <div className="relative flex w-full">
+                <Input
+                  placeholder="Search..."
+                  className="w-full"
+                  onChange={(value) => searchingHandler(value)}
+                />
+                <span className="absolute right-2 flex h-full items-center">
+                  <Search className="h-4" />
+                </span>
+              </div>
 
-            <Select onValueChange={(value) => sortingHandler(value)}>
-              <SelectTrigger className="w-[150px]">
-                <SelectValue placeholder="Sort By" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="price&dir=false">Lowest Price</SelectItem>
-                <SelectItem value="price&dir=true">Highest Price</SelectItem>
-                <SelectItem value="rating">Rating</SelectItem>
-                <SelectItem value="sold">Sold</SelectItem>
-              </SelectContent>
-            </Select>
+              <Select onValueChange={(value) => sortingHandler(value)}>
+                <SelectTrigger className="w-[150px] md:w-[250px]">
+                  <SelectValue placeholder="Sort By" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="price&dir=false">Lowest Price</SelectItem>
+                  <SelectItem value="price&dir=true">Highest Price</SelectItem>
+                  <SelectItem value="rating">Rating</SelectItem>
+                  <SelectItem value="sold">Sold</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
           <p className="mt-3 text-[22px] font-semibold">Tours List</p>
           <div className="h-full w-full">
             {tourData !== null ? (
               <>
-                <div className="mb-5 mt-2 grid w-full grid-cols-1 justify-items-start gap-5 md:grid-cols-2 lg:grid-cols-3">
+                <div className="mb-5 mt-2 grid w-full grid-cols-2 justify-items-start gap-5 md:grid-cols-2 lg:grid-cols-3">
                   {tourData?.map((tour) => (
                     <TourCard key={tour.tour_id} tourData={tour} />
                   ))}

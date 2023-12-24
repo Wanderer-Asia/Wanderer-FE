@@ -130,17 +130,17 @@ export const Columns: ColumnDef<newITransactions>[] = [
     header: "Actions",
     cell: ({ row }) => {
       const transaction = row.original;
-
-      if (transaction.status === "refund" || transaction.status === 'refunded') {
-        return (
-          <DropDownActions
-            booking_code={transaction.booking_code}
-            name={transaction.name}
-            tourPackage={transaction.tour_package}
-            status={transaction.status}
-          />
-        );
-      }
+      
+      return (
+        <DropDownActions
+          booking_code={transaction.booking_code}
+          name={transaction.name}
+          tourPackage={transaction.tour_package}
+          status={transaction.status}
+        />
+      );
+      // if (transaction.status === "refund" || transaction.status === 'refunded') {
+      // }
     },
   },
 ];

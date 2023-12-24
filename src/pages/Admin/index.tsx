@@ -25,6 +25,7 @@ const Dashboard = () => {
   const { toast } = useToast();
   const [data, setData] = useState<IDashboard>();
   const [loading, setIsLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
 
   const fetchDashboard = async () => {
     try {
@@ -45,6 +46,14 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchDashboard();
+    const { innerWidth: width } = window;
+
+    if (width < 769) {
+      setIsMobile(true);
+    }
+    if (width > 769) {
+      setIsMobile(false);
+    }
   }, []);
 
   return (
@@ -53,60 +62,66 @@ const Dashboard = () => {
         <Loading />
       ) : (
         <div className="mt-5 min-h-screen w-full">
-          <div className="grid h-[155px] w-full grid-cols-4 rounded-xl bg-background shadow-lg dark:border">
+          <div className="grid h-fit w-full grid-cols-2 gap-3 rounded-xl bg-background p-5 shadow-lg dark:border lg:h-[155px] lg:grid-cols-4">
             <div className="flex items-center justify-center gap-5">
-              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#FFA3CF] p-5">
+              <div className="h-15 w-15 flex items-center justify-center rounded-full bg-[#FFA3CF] p-5 md:h-20 md:w-20">
                 <Users className="h-full w-full stroke-[#DA001A]" />
               </div>
               <div className="leading-6">
-                <p className="text-[32px] font-semibold text-[#333333] dark:text-white">
+                <p className="text-[23px] font-semibold text-[#333333] dark:text-white lg:text-[32px]">
                   {data?.total_user}
                 </p>
-                <p className="text-[14px] text-neutral-400">Total Wanderers</p>
+                <p className="text-[12px] text-neutral-400 lg:text-[14px]">
+                  Total Wanderers
+                </p>
               </div>
             </div>
 
             <div className="flex items-center justify-center gap-5">
-              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#CAF1FF] p-5">
+              <div className="h-15 w-15 flex items-center justify-center rounded-full bg-[#CAF1FF] p-5 md:h-20 md:w-20">
                 <Banknote className="h-full w-full stroke-[#0F5FC2]" />
               </div>
               <div className="leading-6">
-                <p className="text-[32px] font-semibold text-[#333333] dark:text-white">
+                <p className="text-[23px] font-semibold text-[#333333] dark:text-white lg:text-[32px]">
                   {data?.total_booking}
                 </p>
-                <p className="text-[14px] text-neutral-400">Transaction</p>
+                <p className="text-[12px] text-neutral-400 lg:text-[14px]">
+                  Transaction
+                </p>
               </div>
             </div>
 
             <div className="flex items-center justify-center gap-5">
-              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#D3FFE7] p-5">
+              <div className="h-15 w-15 flex items-center justify-center rounded-full bg-[#D3FFE7] p-5 md:h-20 md:w-20">
                 <Palmtree className="h-full w-full stroke-[#00AC4F]" />
               </div>
               <div className="leading-6">
-                <p className="text-[32px] font-semibold text-[#333333] dark:text-white">
+                <p className="text-[23px] font-semibold text-[#333333] dark:text-white lg:text-[32px]">
                   {data?.total_location}
                 </p>
-                <p className="text-[14px] text-neutral-400">
+                <p className="text-[12px] text-neutral-400 lg:text-[14px]">
                   Total Destination
                 </p>
               </div>
             </div>
 
             <div className="flex items-center justify-center gap-5">
-              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#e7d3ff] p-5">
+              <div className="h-15 w-15 flex items-center justify-center rounded-full bg-[#e7d3ff] p-5 md:h-20 md:w-20">
                 <PlaneTakeoff className="h-full w-full stroke-[#3400ac]" />
               </div>
               <div className="leading-6">
-                <p className="text-[32px] font-semibold text-[#333333] dark:text-white">
+                <p className="text-[23px] font-semibold text-[#333333] dark:text-white lg:text-[32px]">
                   {data?.total_tour}
                 </p>
-                <p className="text-[14px] text-neutral-400">Total Tours</p>
+                <p className="text-[12px] text-neutral-400 lg:text-[14px]">
+                  Total Tours
+                </p>
               </div>
             </div>
           </div>
 
-          <div className="mt-5 flex w-full gap-5">
-            <div className="w-[55%] rounded-lg bg-background p-5 shadow-lg dark:border">
+          <div className="mt-5 flex w-full flex-col gap-5 lg:flex-row">
+            <div className="w-full rounded-lg bg-background p-5 shadow-lg dark:border lg:w-[55%]">
               <p className="mb-1 w-full text-[16px] font-medium dark:text-neutral-400">
                 Transactions /month
               </p>
@@ -142,7 +157,7 @@ const Dashboard = () => {
           <div className="mt-5 grid w-full grid-cols-1 rounded-lg bg-background shadow-lg dark:border">
             <p className="pl-5 pt-5 font-medium">Top 5 Tour Destinations</p>
             <Swiper
-              slidesPerView={3}
+              slidesPerView={isMobile ? 2 : 3}
               scrollbar={{
                 hide: true,
               }}

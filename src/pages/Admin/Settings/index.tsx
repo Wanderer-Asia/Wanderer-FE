@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { editUserSchema, IEditUser } from "@/utils/apis/user";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -12,23 +13,28 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Camera } from "lucide-react";
+import { Camera, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useToken } from "@/utils/context/token";
+import { useToast } from "@/components/ui/use-toast";
+import { updateUser } from "@/utils/apis/user/api";
 
 const SettingsPage = () => {
+  const { user, fetchProfile } = useToken();
+
   const form = useForm<IEditUser>({
     resolver: zodResolver(editUserSchema),
     defaultValues: {
-      email: "",
-      fullname: "",
+      email: user.email,
+      fullname: user.fullname,
       image: "",
       password: "",
-      phone: "",
+      phone: user.phone,
     },
   });
   const [showUploadedImage, setShowUploadedImage] = useState("");
-
   const imageWatcher = form.watch("image");
+  const { toast } = useToast();
 
   useEffect(() => {
     if (imageWatcher?.length > 0) {
@@ -37,7 +43,28 @@ const SettingsPage = () => {
   }, [imageWatcher]);
 
   const editUserHandler = async (values: IEditUser) => {
-    console.log(values);
+    try {
+      const formData = new FormData();
+      formData.append("email", values.email);
+      formData.append("fullname", values.fullname);
+      formData.append("image", values.image[0]);
+      formData.append("password", values.password as string);
+      formData.append("pone", values.phone);
+      const res = await updateUser(formData as any);
+
+      toast({
+        description: <p className="capitalize">{res?.message}</p>,
+      });
+
+      fetchProfile();
+    } catch (error) {
+      if (error instanceof Error) {
+        toast({
+          variant: "destructive",
+          description: <p className="capitalize">{error.message}</p>,
+        });
+      }
+    }
   };
 
   return (
@@ -52,11 +79,7 @@ const SettingsPage = () => {
                 <div className="flex w-full justify-center">
                   <div className="relative h-[140px] w-[140px]">
                     <img
-                      src={
-                        showUploadedImage
-                          ? showUploadedImage
-                          : "https://avatars.githubusercontent.com/u/124599?v=4"
-                      }
+                      src={showUploadedImage ? showUploadedImage : user.image}
                       alt="profile"
                       className="h-full w-full rounded-full object-cover"
                     />
@@ -70,7 +93,7 @@ const SettingsPage = () => {
                 </div>
                 <FormControl>
                   <Input
-                    placeholder="Email"
+                    placeholder="image"
                     {...form.register("image")}
                     id="image"
                     type="file"
@@ -118,7 +141,7 @@ const SettingsPage = () => {
               <FormItem className="mb-3">
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input placeholder="Password" {...field} />
+                  <Input placeholder="Password" type="password" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -139,7 +162,18 @@ const SettingsPage = () => {
             )}
           />
 
-          <Button>Submit</Button>
+          <Button
+            type="submit"
+            className="mb-6 mt-5 w-[200px] bg-yellow-main text-black"
+            disabled={form.formState.isSubmitting}
+            aria-disabled={form.formState.isSubmitting}
+          >
+            {form.formState.isSubmitting ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              "Submit"
+            )}
+          </Button>
         </form>
       </Form>
     </div>
