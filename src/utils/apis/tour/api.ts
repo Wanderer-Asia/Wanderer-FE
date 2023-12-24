@@ -37,7 +37,6 @@ export const getToursAdmin = async (url?: string, params?: Request) => {
 
       const res = await axios.get(API_URL);
 
-      console.log(res.data);
       return res.data as Response<ITours[]>;
     }
 

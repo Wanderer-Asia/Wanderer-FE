@@ -1,7 +1,7 @@
 import { AxiosError } from "axios";
 import { BookingData } from ".";
 import { BookingDetail } from "./type";
-import { Response } from "@/utils/types/api";
+import { IResponse, Response } from "@/utils/types/api";
 import axiosWithConfig from "../axiosWithConfig";
 
 export const createBooking = async (body: BookingData) => {
@@ -35,6 +35,21 @@ export const refundBooking = async (bookingId: string) => {
     });
 
     return response?.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      throw Error(error.response?.data.message);
+    }
+  }
+};
+
+export const changeBookingStatus = async (
+  bookingId: string,
+  body: { status: string },
+) => {
+  try {
+    const res = await axiosWithConfig.patch(`/bookings/${bookingId}`, body);
+
+    return res.data as IResponse;
   } catch (error) {
     if (error instanceof AxiosError) {
       throw Error(error.response?.data.message);

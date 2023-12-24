@@ -1,10 +1,11 @@
 import { DataTable } from "./DataTable";
 import { Columns } from "./Columns";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { getTransactions } from "@/utils/apis/transactions/api";
 import { differenceInDays } from "date-fns";
 import { useToast } from "@/components/ui/use-toast";
 import { ITransactions } from "@/utils/apis/transactions";
+import useAdminStore from "@/utils/store/admin";
 
 export interface newITransactions {
   booking_code: string;
@@ -17,6 +18,9 @@ export interface newITransactions {
 
 const TransactionsPage = () => {
   const { toast } = useToast();
+
+  const data = useAdminStore((state) => state.transactions);
+  const setData = useAdminStore((state) => state.setTransactions);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,7 +41,7 @@ const TransactionsPage = () => {
           };
         });
 
-        setData(newTransactions);
+        setData(newTransactions!);
       } catch (error) {
         if (error instanceof Error) {
           toast({
@@ -48,9 +52,9 @@ const TransactionsPage = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [data]);
 
-  const [data, setData] = useState<newITransactions[] | undefined>([]);
+  // const [data, setData] = useState<newITransactions[] | undefined>([]);
 
   return (
     <div className="mt-5 w-full">

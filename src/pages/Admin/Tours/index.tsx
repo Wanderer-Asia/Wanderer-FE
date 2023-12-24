@@ -23,7 +23,7 @@ const ToursPage = () => {
   const [tourData, setToursData] = useState<ITours[]>();
   const [pagination, setPagination] = useState<Pagination>();
   const [tourUrl, setTourUrl] = useState<string | undefined>(
-    "https://api.wanderer.asia/tours?start=0&limit=3",
+    "https://api.wanderer.asia/tours?start=0&limit=6",
   );
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -36,7 +36,6 @@ const ToursPage = () => {
 
       try {
         const res = await getToursAdmin(tourUrl, { ...query });
-        console.log({ ...query });
         setPagination(res!.pagination);
         setToursData(res!.data);
       } catch (error) {
@@ -56,6 +55,15 @@ const ToursPage = () => {
     setSearchParams(searchParams);
   };
 
+  const searchingHandler = (value: React.ChangeEvent<HTMLInputElement>) => {
+    const timeOut = setTimeout(() => {
+      searchParams.set("keyword", value.target.value);
+      setSearchParams(searchParams);
+    }, 1000);
+
+    return timeOut;
+  };
+
   return (
     <>
       {isLoading ? (
@@ -71,7 +79,11 @@ const ToursPage = () => {
               </Link>
             </div>
             <div className="relative flex">
-              <Input placeholder="Search..." className="h-9 w-[250px]" />
+              <Input
+                placeholder="Search..."
+                className="h-9 w-[250px]"
+                onChange={(value) => searchingHandler(value)}
+              />
               <span className="absolute right-2 flex h-full items-center">
                 <Search className="h-4" />
               </span>
