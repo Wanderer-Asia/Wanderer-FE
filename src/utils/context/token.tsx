@@ -48,7 +48,7 @@ export function TokenProvider({ children }: Readonly<Props>) {
     (response) => response,
     (error) => {
       if (error.response.status === 401) {
-        changeToken();
+        changeToken("");
       }
 
       return Promise.reject(error);

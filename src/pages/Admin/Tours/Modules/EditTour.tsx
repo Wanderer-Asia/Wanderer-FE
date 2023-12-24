@@ -38,7 +38,7 @@ import { Textarea } from "@/components/ui/textarea";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, Loader2 } from "lucide-react";
 import { cn } from "@/utils/utils";
 import { Calendar } from "@/components/ui/calendar";
 import { useEffect, useState } from "react";
@@ -46,7 +46,7 @@ import { INewFacilities, getFacilities } from "@/utils/apis/facilities";
 import { IAirlines, getAirlines } from "@/utils/apis/airlines";
 import { Location, getLocation } from "@/utils/apis/location";
 import { useToast } from "@/components/ui/use-toast";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Loading from "@/components/Loading";
 
 const EditTour = () => {
@@ -77,20 +77,15 @@ const EditTour = () => {
   const { toast } = useToast();
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   const animatedComponents = makeAnimated();
   const thumbnailWatch = form.watch("thumbnail");
-  // const pictureGalleryWatch = form.watch("picture");
-
   const [tourDuration, setTourDuration] = useState(0);
-  // const [thumbnailPict, setThumbnailPict] = useState("");
-  // const [pictureGallery, setPictureGallery] = useState("");
-
   const [locations, setLocations] = useState<Location[] | undefined>([]);
   const [facilities, setFacilities] = useState<INewFacilities[] | undefined>(
     [],
   );
-
   const [airlines, setAirlines] = useState<IAirlines[] | undefined>([]);
 
   const fetchTourData = async () => {
@@ -159,10 +154,6 @@ const EditTour = () => {
       );
     }
 
-    // if (thumbnailWatch?.length > 0) {
-    //   setThumbnailPict(URL.createObjectURL(thumbnailWatch?.[0]));
-    // }
-
     const formSubscribe = form.watch((value) => {
       setTourDuration(
         differenceInDays(new Date(value.finish!), new Date(value.start!)) + 1,
@@ -224,6 +215,8 @@ const EditTour = () => {
         title: "Success",
         description: res?.message,
       });
+
+      navigate("/admin/tours");
     } catch (error) {
       if (error instanceof Error) {
         toast({
@@ -486,7 +479,7 @@ const EditTour = () => {
                 control={form.control}
                 name="airline_id"
                 render={({ field }) => (
-                  <FormItem className="mt5 mb-3 w-[300px]">
+                  <FormItem className="mb-3 mt-5 w-[300px]">
                     <FormLabel>Airline</FormLabel>
                     <SelectShad
                       onValueChange={field.onChange}
@@ -617,7 +610,18 @@ const EditTour = () => {
                 ))}
               </>
 
-              <Button type="submit">Submit</Button>
+              <Button
+                type="submit"
+                className="mb-6 mt-5 w-[200px] bg-yellow-main text-black"
+                disabled={form.formState.isSubmitting}
+                aria-disabled={form.formState.isSubmitting}
+              >
+                {form.formState.isSubmitting ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  "Submit"
+                )}
+              </Button>
             </form>
           </Form>
         </div>

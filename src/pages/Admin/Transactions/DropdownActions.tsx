@@ -13,10 +13,13 @@ import EditStatusDialog from "./EditStatusDialog";
 
 interface IProps {
   booking_code: string;
+  name: string;
+  tourPackage: string;
+  status: string;
 }
 
 const DropDownActions = (props: IProps) => {
-  const { booking_code } = props;
+  const { booking_code, name, tourPackage, status } = props;
   const [editDialogiOpen, setEditDialogOpen] = useState(false);
 
   return (
@@ -37,6 +40,9 @@ const DropDownActions = (props: IProps) => {
       </DropdownMenu>
       <EditStatusDialog
         booking_code={booking_code}
+        name={name}
+        tourPacakge={tourPackage}
+        status={status}
         open={editDialogiOpen}
         onOpenChange={setEditDialogOpen}
       />

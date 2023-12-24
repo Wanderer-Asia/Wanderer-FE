@@ -51,11 +51,13 @@ export const Columns: ColumnDef<newITransactions>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Price" />
     ),
-    cell: ({row}) => {
+    cell: ({ row }) => {
       return (
-        <p>Rp. {new Intl.NumberFormat('id-ID').format(row.getValue("total"))}</p>
-      )
-    }
+        <p>
+          Rp. {new Intl.NumberFormat("id-ID").format(row.getValue("total"))}
+        </p>
+      );
+    },
   },
   {
     accessorKey: "status",
@@ -129,8 +131,15 @@ export const Columns: ColumnDef<newITransactions>[] = [
     cell: ({ row }) => {
       const transaction = row.original;
 
-      if (transaction.status === "refund") {
-        return <DropDownActions booking_code={transaction.booking_code} />;
+      if (transaction.status === "refund" || transaction.status === 'refunded') {
+        return (
+          <DropDownActions
+            booking_code={transaction.booking_code}
+            name={transaction.name}
+            tourPackage={transaction.tour_package}
+            status={transaction.status}
+          />
+        );
       }
     },
   },

@@ -1,5 +1,16 @@
 import { BookingData, BookingSchema, Persons, bookingSchema } from "./type";
-import { createBooking, getBookingDetail, refundBooking } from "./api";
+import {
+  createBooking,
+  getBookingDetail,
+  refundBooking,
+  changeBookingStatus,
+} from "./api";
 
-export { bookingSchema, createBooking, getBookingDetail, refundBooking };
+export {
+  bookingSchema,
+  createBooking,
+  getBookingDetail,
+  refundBooking,
+  changeBookingStatus,
+};
 export type { Persons, BookingSchema, BookingData };
