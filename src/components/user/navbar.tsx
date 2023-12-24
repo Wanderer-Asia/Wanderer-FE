@@ -56,7 +56,7 @@ const Navbar = () => {
           Home
         </Link>
       </div>
-      <div className="flex flex-row items-center gap-8">
+      <div className="flex flex-row items-center gap-4 md:gap-8">
         <div className="relative">
           <input
             type="text"
@@ -65,23 +65,29 @@ const Navbar = () => {
             value={searchQuery}
             onChange={handleSearchInputChange}
           />
-          {searchQuery && searchResults.length > 0 && (
+          {searchQuery && searchResults && searchResults.length > 0 ? (
             <ul className="absolute left-0 right-0 top-10 z-10 mr-4 rounded-md border-2 border-solid border-gray-100 bg-white outline-none dark:border-gray-800 dark:bg-gray-900">
-              {searchResults &&
-                searchResults.map((item, index) => (
-                  <li
-                    key={index}
-                    className="cursor-pointer px-2 py-1 text-xs hover:bg-gray-100 dark:hover:bg-gray-700"
-                    onClick={() => {
-                      setSearchQuery("");
-                      setSearchResults([]);
-                      navigate(`/detail-trip/${item.tour_id}`);
-                    }}
-                  >
-                    {item.title}
-                  </li>
-                ))}
+              {searchResults.map((item, index) => (
+                <li
+                  key={index}
+                  className="cursor-pointer px-2 py-1 text-xs hover:bg-gray-100 dark:hover:bg-gray-700"
+                  onClick={() => {
+                    setSearchQuery("");
+                    setSearchResults([]);
+                    navigate(`/detail-trip/${item.tour_id}`);
+                  }}
+                >
+                  {item.title}
+                </li>
+              ))}
             </ul>
+          ) : (
+            searchQuery &&
+            searchQuery.length > 0 && (
+              <ul className="absolute left-0 right-0 top-10 z-10 mr-4 rounded-md border-2 border-solid border-gray-100 bg-white outline-none dark:border-gray-800 dark:bg-gray-900">
+                <li className="px-2 py-1 text-xs">No Result Found</li>
+              </ul>
+            )
           )}
         </div>
 

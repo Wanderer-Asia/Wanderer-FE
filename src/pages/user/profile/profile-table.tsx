@@ -49,26 +49,32 @@ const ProfileTable = () => {
     return buttonTable;
   };
   return (
-    <div className=" m-10 border border-tyellow p-10">
-      <table className="min-w-full border-collapse">
+    <div className="m-10 border border-tyellow p-10">
+      <table className="min-w-full border-collapse text-xs md:text-base">
         <thead>
-          <tr className=" border-b border-b-tyellow">
-            <th className="px-4 py-7">Trip</th>
-            <th className="px-4 py-7">Quantity</th>
-            <th className="px-4 py-7">Code Book</th>
-            <th className="px-4 py-7">Trip Id</th>
-            <th className="px-4 py-7">Payment</th>
+          <tr className="items-center border-b border-b-tyellow">
+            <th className="px-2 py-7 md:px-4">Trip</th>
+            <th className="hidden px-4 py-7 md:flex">Quantity</th>
+            <th className="px-2 py-7 md:px-4">Code Book</th>
+            <th className="hidden px-4 py-7 md:flex">Trip Id</th>
+            <th className="px-2 py-7 md:px-4">Payment</th>
           </tr>
         </thead>
         <tbody>
           {user.bookings &&
             user.bookings.map((item, index) => (
-              <tr className="text-center" key={index}>
-                <td className="px-4 py-7 text-left">{item.tour.title}</td>
-                <td className="px-4 py-7">{item.detail_count}</td>
+              <tr className="items-center text-center" key={index}>
+                <td className="px-2 py-7 text-left md:px-4">
+                  {item.tour.title}
+                </td>
+                <td className="hidden px-2 py-7 md:flex md:px-4">
+                  {item.detail_count}
+                </td>
                 <td className="px-4 py-7">{item.booking_code}</td>
-                <td className="px-4 py-7">{item.tour.tour_id}</td>
-                <td className="px-4 py-7">
+                <td className="hidden px-2 py-7 md:flex md:px-4">
+                  {item.tour.tour_id}
+                </td>
+                <td className="px-2 py-7 md:px-4">
                   {buttonCondition(
                     item.status,
                     item.booking_code,

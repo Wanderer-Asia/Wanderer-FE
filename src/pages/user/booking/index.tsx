@@ -12,6 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import Layout from "@/components/user/layout";
+import { Loader2 } from "lucide-react";
 import PaymentDialog from "@/components/user/payment-dialog";
 import { Separator } from "@/components/ui/separator";
 import { formattedAmount } from "@/utils/formattedAmount";
@@ -28,7 +29,8 @@ const Booking = () => {
     detail: [],
   });
   const [term, setTerm] = useState<boolean>(false);
-  const [isFormValid, setIsFormValid] = useState(false);
+  const [isFormValid, setIsFormValid] = useState<boolean>(false);
+  const [onLoading, setOnloading] = useState<boolean>(false);
 
   const handlePayment = (value: string) => {
     setData({ ...data, payment_method: value });
@@ -68,9 +70,6 @@ const Booking = () => {
     index: number,
     field: keyof Persons,
   ) => {
-    // const updatedDetail = [...data.detail];
-    // updatedDetail[index][field] = event.target.value;
-    // setData({ ...data, detail: updatedDetail });
     const { value } = event.target;
 
     let updatedValue: string | Date = value;
@@ -103,12 +102,14 @@ const Booking = () => {
 
   const handleBooking = async () => {
     try {
+      setOnloading(true);
       const result = await createBooking(data);
-      console.log(result);
       if (result.data) {
+        setOnloading(false);
         navigate(`/payment/${tripId}/${result.data.booking_code}`);
       }
     } catch (error) {
+      setOnloading(false);
       toast({
         title: "Uh oh! Something went wrong.",
         description: "There was a problem with your request.",
@@ -133,17 +134,17 @@ const Booking = () => {
                 <AccordionTrigger>
                   <h1 className="text-xl">Adult {index + 1}</h1>
                 </AccordionTrigger>
-                <AccordionContent className="grid grid-cols-2 gap-8">
-                  <div className="flex flex-row items-center ">
-                    <p className=" w-64 text-sm font-normal">Greeting</p>
+                <AccordionContent className="grid grid-cols-1 gap-8 md:grid-cols-2">
+                  <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-0">
+                    <p className=" text-sm font-normal md:w-64">Greeting</p>
                     <input
                       className=" w-full rounded-sm bg-tblueLight p-2 text-gray-800 outline-none"
                       value={item.greeting}
                       onChange={(e) => handleInputChange(e, index, "greeting")}
                     />
                   </div>
-                  <div className="flex flex-row items-center ">
-                    <p className="w-64 text-sm font-normal">Nationality</p>
+                  <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-0">
+                    <p className="text-sm font-normal md:w-64">Nationality</p>
                     <input
                       className=" w-full rounded-sm bg-tblueLight p-2 text-gray-800 outline-none"
                       value={item.nationality}
@@ -152,16 +153,18 @@ const Booking = () => {
                       }
                     />
                   </div>
-                  <div className="flex flex-row items-center ">
-                    <p className="w-64 text-sm font-normal">Name</p>
+                  <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-0">
+                    <p className="text-sm font-normal md:w-64">Name</p>
                     <input
                       className=" w-full rounded-sm bg-tblueLight p-2 text-gray-800 outline-none"
                       value={item.name}
                       onChange={(e) => handleInputChange(e, index, "name")}
                     />
                   </div>
-                  <div className="flex flex-row items-center ">
-                    <p className="w-64 text-sm font-normal">NIK/NO Passport</p>
+                  <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-0">
+                    <p className="text-sm font-normal md:w-64">
+                      NIK/NO Passport
+                    </p>
                     <input
                       className=" w-full rounded-sm bg-tblueLight p-2 text-gray-800 outline-none"
                       value={item.document_number}
@@ -170,8 +173,8 @@ const Booking = () => {
                       }
                     />
                   </div>
-                  <div className="flex flex-row items-center ">
-                    <p className="w-64 text-sm font-normal">Birth Date</p>
+                  <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-0">
+                    <p className="text-sm font-normal md:w-64">Birth Date</p>
                     <input
                       type="date"
                       className="w-full rounded-sm bg-tblueLight p-2 text-gray-800 outline-none"
@@ -186,21 +189,21 @@ const Booking = () => {
 
           <div className="mt-5 items-center border border-tyellow shadow-lg">
             <div className="m-5 grid grid-cols-2 gap-8">
-              <div className="flex flex-row">
-                <p className=" w-64 font-semibold">Subtotal</p>
+              <div className="flex flex-col md:flex-row">
+                <p className="font-semibold md:w-64">Subtotal</p>
                 <p className="font-semibold">
                   {trip && formattedAmount(trip.price * Number(persons))}
                 </p>
               </div>
               <div className="flex flex-col gap-5">
-                <div className="flex flex-row items-center ">
-                  <p className=" w-64 font-semibold">Admin</p>
+                <div className="flex flex-col md:flex-row md:items-center ">
+                  <p className="font-semibold md:w-64">Admin</p>
                   <p className="font-semibold">
                     {trip && formattedAmount(trip.admin_fee)}
                   </p>
                 </div>
-                <div className="flex flex-row items-center ">
-                  <p className=" w-64 font-semibold">Discount</p>
+                <div className="flex flex-col md:flex-row md:items-center ">
+                  <p className="font-semibold md:w-64">Discount</p>
                   <p className="font-semibold">
                     {trip && formattedAmount(trip.discount)}
                   </p>
@@ -209,8 +212,8 @@ const Booking = () => {
             </div>
             <Separator className="my-6 bg-tyellow" />
             <div className="m-5 grid grid-cols-2 gap-8">
-              <div className="flex flex-row">
-                <p className=" w-64 font-semibold">Total</p>
+              <div className="flex flex-row gap-2">
+                <p className="font-semibold md:w-64">Total</p>
                 <p className="font-semibold">
                   {trip &&
                     formattedAmount(
@@ -224,7 +227,7 @@ const Booking = () => {
           </div>
 
           <div className="mt-5 flex flex-row items-center justify-between border border-tyellow p-5 shadow-lg">
-            <p className=" w-64 font-semibold"></p>
+            <p className="font-semibold"></p>
 
             <PaymentDialog onSelect={handlePayment} isValid={isFormValid} />
           </div>
@@ -248,10 +251,10 @@ const Booking = () => {
               type="button"
               variant="secondary"
               className=" bg-tyellow px-10 hover:bg-tyellowlight"
-              disabled={!term || !isFormValid}
+              disabled={!term || !isFormValid || onLoading}
               onClick={handleBooking}
             >
-              Pay Now
+              {onLoading ? <Loader2 className="animate-spin" /> : "Pay Now"}
             </Button>
           </div>
         </div>

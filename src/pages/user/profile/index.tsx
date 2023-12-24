@@ -1,7 +1,6 @@
 import Layout from "@/components/user/layout";
 import ProfileHeader from "./profile-header";
 import ProfileTable from "./profile-table";
-import { getProfile } from "@/utils/apis/users/api";
 import { useEffect } from "react";
 import { useToken } from "@/utils/context/token";
 

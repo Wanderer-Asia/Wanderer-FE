@@ -1,4 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Camera, Loader2 } from "lucide-react";
 import {
   Dialog,
   DialogClose,
@@ -11,7 +12,6 @@ import { IEditUser, editUserSchema } from "@/utils/apis/user";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { Camera } from "lucide-react";
 import CustomFormField from "@/components/custom-formfield";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -24,6 +24,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 const EditProfile = () => {
   const { toast } = useToast();
   const { user, fetchProfile } = useToken();
+  const [avatarImage, setAvatarImage] = useState<string>("");
+  const [open, setOpen] = useState<boolean>(false);
 
   const form = useForm<IEditUser>({
     resolver: zodResolver(editUserSchema),
@@ -41,10 +43,9 @@ const EditProfile = () => {
       form.setValue("email", user.email || "");
       form.setValue("fullname", user.fullname || "");
       form.setValue("phone", user.phone || "");
+      setAvatarImage(user.image || "");
     }
   }, [form, user]);
-
-  const [avatarImage, setAvatarImage] = useState<string>("");
 
   const imageWatcher = form.watch("image");
 
@@ -62,6 +63,7 @@ const EditProfile = () => {
           description: result.message,
         });
         fetchProfile();
+        setOpen(false);
       }
     } catch (error) {
       console.log(error);
@@ -69,7 +71,7 @@ const EditProfile = () => {
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
         <Button
           type="button"
@@ -125,7 +127,7 @@ const EditProfile = () => {
                     type="text"
                     disabled={form.formState.isSubmitting}
                     aria-disabled={form.formState.isSubmitting}
-                    className=" w-full rounded-sm bg-tblueLight p-3 placeholder:text-gray-800"
+                    className=" w-full rounded-sm bg-tblueLight p-3 text-gray-800 placeholder:text-gray-800"
                   />
                 )}
               </CustomFormField>
@@ -137,7 +139,7 @@ const EditProfile = () => {
                     type="email"
                     disabled={form.formState.isSubmitting}
                     aria-disabled={form.formState.isSubmitting}
-                    className=" w-full rounded-sm bg-tblueLight p-3 placeholder:text-gray-800"
+                    className=" w-full rounded-sm bg-tblueLight p-3 text-gray-800 placeholder:text-gray-800"
                   />
                 )}
               </CustomFormField>
@@ -149,7 +151,7 @@ const EditProfile = () => {
                     type="tel"
                     disabled={form.formState.isSubmitting}
                     aria-disabled={form.formState.isSubmitting}
-                    className=" w-full rounded-sm bg-tblueLight p-3 placeholder:text-gray-800"
+                    className=" w-full rounded-sm bg-tblueLight p-3 text-gray-800 placeholder:text-gray-800"
                   />
                 )}
               </CustomFormField>
@@ -161,12 +163,12 @@ const EditProfile = () => {
                     type="password"
                     disabled={form.formState.isSubmitting}
                     aria-disabled={form.formState.isSubmitting}
-                    className=" w-full rounded-sm bg-tblueLight p-3 placeholder:text-gray-800"
+                    className=" w-full rounded-sm bg-tblueLight p-3 text-gray-800 placeholder:text-gray-800"
                   />
                 )}
               </CustomFormField>
             </div>
-            <DialogFooter className="mt-10 sm:justify-center">
+            <DialogFooter className="mt-10 gap-2 sm:justify-center">
               <DialogClose asChild>
                 <Button type="button" variant="secondary">
                   Cancel
@@ -179,7 +181,11 @@ const EditProfile = () => {
                 disabled={form.formState.isSubmitting}
                 aria-disabled={form.formState.isSubmitting}
               >
-                Save
+                {form.formState.isSubmitting ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  "Save"
+                )}
               </Button>
             </DialogFooter>
           </form>
