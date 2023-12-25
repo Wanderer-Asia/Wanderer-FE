@@ -46,8 +46,9 @@ const RegisterForm = () => {
       <form onSubmit={form.handleSubmit(handleRegister)}>
         <Card>
           <CardHeader>
-            <CardTitle>Register</CardTitle>
-            <CardDescription>Buat akun untuk pengalaman baru</CardDescription>
+            <CardDescription className="text-center text-gray-800">
+              Buat akun untuk pengalaman baru
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
             <CustomFormField control={form.control} name="email" label="Email">
@@ -58,6 +59,7 @@ const RegisterForm = () => {
                   type="email"
                   disabled={form.formState.isSubmitting}
                   aria-disabled={form.formState.isSubmitting}
+                  className="border-tyellow focus-visible:ring-tyellow"
                 />
               )}
             </CustomFormField>
@@ -73,6 +75,7 @@ const RegisterForm = () => {
                   type="tel"
                   disabled={form.formState.isSubmitting}
                   aria-disabled={form.formState.isSubmitting}
+                  className="border-tyellow focus-visible:ring-tyellow"
                 />
               )}
             </CustomFormField>
@@ -88,6 +91,7 @@ const RegisterForm = () => {
                   type="text"
                   disabled={form.formState.isSubmitting}
                   aria-disabled={form.formState.isSubmitting}
+                  className="border-tyellow focus-visible:ring-tyellow"
                 />
               )}
             </CustomFormField>
@@ -103,12 +107,13 @@ const RegisterForm = () => {
                   type="password"
                   disabled={form.formState.isSubmitting}
                   aria-disabled={form.formState.isSubmitting}
+                  className="border-tyellow focus-visible:ring-tyellow"
                 />
               )}
             </CustomFormField>
           </CardContent>
           <CardFooter>
-            <Button className="w-[200px] bg-yellow-main text-black">
+            <Button className="mx-5 w-full bg-tyellow text-black hover:bg-yellow-main">
               Register
             </Button>
           </CardFooter>
