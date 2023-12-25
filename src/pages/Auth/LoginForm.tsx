@@ -15,9 +15,9 @@ import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { postLogin } from "@/utils/apis/auth/api";
 import { useForm } from "react-hook-form";
+import { useToast } from "@/components/ui/use-toast";
 import { useToken } from "@/utils/context/token";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useToast } from "@/components/ui/use-toast";
 
 const LoginForm = () => {
   const { toast } = useToast();
@@ -56,8 +56,9 @@ const LoginForm = () => {
       <form onSubmit={form.handleSubmit(handleLogin)}>
         <Card>
           <CardHeader>
-            <CardTitle>Login</CardTitle>
-            <CardDescription>Enter Your Email and Password</CardDescription>
+            <CardDescription className="text-center text-gray-800">
+              Enter Your Email and Password
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
             <CustomFormField control={form.control} name="email" label="Email">
@@ -68,6 +69,7 @@ const LoginForm = () => {
                   type="email"
                   disabled={form.formState.isSubmitting}
                   aria-disabled={form.formState.isSubmitting}
+                  className="border-tyellow focus-visible:ring-tyellow"
                 />
               )}
             </CustomFormField>
@@ -83,6 +85,7 @@ const LoginForm = () => {
                   type="password"
                   disabled={form.formState.isSubmitting}
                   aria-disabled={form.formState.isSubmitting}
+                  className="border-tyellow focus-visible:ring-tyellow"
                 />
               )}
             </CustomFormField>
@@ -91,7 +94,7 @@ const LoginForm = () => {
             </Link>
           </CardContent>
           <CardFooter>
-            <Button className="w-[200px] bg-yellow-main text-black">
+            <Button className="mx-5 w-full bg-tyellow text-black hover:bg-yellow-main">
               Login
             </Button>
           </CardFooter>

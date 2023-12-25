@@ -1,20 +1,19 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
-import { useLocation } from "react-router-dom";
-import LoginForm from "./LoginForm";
-import RegisterForm from "./RegisterForm";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useTheme } from "@/utils/context/theme-provider";
-import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
-import { cn } from "@/utils/utils";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+import { Button } from "@/components/ui/button";
+import LoginForm from "./LoginForm";
 import Logo from "@/components/Logo";
+import RegisterForm from "./RegisterForm";
+import { cn } from "@/utils/utils";
+import { useLocation } from "react-router-dom";
+import { useTheme } from "@/utils/context/theme-provider";
 
 const AuthLayout = () => {
   const { pathname } = useLocation();
@@ -57,8 +56,18 @@ const AuthLayout = () => {
       <div className="flex h-full w-full flex-1 justify-center">
         <Tabs defaultValue={`${pathname}`} className="mt-[180px] w-[400px]">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="/login">Login</TabsTrigger>
-            <TabsTrigger value="/register">Register</TabsTrigger>
+            <TabsTrigger
+              value="/login"
+              className="data-[state=active]:bg-yellow-main"
+            >
+              Login
+            </TabsTrigger>
+            <TabsTrigger
+              value="/register"
+              className="data-[state=active]:bg-yellow-main"
+            >
+              Register
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="/login">
             <LoginForm />
