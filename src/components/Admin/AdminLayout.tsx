@@ -7,7 +7,7 @@ import Navbar from "./Navbar";
 
 const AdminLayout = () => {
   return (
-    <div className="relative h-screen">
+    <div className="relative h-screen w-full">
       <div className="min-h-screen bg-[#f5f7fc] dark:bg-background">
         <Navbar />
         <div className="container">
