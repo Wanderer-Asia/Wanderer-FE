@@ -3,7 +3,6 @@ import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-import { Trip, getTrip } from "@/utils/apis/trip";
 import { useEffect, useState } from "react";
 
 import Layout from "@/components/user/layout";

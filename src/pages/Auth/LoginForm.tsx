@@ -4,7 +4,6 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginSchema, loginSchema } from "@/utils/apis/auth";

@@ -1,4 +1,3 @@
-import { ITours } from "@/utils/apis/tour";
 import {
   Banknote,
   MapPin,
@@ -17,7 +16,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { Skeleton } from "../ui/skeleton";
 
 interface IProps {
-  tourData: ITours;
+  tourData: {
+    tour_id: number;
+    title: string;
+    quota: number;
+    discount: number;
+    rating: number;
+    price: number;
+    thumbnail: string;
+    start: string;
+    location: {
+      name: string;
+    };
+  };
 }
 
 const TourCard = (props: IProps) => {

@@ -567,7 +567,7 @@ const EditTour = () => {
               />
 
               <>
-                {Array.from({ length: tourDuration }, (v, k) => (
+                {Array.from({ length: tourDuration }, (_v, k) => (
                   <div key={k}>
                     <FormField
                       key={k}
