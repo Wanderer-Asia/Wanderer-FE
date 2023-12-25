@@ -25,10 +25,7 @@ const TourCard = (props: IProps) => {
   const navigate = useNavigate();
 
   return (
-    <div
-      className="w-fit rounded-lg bg-background px-5 pb-5 shadow-lg dark:border hover:cursor-pointer"
-      onClick={() => navigate(`/admin/tours/detail-tour/${tourData.tour_id}`)}
-    >
+    <div className="w-fit rounded-lg bg-background px-5 pb-5 shadow-lg dark:border">
       <div className="flex w-full justify-end p-1">
         <DropdownMenu>
           <DropdownMenuTrigger>
@@ -57,7 +54,14 @@ const TourCard = (props: IProps) => {
         )}
       </div>
       <div className="mt-2 px-2">
-        <p className="text-left text-[14px] font-medium">{tourData.title}</p>
+        <p
+          className="text-left text-[14px] font-medium hover:cursor-pointer hover:underline"
+          onClick={() =>
+            navigate(`/admin/tours/detail-tour/${tourData.tour_id}`)
+          }
+        >
+          {tourData.title}
+        </p>
         <div className="mt-3">
           <span className="mt-1 flex items-center gap-3">
             <UsersIcon className="h-5 w-5 fill-red-400" />
