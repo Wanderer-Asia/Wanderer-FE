@@ -18,7 +18,8 @@ import ToursPage from "@/pages/Admin/Tours";
 import TransactionsPage from "@/pages/Admin/Transactions";
 import { createBrowserRouter } from "react-router-dom";
 import EditTour from "@/pages/Admin/Tours/Modules/EditTour";
-import ProtectedRoutes from "./protectedRoutes";
+import ProtectedRoutes from "./ProtectedRoutes";
+import DetailTour from "@/pages/Admin/Tours/DetailTour";
 
 export const router = createBrowserRouter([
   {
@@ -82,6 +83,10 @@ export const router = createBrowserRouter([
               {
                 path: "edit-tour/:id",
                 element: <EditTour />,
+              },
+              {
+                path: "detail-tour/:id",
+                element: <DetailTour />,
               },
             ],
           },

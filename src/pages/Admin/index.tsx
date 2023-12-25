@@ -141,14 +141,14 @@ const Dashboard = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {data?.recent_booking.map((booking, index) => (
+                  {/* {data?.recent_booking.map((booking, index) => (
                     <TableRow key={booking.booking_code}>
                       <TableCell>{index + 1}</TableCell>
                       <TableCell>{booking.booking_code}</TableCell>
                       <TableCell>{booking.location}</TableCell>
                       <TableCell>{booking.price}</TableCell>
                     </TableRow>
-                  ))}
+                  ))} */}
                 </TableBody>
               </Table>
             </div>
@@ -164,11 +164,11 @@ const Dashboard = () => {
               modules={[Scrollbar]}
               className="mySwiper rounded-lg"
             >
-              {data?.top_tours.map((tour) => (
+              {/* {data?.top_tours.map((tour) => (
                 <SwiperSlide className="py-4" key={tour.tour_id}>
                   <TourCard tourData={tour} />
                 </SwiperSlide>
-              ))}
+              ))} */}
             </Swiper>
           </div>
         </div>
