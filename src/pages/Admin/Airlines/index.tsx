@@ -10,15 +10,17 @@ import {
 } from "@/components/ui/table";
 
 import { useToast } from "@/components/ui/use-toast";
-import { IAirlines, getAirlines } from "@/utils/apis/airlines";
+import { getAirlines } from "@/utils/apis/airlines";
 import { PenBox, PlusCircle, Trash2 } from "lucide-react";
 import Loading from "@/components/Loading";
 import AddAirlines from "./Modules/AddAirlines";
 import DeleteAirlines from "./Modules/DeleteAirlines";
 import EditAirlines from "./Modules/EditAirlines";
+import useAdminStore from "@/utils/store/admin";
 
 const AirlinesPage = () => {
-  const [airlines, setAirlines] = useState<IAirlines[] | undefined>([]);
+  const airlineData = useAdminStore((state) => state.airlines);
+  const setAirlineData = useAdminStore((state) => state.setAirlines);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
@@ -26,7 +28,7 @@ const AirlinesPage = () => {
     try {
       const res = await getAirlines();
 
-      setAirlines(res?.data);
+      setAirlineData(res!.data);
     } catch (error) {
       if (error instanceof Error) {
         toast({
@@ -41,7 +43,8 @@ const AirlinesPage = () => {
 
   useEffect(() => {
     fetchAirlines();
-  }, []);
+    document.title = "Wanderer - Airlines";
+  }, [airlineData]);
 
   return (
     <>
@@ -65,7 +68,7 @@ const AirlinesPage = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {airlines?.map((airline) => (
+              {airlineData?.map((airline) => (
                 <TableRow key={airline.airline_id}>
                   <TableCell className="font-medium">
                     {airline.airline_id}

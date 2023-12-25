@@ -21,18 +21,21 @@ import {
   ICreateAirline,
   createAirline,
   createAirlineSchema,
+  getAirlines,
 } from "@/utils/apis/airlines";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ReactNode, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
+import useAdminStore from "@/utils/store/admin";
 
 interface IProps {
   children: ReactNode;
 }
 
 const AddAirlines = (props: IProps) => {
+  const setAirlinesData = useAdminStore((state) => state.setAirlines);
   const { children } = props;
   const { toast } = useToast();
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -52,6 +55,8 @@ const AddAirlines = (props: IProps) => {
       formData.append("logo", values.logo[0]);
 
       const res = await createAirline(formData as any);
+      const fetchData = await getAirlines();
+      setAirlinesData(fetchData!.data);
 
       toast({
         description: <p className="capitalize">{res?.message}</p>,

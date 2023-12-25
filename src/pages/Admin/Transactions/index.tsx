@@ -23,25 +23,32 @@ const TransactionsPage = () => {
   const setData = useAdminStore((state) => state.setTransactions);
 
   useEffect(() => {
+    document.title = "Wanderer - Transactions";
     const fetchData = async () => {
       try {
         const res = await getTransactions();
-        const newTransactions = res?.data.map((data: ITransactions) => {
-          return {
-            booking_code: data.booking_code.toString(),
-            tour_package: data.tour.title,
-            total: data.total,
-            name: data.user.fullname,
-            status: data.status,
-            durations:
-              differenceInDays(
-                new Date(data.tour.finish),
-                new Date(data.tour.start),
-              ) + 1,
-          };
-        });
+        if (res?.data !== null) {
+          const newTransactions = res?.data.map((data: ITransactions) => {
+            return {
+              booking_code: data.booking_code.toString(),
+              tour_package: data.tour.title,
+              total: data.total,
+              name: data.user.fullname,
+              status: data.status,
+              durations:
+                differenceInDays(
+                  new Date(data.tour.finish),
+                  new Date(data.tour.start),
+                ) + 1,
+            };
+          });
 
-        setData(newTransactions!);
+          setData(newTransactions!);
+        } else {
+          toast({
+            description: <p>No Transactions Data</p>,
+          });
+        }
       } catch (error) {
         if (error instanceof Error) {
           toast({

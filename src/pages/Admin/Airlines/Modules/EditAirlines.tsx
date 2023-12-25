@@ -21,12 +21,14 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import {
   IUpdateAirline,
+  getAirlines,
   updateAirline,
   updateAirlineSchema,
 } from "@/utils/apis/airlines";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import useAdminStore from "@/utils/store/admin";
 
 interface IProps {
   children: ReactNode;
@@ -35,6 +37,7 @@ interface IProps {
 }
 
 const EditAirlines = (props: IProps) => {
+  const setAirlineData = useAdminStore((state) => state.setAirlines);
   const { children, airlane_name, id } = props;
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
@@ -50,6 +53,9 @@ const EditAirlines = (props: IProps) => {
   const submitAirlineHandler = async (values: IUpdateAirline) => {
     try {
       const res = await updateAirline(id, values);
+      const fetchAirline = await getAirlines();
+
+      setAirlineData(fetchAirline!.data);
 
       toast({
         title: "Success",

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Dialog,
   DialogContent,
@@ -22,14 +23,20 @@ import { ReactNode, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
-import { ICreateLocation, createLocation } from "@/utils/apis/location";
+import {
+  ICreateLocation,
+  createLocation,
+  getLocation,
+} from "@/utils/apis/location";
 import { createLocationSchema } from "@/utils/apis/location/type";
+import useAdminStore from "@/utils/store/admin";
 
 interface IProps {
   children: ReactNode;
 }
 
 const AddLocations = (props: IProps) => {
+  const setLocationData = useAdminStore((state) => state.setLocations);
   const { children } = props;
   const { toast } = useToast();
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -49,6 +56,9 @@ const AddLocations = (props: IProps) => {
       formData.append("image", values.image[0]);
 
       const res = await createLocation(formData as any);
+      const fetchLocation = await getLocation();
+
+      setLocationData(fetchLocation.data);
 
       toast({
         description: <p className="capitalize">{res?.message}</p>,

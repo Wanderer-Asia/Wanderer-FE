@@ -23,10 +23,12 @@ import { useToast } from "@/components/ui/use-toast";
 import {
   ICreateFacility,
   createFacilitySchema,
+  getFacilities,
   updateFacility,
 } from "@/utils/apis/facilities";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
+import useAdminStore from "@/utils/store/admin";
 
 interface IProps {
   children: ReactNode;
@@ -38,6 +40,7 @@ const EditFacility = (props: IProps) => {
   const { id, facility_name, children } = props;
   const { toast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
+  const setFacilities = useAdminStore((state) => state.setFacilities);
 
   const form = useForm<ICreateFacility>({
     resolver: zodResolver(createFacilitySchema),
@@ -49,6 +52,9 @@ const EditFacility = (props: IProps) => {
   const submitFaciltyHandler = async (values: ICreateFacility) => {
     try {
       const res = await updateFacility(id, values);
+      const fetchFacilities = await getFacilities();
+
+      setFacilities(fetchFacilities!.data);
 
       toast({
         title: "Success",

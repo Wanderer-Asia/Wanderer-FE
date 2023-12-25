@@ -45,6 +45,7 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
+    document.title = "Wanderer - Dashboard";
     fetchDashboard();
     const { innerWidth: width } = window;
 
@@ -151,7 +152,11 @@ const Dashboard = () => {
                       </TableRow>
                     ))
                   ) : (
-                    <TableCell>No Recent Transaction</TableCell>
+                    <TableRow>
+                      <TableCell colSpan={4} className="h-24 text-center">
+                        No Recent Transactions
+                      </TableCell>
+                    </TableRow>
                   )}
                 </TableBody>
               </Table>

@@ -37,6 +37,7 @@ const SettingsPage = () => {
   const { toast } = useToast();
 
   useEffect(() => {
+    document.title = "Wanderer - Settings";
     if (imageWatcher?.length > 0) {
       setShowUploadedImage(URL.createObjectURL(imageWatcher?.[0]));
     }

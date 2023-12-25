@@ -28,6 +28,7 @@ const ToursPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
+    document.title = "Wanderer - Tours";
     const fetchTours = async () => {
       const query: { [key: string]: string } = {};
       for (const entry of searchParams.entries()) {
@@ -78,7 +79,7 @@ const ToursPage = () => {
                 </Button>
               </Link>
             </div>
-            <div className="flex items-center gap-2 w-full md:w-fit">
+            <div className="flex w-full items-center gap-2 md:w-fit">
               <div className="relative flex w-full">
                 <Input
                   placeholder="Search..."
