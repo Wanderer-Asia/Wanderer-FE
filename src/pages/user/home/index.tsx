@@ -60,7 +60,7 @@ const Home = () => {
                 disableOnInteraction: false,
               }}
             >
-              {[1, 2].map((item, index) => (
+              {[1, 2].map((_item, index) => (
                 <SwiperSlide key={index}>
                   <img
                     src={

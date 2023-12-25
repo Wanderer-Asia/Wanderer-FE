@@ -4,7 +4,6 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import { RegisterSchema, registerSchema } from "@/utils/apis/auth/type";
 
@@ -12,7 +11,6 @@ import { Button } from "@/components/ui/button";
 import CustomFormField from "@/components/custom-formfield";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { postRegister } from "@/utils/apis/auth/api";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/components/ui/use-toast";

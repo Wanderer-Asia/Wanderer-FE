@@ -313,7 +313,7 @@ const AddTour = () => {
             />
           </div>
 
-          <div className="mb-3 mt-5 flex w-full lg:w-[800px] gap-3">
+          <div className="mb-3 mt-5 flex w-full gap-3 lg:w-[800px]">
             <FormField
               control={form.control}
               name="start"
@@ -513,7 +513,7 @@ const AddTour = () => {
           />
 
           <>
-            {Array.from({ length: tourDuration }, (v, k) => (
+            {Array.from({ length: tourDuration }, (_v, k) => (
               <div key={k}>
                 <FormField
                   key={k}

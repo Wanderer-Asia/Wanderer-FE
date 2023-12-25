@@ -1,7 +1,7 @@
 import { AxiosError } from "axios";
 import axiosWithConfig from "../axiosWithConfig";
-import { IResponse } from "../../types/types";
 import { IDashboard } from ".";
+import { IResponse } from "@/utils/types/api";
 
 export const getDashboardReports = async () => {
   try {

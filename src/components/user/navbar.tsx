@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { ChangeEvent, ReactHTMLElement, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
