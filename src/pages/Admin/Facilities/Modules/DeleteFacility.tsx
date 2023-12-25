@@ -10,7 +10,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/components/ui/use-toast";
-import { deleteFacility } from "@/utils/apis/facilities";
+import { deleteFacility, getFacilities } from "@/utils/apis/facilities";
+import useAdminStore from "@/utils/store/admin";
 import { ReactNode } from "react";
 
 interface IProps {
@@ -22,10 +23,14 @@ interface IProps {
 const DeleteFacility = (props: IProps) => {
   const { id, facility_name, children } = props;
   const { toast } = useToast();
+  const setFacilities = useAdminStore((state) => state.setFacilities);
 
   const deleteFaciltyHandler = async () => {
     try {
       const res = await deleteFacility(id);
+      const fetchFacilities = await getFacilities();
+
+      setFacilities(fetchFacilities!.data);
 
       toast({
         title: "Success",

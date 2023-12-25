@@ -9,23 +9,25 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Loading from "@/components/Loading";
-import { IFacilities, getFacilities } from "@/utils/apis/facilities";
+import { getFacilities } from "@/utils/apis/facilities";
 import { useToast } from "@/components/ui/use-toast";
 import AddFacility from "./Modules/AddFacility";
 import { PenBox, PlusCircle, Trash2 } from "lucide-react";
 import DeleteFacility from "./Modules/DeleteFacility";
 import EditFacility from "./Modules/EditFacility";
+import useAdminStore from "@/utils/store/admin";
 
 const FacilitiesPage = () => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(true);
-  const [facilities, setFacilities] = useState<IFacilities[] | undefined>([]);
+  const facilities = useAdminStore((state) => state.facilities);
+  const setFacilities = useAdminStore((state) => state.setFacilities);
 
   const fetchFacilities = async () => {
     try {
       const res = await getFacilities();
 
-      setFacilities(res?.data);
+      setFacilities(res!.data);
     } catch (error) {
       if (error instanceof Error) {
         toast({
@@ -40,7 +42,8 @@ const FacilitiesPage = () => {
 
   useEffect(() => {
     fetchFacilities();
-  }, []);
+    document.title = "Wanderer - Facilities";
+  }, [facilities]);
 
   return (
     <>

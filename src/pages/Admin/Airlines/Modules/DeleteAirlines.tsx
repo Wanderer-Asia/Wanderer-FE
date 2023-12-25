@@ -12,7 +12,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/components/ui/use-toast";
-import { deleteAirline } from "@/utils/apis/airlines";
+import { deleteAirline, getAirlines } from "@/utils/apis/airlines";
+import useAdminStore from "@/utils/store/admin";
 
 interface IProps {
   id: string;
@@ -21,12 +22,16 @@ interface IProps {
 }
 
 const DeleteAirlines = (props: IProps) => {
+  const setAirlineData = useAdminStore((state) => state.setAirlines);
   const { id, airlane_name, children } = props;
   const { toast } = useToast();
 
   const deleteAirlineHandler = async () => {
     try {
       const res = await deleteAirline(id);
+      const fetchAirline = await getAirlines();
+
+      setAirlineData(fetchAirline!.data);
 
       toast({
         description: <p className="capitalize">{res?.message}</p>,

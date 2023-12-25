@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ReactNode, useState } from "react";
 import {
   Dialog,
@@ -18,11 +19,16 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { IUpdateLocation, updateLocation } from "@/utils/apis/location";
+import {
+  IUpdateLocation,
+  getLocation,
+  updateLocation,
+} from "@/utils/apis/location";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { updateLocationSchema } from "@/utils/apis/location/type";
 import { useToast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
+import useAdminStore from "@/utils/store/admin";
 
 interface IProps {
   children: ReactNode;
@@ -34,6 +40,7 @@ const EditLocations = (props: IProps) => {
   const { children, location_name, id } = props;
   const [isOpen, setIsOpen] = useState(false);
   const { toast } = useToast();
+  const setLocationsData = useAdminStore((state) => state.setLocations);
 
   const form = useForm<IUpdateLocation>({
     resolver: zodResolver(updateLocationSchema),
@@ -49,7 +56,9 @@ const EditLocations = (props: IProps) => {
       formData.append("name", values.name);
       formData.append("image", values.image[0]);
       const res = await updateLocation(id, formData as any);
+      const fetchLocationsData = await getLocation();
 
+      setLocationsData(fetchLocationsData.data);
       toast({
         description: <p className="capitalize">{res?.message}</p>,
         title: "Success",

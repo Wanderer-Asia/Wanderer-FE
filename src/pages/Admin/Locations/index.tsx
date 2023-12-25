@@ -12,13 +12,16 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { PenBox, PlusCircle, Trash2 } from "lucide-react";
 import Loading from "@/components/Loading";
-import { Location, getLocation } from "@/utils/apis/location";
+import { getLocation } from "@/utils/apis/location";
 import AddLocations from "./Modules/AddLocations";
 import DeleteLocations from "./Modules/DeleteLocations";
 import EditLocations from "./Modules/EditLocations";
+import useAdminStore from "@/utils/store/admin";
 
 const LocationsPage = () => {
   const { toast } = useToast();
+  const locations = useAdminStore((state) => state.locations);
+  const setLocations = useAdminStore((state) => state.setLocations);
 
   const fetchLocations = async () => {
     try {
@@ -39,9 +42,9 @@ const LocationsPage = () => {
 
   useEffect(() => {
     fetchLocations();
-  }, []);
+    document.title = "Wanderer - Locations";
+  }, [locations]);
 
-  const [locations, setLocations] = useState<Location[] | undefined>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   return (
