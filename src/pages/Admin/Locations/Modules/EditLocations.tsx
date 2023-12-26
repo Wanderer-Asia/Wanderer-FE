@@ -19,16 +19,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import {
-  IUpdateLocation,
-  getLocation,
-  updateLocation,
-} from "@/utils/apis/location";
+import { IUpdateLocation, updateLocation } from "@/utils/apis/location";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { updateLocationSchema } from "@/utils/apis/location/type";
 import { useToast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
 import useAdminStore from "@/utils/store/admin";
+import { getLocationAdmin } from "@/utils/apis/location/api";
 
 interface IProps {
   children: ReactNode;
@@ -56,13 +53,15 @@ const EditLocations = (props: IProps) => {
       formData.append("name", values.name);
       formData.append("image", values.image[0]);
       const res = await updateLocation(id, formData as any);
-      const fetchLocationsData = await getLocation();
+      const fetchLocationsData = await getLocationAdmin();
 
-      setLocationsData(fetchLocationsData.data);
+      setLocationsData(fetchLocationsData!.data);
       toast({
         description: <p className="capitalize">{res?.message}</p>,
         title: "Success",
       });
+
+      setIsOpen(false);
     } catch (error) {
       if (error instanceof Error) {
         toast({

@@ -58,13 +58,13 @@ const DetailTour = () => {
   useEffect(() => {
     fetchData();
     document.title = tourData ? tourData.title : "Wanderer";
-  }, [tourData, fetchData]);
+  }, [fetchData]);
 
   return (
     <>
       {tourData ? (
         <div className="w-full">
-          <p className="mt-3 text-[24px] md:text-[32px] font-bold capitalize">
+          <p className="mt-3 text-[24px] font-bold capitalize md:text-[32px]">
             {tourData.title}
           </p>
           <div className="mt-2 flex justify-between border-b-4 border-tyellow pb-3">
@@ -118,7 +118,9 @@ const DetailTour = () => {
 
           <div className="mt-5 rounded-lg bg-background p-5">
             <p className="text-[24px] font-semibold">Description</p>
-            <p className="mt-3 text-justify  dark:text-slate-400">{tourData.description}</p>
+            <p className="mt-3 text-justify  dark:text-slate-400">
+              {tourData.description}
+            </p>
             <div className="mt-5 flex items-center gap-4 font-medium">
               <Banknote />
               {new Intl.NumberFormat("id-ID", {
@@ -139,7 +141,7 @@ const DetailTour = () => {
             </div>
           </div>
 
-          <div className="my-5 flex flex-col md:flex-row gap-5 rounded-lg bg-background p-5 shadow-lg">
+          <div className="my-5 flex flex-col gap-5 rounded-lg bg-background p-5 shadow-lg md:flex-row">
             <section>
               <p className="mb-5 text-[24px] font-semibold">Include</p>
               <div className="flex w-full flex-col">
@@ -184,7 +186,9 @@ const DetailTour = () => {
                       )}`}</p>
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="dark:text-slate-400">{value.description}</AccordionContent>
+                  <AccordionContent className="dark:text-slate-400">
+                    {value.description}
+                  </AccordionContent>
                 </AccordionItem>
               </Accordion>
             ))}

@@ -82,7 +82,7 @@ export const Columns: ColumnDef<newITransactions>[] = [
         );
       }
 
-      if (status.value === "canceled") {
+      if (status.value === "cancel") {
         return (
           <Badge className="flex w-fit items-center bg-gray-500 hover:cursor-default">
             <status.icon className="mr-2 h-4 w-4" />
@@ -130,7 +130,7 @@ export const Columns: ColumnDef<newITransactions>[] = [
     header: "Actions",
     cell: ({ row }) => {
       const transaction = row.original;
-      
+
       return (
         <DropDownActions
           booking_code={transaction.booking_code}
