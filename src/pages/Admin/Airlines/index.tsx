@@ -11,12 +11,16 @@ import {
 
 import { useToast } from "@/components/ui/use-toast";
 import { getAirlines } from "@/utils/apis/airlines";
-import { PenBox, PlusCircle, Trash2 } from "lucide-react";
+import { FileDown, FileUp, PenBox, PlusCircle, Trash2 } from "lucide-react";
 import Loading from "@/components/Loading";
 import AddAirlines from "./Modules/AddAirlines";
 import DeleteAirlines from "./Modules/DeleteAirlines";
 import EditAirlines from "./Modules/EditAirlines";
 import useAdminStore from "@/utils/store/admin";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import axiosWithConfig from "@/utils/apis/axiosWithConfig";
 
 const AirlinesPage = () => {
   const airlineData = useAdminStore((state) => state.airlines);
@@ -41,10 +45,30 @@ const AirlinesPage = () => {
     }
   };
 
+  const uploadFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      if (e.target.files) {
+        const formData = new FormData();
+        formData.append("file", e.target.files[0]);
+        const res = await axiosWithConfig.post("/airlines/import", formData);
+
+        toast({
+          description: <p className="capitalize">{res.data.message}</p>,
+        });
+
+        const fetchOnChange = await getAirlines();
+
+        setAirlineData(fetchOnChange!.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchAirlines();
     document.title = "Wanderer - Airlines";
-  }, [airlineData]);
+  }, []);
 
   return (
     <>
@@ -57,6 +81,31 @@ const AirlinesPage = () => {
             <AddAirlines>
               <PlusCircle className="mr-2 h-4 w-4 stroke-black" /> Add Airlines
             </AddAirlines>
+            <a href="https://api.wanderer.asia/airlines/import">
+              <Button
+                size={"sm"}
+                className="h-8 rounded-full bg-green-400 hover:bg-green-600"
+              >
+                <FileDown className="mr-1 h-4" />
+                Download Template
+              </Button>
+            </a>
+            <form>
+              <Label
+                htmlFor="uploadFile"
+                className="flex h-8 items-center rounded-full bg-blue-500 px-3 text-black hover:cursor-pointer hover:bg-blue-700"
+              >
+                <FileUp className="mr-1 h-4" />
+                Import
+              </Label>
+              <Input
+                id="uploadFile"
+                type="file"
+                accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                className="hidden"
+                onChange={uploadFile}
+              />
+            </form>
           </div>
           <Table>
             <TableHeader>

@@ -6,6 +6,10 @@ import { differenceInDays } from "date-fns";
 import { useToast } from "@/components/ui/use-toast";
 import { ITransactions } from "@/utils/apis/transactions";
 import useAdminStore from "@/utils/store/admin";
+import { Button } from "@/components/ui/button";
+import { useToken } from "@/utils/context/token";
+import axios from "axios";
+import { FileDown } from "lucide-react";
 
 export interface newITransactions {
   booking_code: string;
@@ -18,9 +22,30 @@ export interface newITransactions {
 
 const TransactionsPage = () => {
   const { toast } = useToast();
+  const { token } = useToken();
 
   const data = useAdminStore((state) => state.transactions);
   const setData = useAdminStore((state) => state.setTransactions);
+
+  const downloadFile = async () => {
+    try {
+      await axios
+        .get("https://api.wanderer.asia/bookings/export?type=excel", {
+          responseType: "blob",
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response) => {
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement("a");
+          link.href = url;
+          link.setAttribute("download", `${Date.now()}.xlsx`);
+          document.body.appendChild(link);
+          link.click();
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     document.title = "Wanderer - Transactions";
@@ -59,12 +84,23 @@ const TransactionsPage = () => {
       }
     };
     fetchData();
-  }, [data]);
+  }, []);
 
   // const [data, setData] = useState<newITransactions[] | undefined>([]);
 
   return (
     <div className="mt-5 w-full">
+      <div className="flex w-full gap-5">
+        <p className="mb-5 text-[22px] font-semibold">Transaction List</p>
+        <Button
+          size="sm"
+          onClick={downloadFile}
+          className="h-8 rounded-full bg-yellow-main hover:bg-tyellow"
+        >
+          <FileDown className="h-4" />
+          Import
+        </Button>
+      </div>
       <p className="mb-5 text-[22px] font-semibold">Transaction List</p>
       <DataTable data={data as newITransactions[]} columns={Columns} />
     </div>

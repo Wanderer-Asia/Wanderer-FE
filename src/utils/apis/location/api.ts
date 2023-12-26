@@ -26,6 +26,18 @@ export const getDetailLocation = async (locationId: string) => {
   }
 };
 
+export const getLocationAdmin = async () => {
+  try {
+    const response = await axiosWithConfig.get(`/locations`);
+
+    return response.data as IResponse<Location[]>;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      throw Error(error.response?.data.message);
+    }
+  }
+};
+
 export const createLocation = async (body: ICreateLocation) => {
   try {
     const res = await axiosWithConfig.post("/locations", body);

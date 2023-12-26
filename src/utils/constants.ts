@@ -43,8 +43,8 @@ export const statuses = [
     icon: ClipboardCheck,
   },
   {
-    value: "canceled",
-    label: "Canceled",
+    value: "cancel",
+    label: "Cancel",
     icon: XCircle,
   },
 ];

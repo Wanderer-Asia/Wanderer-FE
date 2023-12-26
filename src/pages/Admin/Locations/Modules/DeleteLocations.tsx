@@ -10,7 +10,8 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/components/ui/use-toast";
-import { deleteLocation, getLocation } from "@/utils/apis/location";
+import { deleteLocation } from "@/utils/apis/location";
+import { getLocationAdmin } from "@/utils/apis/location/api";
 import useAdminStore from "@/utils/store/admin";
 import { ReactNode } from "react";
 
@@ -28,9 +29,9 @@ const DeleteLocations = (props: IProps) => {
   const deleteLocationHandler = async () => {
     try {
       const res = await deleteLocation(id);
-      const fetchLocationsData = await getLocation();
+      const fetchLocationsData = await getLocationAdmin();
 
-      setLocationsData(fetchLocationsData.data);
+      setLocationsData(fetchLocationsData!.data);
 
       toast({
         description: <p className="capitalize">{res?.message}</p>,

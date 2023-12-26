@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ReactNode, useState } from "react";
 
 import {
@@ -52,7 +53,11 @@ const EditAirlines = (props: IProps) => {
 
   const submitAirlineHandler = async (values: IUpdateAirline) => {
     try {
-      const res = await updateAirline(id, values);
+      const formData = new FormData();
+      formData.append("name", values.name);
+      formData.append("logo", values.logo[0]);
+
+      const res = await updateAirline(id, formData as any);
       const fetchAirline = await getAirlines();
 
       setAirlineData(fetchAirline!.data);
@@ -61,7 +66,6 @@ const EditAirlines = (props: IProps) => {
         title: "Success",
         description: <p className="capitalize">{res?.message}</p>,
       });
-      form.reset();
       setIsOpen(false);
     } catch (error) {
       if (error instanceof Error) {
