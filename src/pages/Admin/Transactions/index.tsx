@@ -101,7 +101,6 @@ const TransactionsPage = () => {
           Import
         </Button>
       </div>
-      <p className="mb-5 text-[22px] font-semibold">Transaction List</p>
       <DataTable data={data as newITransactions[]} columns={Columns} />
     </div>
   );
