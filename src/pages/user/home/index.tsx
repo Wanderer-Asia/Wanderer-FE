@@ -64,7 +64,7 @@ const Home = () => {
                 <SwiperSlide key={index}>
                   <img
                     src={
-                      "https://s3-alpha-sig.figma.com/img/632b/1f72/bc2e905f3f59e57cfd99f7de8a7024fe?Expires=1704067200&Signature=R4XMQMYvIXNXgu~uDQkN4c01pugfgoCKdvDjFGcXsDub6QJ1MHKNo3iK~UOSH8ym1NKmY9w96HR8B636L2Ldx7GSj5iEvaJLnPWhIGnF6DNV-vcCISvxZZXQv5fRx2YgKepoDvSu3bGgHRakcGZrV9Ckz-K-SLdRJAeYo5UQb7RZwatZ86F~S9c1o4tS4uUlHCC1kSP431SE5a6ogYvRkGx5LcGwPe6Z6u-bG0rQ3sqzciy8Pm-Io5OPKT7bcjYkgzdO7xSMmtUtxQnV~6oOMQfKTdc5St4t9lIhMrq1AhsO2iGg~FTyhE2ufeE1AkI8h7tP7IUrekJHKTJH7Ua7Fg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
+                      "https://res.cloudinary.com/dypeyso0m/image/upload/v1703677326/homepage_d1cdw5.png"
                     }
                     alt="banner"
                     className="h-full w-full object-fill"
