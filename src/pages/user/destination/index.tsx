@@ -40,9 +40,7 @@ const Destionation = () => {
       ) : (
         <>
           <img
-            src={
-              "https://s3-alpha-sig.figma.com/img/2187/d1a7/09ec5f3ca5d2243cf9ac9b8526d0c899?Expires=1703462400&Signature=Lw~Ro4zs2~i06kfXdbmXonNIba0qetdMH2O4PbNEt3EjFi-aDBhCBh~BSijViarsGLFM1GBrQPjadnmfwnpU9zS9h6jsJJ-6tni7QHWC0-DrGcN8GDP36JgHpic4NE~Z8qdK-B4cxkZCK4~px2Sl775ROgj0t5WY0mjOjG4lA51D4dwnNyl9yKDeneiWIKyls1xgbPIMnatgllnl5s~GPsm3IXjlydl8IK4EqpSNDT7929cPz-TZBWTtIc9Y02bNWuAazKlxPSaSmBWfKr0GPl5CnkpYGVEG7zgYlttvJbaS96LA1ILAoB3ZMKnxAen439QQdrVYT~gMy5UBh~BruA__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
-            }
+            src={locationData?.image}
             alt="banner"
             className="h-[25rem] w-full object-fill"
           />

@@ -12,8 +12,11 @@ const DetailTripInclude = (props: Props) => {
       <div className="flex flex-col gap-8 md:flex-row">
         <div className="flex-1 flex-col">
           {trip?.facility &&
-            trip?.facility.include.map((item) => (
-              <div className="mt-3 flex flex-row items-center gap-3">
+            trip?.facility.include.map((item, index) => (
+              <div
+                className="mt-3 flex flex-row items-center gap-3"
+                key={index}
+              >
                 <div>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -32,8 +35,11 @@ const DetailTripInclude = (props: Props) => {
         </div>
         <div className="flex-1 flex-col">
           {trip?.facility &&
-            trip?.facility.exclude.map((item) => (
-              <div className="mt-3 flex flex-row items-center gap-3">
+            trip?.facility.exclude.map((item, index) => (
+              <div
+                className="mt-3 flex flex-row items-center gap-3"
+                key={index}
+              >
                 <div>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
