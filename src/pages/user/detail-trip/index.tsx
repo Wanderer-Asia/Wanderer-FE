@@ -67,10 +67,7 @@ const DetailTrip = () => {
   };
 
   const handleRefund = async () => {
-    if (
-      bookingData?.status !== "refund" &&
-      bookingData?.status !== "refunded"
-    ) {
+    if (bookingData?.status === "approved") {
       try {
         const result = await refundBooking(bookingId as string);
 
@@ -83,14 +80,65 @@ const DetailTrip = () => {
     }
   };
 
-  const handleRefundText = () => {
-    if (bookingData?.status === "refunded") {
-      return "Refunded";
-    } else if (bookingData?.status === "refund") {
-      return "Pending Refund";
+  const buttonCondition = (status?: string) => {
+    let buttonTable;
+    if (status === "pending") {
+      buttonTable = (
+        <Button
+          type="button"
+          variant="outline"
+          onClick={handleRefund}
+          className="mt-7 rounded-sm text-red-600 outline outline-red-600"
+        >
+          Pay Now
+        </Button>
+      );
+    } else if (status === "refund") {
+      buttonTable = (
+        <Button
+          type="button"
+          variant="outline"
+          onClick={handleRefund}
+          className="mt-7 rounded-sm capitalize text-red-600 outline outline-red-600"
+        >
+          Pending Refund
+        </Button>
+      );
+    } else if (status === "refunded") {
+      buttonTable = (
+        <Button
+          type="button"
+          variant="outline"
+          onClick={handleRefund}
+          className="mt-7 rounded-sm capitalize text-red-600 outline outline-red-600"
+        >
+          Refunded
+        </Button>
+      );
+    } else if (status === "approved") {
+      buttonTable = (
+        <Button
+          type="button"
+          variant="outline"
+          onClick={handleRefund}
+          className="mt-7 rounded-sm capitalize text-red-600 outline outline-red-600"
+        >
+          Refund
+        </Button>
+      );
     } else {
-      return "Refund";
+      buttonTable = (
+        <Button
+          type="button"
+          variant="outline"
+          onClick={handleRefund}
+          className="mt-7 capitalize text-gray-500 outline outline-gray-500"
+        >
+          {status}
+        </Button>
+      );
     }
+    return buttonTable;
   };
 
   return (
@@ -199,12 +247,7 @@ const DetailTrip = () => {
                   </div>
                 </div>
                 {bookingId ? (
-                  <Button
-                    onClick={handleRefund}
-                    className="mt-7 rounded-sm bg-tyellow text-white hover:bg-tyellowlight"
-                  >
-                    {handleRefundText()}
-                  </Button>
+                  buttonCondition(bookingData?.status)
                 ) : (
                   <Button
                     onClick={() =>
@@ -294,12 +337,7 @@ const DetailTrip = () => {
                 </div>
               </div>
               {bookingData?.booking_code === Number(bookingId) ? (
-                <Button
-                  onClick={handleRefund}
-                  className="mt-7 rounded-sm bg-tyellow text-white hover:bg-tyellowlight"
-                >
-                  {handleRefundText()}
-                </Button>
+                buttonCondition(bookingData?.status)
               ) : (
                 <Button
                   onClick={() =>
