@@ -28,10 +28,21 @@ const ProfileTable = () => {
         <Button
           type="button"
           variant="outline"
-          className=" outline-t-yellow w-24 capitalize text-tyellow outline"
+          className="w-24 text-red-600 outline outline-red-600"
           onClick={() => navigate(`/detail-trip/${tour_id}/${booking_code}`)}
         >
           {status}
+        </Button>
+      );
+    } else if (status === "approved") {
+      buttonTable = (
+        <Button
+          type="button"
+          variant="outline"
+          className=" outline-t-yellow w-24 capitalize text-tyellow outline"
+          onClick={() => navigate(`/detail-trip/${tour_id}/${booking_code}`)}
+        >
+          Paid
         </Button>
       );
     } else {
@@ -39,10 +50,10 @@ const ProfileTable = () => {
         <Button
           type="button"
           variant="outline"
-          className=" outline-t-yellow w-24 text-tyellow outline"
+          className=" w-24 text-gray-500 outline outline-gray-500"
           onClick={() => navigate(`/detail-trip/${tour_id}/${booking_code}`)}
         >
-          Paid
+          {status}
         </Button>
       );
     }
