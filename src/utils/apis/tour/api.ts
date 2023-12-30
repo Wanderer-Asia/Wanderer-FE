@@ -31,8 +31,6 @@ export const getToursAdmin = async (url?: string, params?: Request) => {
 
       query = queryParams.join("&");
 
-      console.log(`${url}${query}`);
-
       const API_URL = `${url}${query}`;
 
       const res = await axios.get(API_URL);

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 
 import {
@@ -59,8 +60,11 @@ const FacilitiesPage = () => {
 
         setFacilities(fetchOnChange!.data);
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        description: error.message,
+      });
     }
   };
 
