@@ -15,8 +15,10 @@ import { Link } from "react-router-dom";
 import Loading from "@/components/Loading";
 import { Separator } from "@/components/ui/separator";
 import TripCard from "@/components/user/trip-card";
+import { useToast } from "@/components/ui/use-toast";
 
 const Home = () => {
+  const { toast } = useToast();
   const [trip, setTrip] = useState<Trip[]>([]);
   const [locationData, setLocationData] = useState<Location[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -36,7 +38,11 @@ const Home = () => {
 
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      });
       setIsLoading(false);
     }
   };

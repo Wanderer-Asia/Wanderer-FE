@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import Layout from "@/components/user/layout";
 import Loading from "@/components/Loading";
 import TripCard from "@/components/user/trip-card";
+import { useToast } from "@/components/ui/use-toast";
 
 const BestDeals = () => {
+  const { toast } = useToast();
   const [trip, setTrip] = useState<Trip[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -22,7 +24,11 @@ const BestDeals = () => {
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      console.log(error);
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      });
     }
   };
   return (
