@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 
 import {
@@ -60,8 +61,11 @@ const AirlinesPage = () => {
 
         setAirlineData(fetchOnChange!.data);
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast({
+        description: error.message,
+        variant: "destructive",
+      });
     }
   };
 

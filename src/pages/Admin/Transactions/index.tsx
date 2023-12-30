@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DataTable } from "./DataTable";
 import { Columns } from "./Columns";
 import { useEffect } from "react";
@@ -42,8 +43,11 @@ const TransactionsPage = () => {
           document.body.appendChild(link);
           link.click();
         });
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast({
+        description: error.message,
+        variant: "destructive",
+      });
     }
   };
 
@@ -85,8 +89,6 @@ const TransactionsPage = () => {
     };
     fetchData();
   }, []);
-
-  // const [data, setData] = useState<newITransactions[] | undefined>([]);
 
   return (
     <div className="mt-5 w-full">

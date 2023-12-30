@@ -17,8 +17,10 @@ import { ITours, getToursAdmin } from "@/utils/apis/tour";
 import Loading from "@/components/Loading";
 import { Pagination } from "@/utils/types/api";
 import { cn } from "@/utils/utils";
+import { useToast } from "@/components/ui/use-toast";
 
 const ToursPage = () => {
+  const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(true);
   const [tourData, setToursData] = useState<ITours[]>();
   const [pagination, setPagination] = useState<Pagination>();
@@ -41,7 +43,10 @@ const ToursPage = () => {
         setToursData(res!.data);
       } catch (error) {
         if (error instanceof Error) {
-          console.log(error);
+          toast({
+            description: error.message,
+            variant: "destructive",
+          });
         }
       } finally {
         setIsLoading(false);

@@ -83,7 +83,12 @@ const AddTour = () => {
 
       setLocations(res?.data);
     } catch (error) {
-      console.log(error);
+      if (error instanceof Error) {
+        toast({
+          description: error.message,
+          variant: "destructive",
+        });
+      }
     }
   };
 
@@ -100,7 +105,12 @@ const AddTour = () => {
 
       setFacilities(newFacilities);
     } catch (error) {
-      console.log(error);
+      if (error instanceof Error) {
+        toast({
+          description: error.message,
+          variant: "destructive",
+        });
+      }
     }
   };
 
@@ -110,7 +120,12 @@ const AddTour = () => {
 
       setAirlines(res?.data);
     } catch (error) {
-      console.log(error);
+      if (error instanceof Error) {
+        toast({
+          description: error.message,
+          variant: "destructive",
+        });
+      }
     }
   };
 

@@ -110,7 +110,12 @@ const EditTour = () => {
 
       setLocations(res?.data);
     } catch (error) {
-      console.log(error);
+      if (error instanceof Error) {
+        toast({
+          description: error.message,
+          variant: "destructive",
+        });
+      }
     }
   };
 
@@ -127,7 +132,12 @@ const EditTour = () => {
 
       setFacilities(newFacilities);
     } catch (error) {
-      console.log(error);
+      if (error instanceof Error) {
+        toast({
+          description: error.message,
+          variant: "destructive",
+        });
+      }
     }
   };
 
@@ -137,7 +147,12 @@ const EditTour = () => {
 
       setAirlines(res?.data);
     } catch (error) {
-      console.log(error);
+      if (error instanceof Error) {
+        toast({
+          description: error.message,
+          variant: "destructive",
+        });
+      }
     }
   };
 
@@ -164,11 +179,8 @@ const EditTour = () => {
   }, [form, tourDuration, thumbnailWatch]);
 
   const submitTourHandler = async (data: IUpdateTour) => {
-    console.log(data.include_facility);
     try {
       const formData = new FormData();
-
-      console.log(data.include_facility);
 
       formData.append("title", data.title);
       formData.append("location_id", data.location_id);
