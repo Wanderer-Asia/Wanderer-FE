@@ -36,12 +36,11 @@ const RegisterForm = () => {
         });
       }
     } catch (error) {
-      if (error instanceof Error) {
-        toast({
-          description: error.message,
-          variant: "destructive",
-        });
-      }
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      });
     }
   };
   return (

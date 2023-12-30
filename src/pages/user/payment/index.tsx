@@ -8,9 +8,11 @@ import Loading from "@/components/Loading";
 import { differenceInHours } from "date-fns";
 import { formattedAmount } from "@/utils/formattedAmount";
 import { getBookingDetail } from "@/utils/apis/booking";
+import { useToast } from "@/components/ui/use-toast";
 import { useToken } from "@/utils/context/token";
 
 const Payment = () => {
+  const { toast } = useToast();
   const navigate = useNavigate();
   const { fetchProfile } = useToken();
   const { bookingId } = useParams();
@@ -32,7 +34,11 @@ const Payment = () => {
       }
     } catch (error) {
       setIsLoading(false);
-      console.log(error);
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      });
     }
   };
 
