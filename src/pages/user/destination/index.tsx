@@ -11,8 +11,10 @@ import { LocationDetail } from "@/utils/apis/location";
 import TripCard from "@/components/user/trip-card";
 import { getDetailLocation } from "@/utils/apis/location/api";
 import { useParams } from "react-router-dom";
+import { useToast } from "@/components/ui/use-toast";
 
 const Destionation = () => {
+  const { toast } = useToast();
   const { locationId } = useParams();
   const [locationData, setLocationData] = useState<LocationDetail>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -30,7 +32,11 @@ const Destionation = () => {
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      console.log(error);
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      });
     }
   };
   return (

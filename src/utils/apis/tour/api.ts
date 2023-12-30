@@ -1,7 +1,8 @@
-import axiosWithConfig from "../axiosWithConfig";
 import { ICreateTour, ITours, IUpdateTour } from ".";
-import axios, { AxiosError } from "axios";
 import { IResponse, Request, Response } from "@/utils/types/api";
+import axios, { AxiosError } from "axios";
+
+import axiosWithConfig from "../axiosWithConfig";
 
 export const getTours = async () => {
   try {
@@ -30,8 +31,6 @@ export const getToursAdmin = async (url?: string, params?: Request) => {
       }
 
       query = queryParams.join("&");
-
-      console.log(`${url}${query}`);
 
       const API_URL = `${url}${query}`;
 

@@ -26,9 +26,11 @@ import Layout from "@/components/user/layout";
 import Loading from "@/components/Loading";
 import { Separator } from "@/components/ui/separator";
 import { formattedAmount } from "@/utils/formattedAmount";
+import { useToast } from "@/components/ui/use-toast";
 import { useToken } from "@/utils/context/token";
 
 const DetailTrip = () => {
+  const { toast } = useToast();
   const navigate = useNavigate();
   const { tripId, bookingId } = useParams();
   const { token } = useToken();
@@ -49,7 +51,11 @@ const DetailTrip = () => {
 
       setTrip(result.data);
     } catch (error) {
-      console.log(error);
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      });
     }
   };
 
@@ -62,7 +68,11 @@ const DetailTrip = () => {
         setPersons(result.data.detail_count);
       }
     } catch (error) {
-      console.log(error);
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      });
     }
   };
 
@@ -75,7 +85,11 @@ const DetailTrip = () => {
           fetchBooking();
         }
       } catch (error) {
-        console.log(error);
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: "There was a problem with your request.",
+        });
       }
     }
   };

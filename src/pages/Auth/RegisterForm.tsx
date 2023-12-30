@@ -36,7 +36,11 @@ const RegisterForm = () => {
         });
       }
     } catch (error) {
-      console.log(error);
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      });
     }
   };
   return (
