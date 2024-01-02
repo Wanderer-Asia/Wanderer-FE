@@ -80,8 +80,8 @@ const LocationsPage = () => {
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="mt-5 w-[800px]">
-          <div className="mb-5 flex gap-5">
+        <div className="mt-5 w-full lg:w-[800px]">
+          <div className="mb-5 flex flex-col gap-5 md:flex-row">
             <p className="text-[22px] font-semibold">Locations Info</p>
             <AddLocations>
               <PlusCircle className="mr-2 h-4 w-4 stroke-black" /> Add Locations
@@ -90,7 +90,7 @@ const LocationsPage = () => {
             <a href="https://api.wanderer.asia/locations/import">
               <Button
                 size={"sm"}
-                className="h-8 rounded-full bg-green-400 hover:bg-green-600"
+                className="h-8 w-fit rounded-full bg-green-400 hover:bg-green-600"
               >
                 <FileDown className="mr-1 h-4" />
                 Download Template
@@ -99,7 +99,7 @@ const LocationsPage = () => {
             <form>
               <Label
                 htmlFor="uploadFile"
-                className="flex h-8 items-center rounded-full bg-blue-500 px-3 text-black hover:cursor-pointer hover:bg-blue-700"
+                className="flex h-8 w-fit items-center rounded-full bg-blue-500 px-3 text-black hover:cursor-pointer hover:bg-blue-700"
               >
                 <FileUp className="mr-1 h-4" />
                 Import
@@ -116,18 +116,16 @@ const LocationsPage = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>ID. </TableHead>
+                <TableHead>No. </TableHead>
                 <TableHead>Locations</TableHead>
                 <TableHead>Thumbnail</TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {locations?.map((location) => (
+              {locations?.map((location, index) => (
                 <TableRow key={location.location_id}>
-                  <TableCell className="font-medium">
-                    {location.location_id}
-                  </TableCell>
+                  <TableCell className="font-medium">{index + 1}</TableCell>
                   <TableCell>{location.name}</TableCell>
                   <TableCell>
                     <img

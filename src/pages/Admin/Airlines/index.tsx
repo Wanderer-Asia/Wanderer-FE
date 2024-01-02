@@ -79,8 +79,8 @@ const AirlinesPage = () => {
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="mt-5 w-[800px]">
-          <div className="mb-5 flex gap-5">
+        <div className="mt-5 w-full lg:w-[800px]">
+          <div className="mb-5 flex flex-col gap-5 md:flex-row">
             <p className="text-[22px] font-semibold">Airlines Info</p>
             <AddAirlines>
               <PlusCircle className="mr-2 h-4 w-4 stroke-black" /> Add Airlines
@@ -97,7 +97,7 @@ const AirlinesPage = () => {
             <form>
               <Label
                 htmlFor="uploadFile"
-                className="flex h-8 items-center rounded-full bg-blue-500 px-3 text-black hover:cursor-pointer hover:bg-blue-700"
+                className="flex h-8 items-center rounded-full bg-blue-500 px-3 text-black hover:cursor-pointer hover:bg-blue-700 w-fit"
               >
                 <FileUp className="mr-1 h-4" />
                 Import
@@ -114,18 +114,16 @@ const AirlinesPage = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>ID. </TableHead>
+                <TableHead>No. </TableHead>
                 <TableHead>Airlines</TableHead>
                 <TableHead>Logo</TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {airlineData?.map((airline) => (
+              {airlineData?.map((airline, index) => (
                 <TableRow key={airline.airline_id}>
-                  <TableCell className="font-medium">
-                    {airline.airline_id}
-                  </TableCell>
+                  <TableCell className="font-medium">{index + 1}</TableCell>
                   <TableCell>{airline.name}</TableCell>
                   <TableCell>
                     <img

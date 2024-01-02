@@ -79,7 +79,7 @@ const FacilitiesPage = () => {
         <Loading />
       ) : (
         <div className="mt-5 w-[800px]">
-          <div className="mb-5 flex gap-5">
+          <div className="mb-5 flex flex-col gap-5 md:flex-row">
             <p className="text-[22px] font-semibold">Facilities Info</p>
             <AddFacility>
               <PlusCircle className="mr-2 h-4 w-4 stroke-black" /> Add Facility
@@ -97,7 +97,7 @@ const FacilitiesPage = () => {
             <form>
               <Label
                 htmlFor="uploadFile"
-                className="flex h-8 items-center rounded-full bg-blue-500 px-3 text-black hover:cursor-pointer hover:bg-blue-700"
+                className="flex h-8 w-fit items-center rounded-full bg-blue-500 px-3 text-black hover:cursor-pointer hover:bg-blue-700"
               >
                 <FileUp className="mr-1 h-4" />
                 Import
@@ -114,17 +114,15 @@ const FacilitiesPage = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>ID. </TableHead>
+                <TableHead>No. </TableHead>
                 <TableHead>Facility</TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {facilities?.map((facility) => (
+              {facilities?.map((facility, index) => (
                 <TableRow key={facility.facility_id}>
-                  <TableCell className="font-medium">
-                    {facility.facility_id}
-                  </TableCell>
+                  <TableCell className="font-medium">{index + 1}</TableCell>
 
                   <TableCell>{facility.name}</TableCell>
 

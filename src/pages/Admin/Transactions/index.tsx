@@ -31,7 +31,7 @@ const TransactionsPage = () => {
   const downloadFile = async () => {
     try {
       await axios
-        .get("https://api.wanderer.asia/bookings/export?type=excel", {
+        .get("https://api.wanderer.asia/bookings/export?type=xlsx", {
           responseType: "blob",
           headers: { Authorization: `Bearer ${token}` },
         })
@@ -97,7 +97,7 @@ const TransactionsPage = () => {
         <Button
           size="sm"
           onClick={downloadFile}
-          className="h-8 rounded-full bg-yellow-main hover:bg-tyellow"
+          className="h-8 rounded-full bg-yellow-main text-black hover:bg-tyellow"
         >
           <FileDown className="h-4" />
           Import
