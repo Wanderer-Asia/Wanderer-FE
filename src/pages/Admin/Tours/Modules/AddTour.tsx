@@ -40,6 +40,7 @@ import { INewFacilities, getFacilities } from "@/utils/apis/facilities";
 import { IAirlines, getAirlines } from "@/utils/apis/airlines";
 import { Location, getLocation } from "@/utils/apis/location";
 import { useToast } from "@/components/ui/use-toast";
+import { useNavigate } from "react-router-dom";
 
 const AddTour = () => {
   const form = useForm<ICreateTour>({
@@ -62,10 +63,10 @@ const AddTour = () => {
   });
 
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const animatedComponents = makeAnimated();
   const thumbnailWatch = form.watch("thumbnail");
-  const pictureGalleryWatch = form.watch("picture");
 
   const [tourDuration, setTourDuration] = useState(0);
   const [thumbnailPict, setThumbnailPict] = useState("");
@@ -150,7 +151,7 @@ const AddTour = () => {
     });
 
     return () => formSubscribe.unsubscribe();
-  }, [form, tourDuration, thumbnailWatch, pictureGalleryWatch]);
+  }, [form, tourDuration, thumbnailWatch]);
 
   const submitTourHandler = async (data: ICreateTour) => {
     try {
@@ -196,6 +197,8 @@ const AddTour = () => {
         title: "Success",
         description: res?.message,
       });
+
+      navigate("/admin/tours");
     } catch (error) {
       if (error instanceof Error) {
         toast({
@@ -518,11 +521,6 @@ const AddTour = () => {
                   />
                 </FormControl>
                 <FormMessage />
-                <div className="h-[200px] w-[400px] border border-dashed">
-                  <div className="flex h-full w-full items-center justify-center">
-                    <p className="text-neutral-400">Upload Tour Image</p>
-                  </div>
-                </div>
               </FormItem>
             )}
           />

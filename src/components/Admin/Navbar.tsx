@@ -15,6 +15,7 @@ import { Computer, Menu, Moon, Sun } from "lucide-react";
 import { useTheme } from "@/utils/context/theme-provider";
 import SidebarMobile from "./SidebarMobile";
 import { useToken } from "@/utils/context/token";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const { setTheme } = useTheme();
@@ -69,7 +70,9 @@ const Navbar = () => {
               </DropdownMenuPortal>
             </DropdownMenuSub>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Home</DropdownMenuItem>
+            <Link to={"/"}>
+              <DropdownMenuItem>Home</DropdownMenuItem>
+            </Link>
             <DropdownMenuItem
               className="hover:cursor-pointer"
               onClick={() => changeToken("")}

@@ -114,7 +114,7 @@ const ToursPage = () => {
           <div className="h-full w-full">
             {tourData !== null ? (
               <>
-                <div className="mb-5 mt-2 grid w-full grid-cols-2 justify-items-start gap-5 md:grid-cols-2 lg:grid-cols-3">
+                <div className="mb-5 mt-2 grid w-full grid-cols-1 justify-items-start gap-5 md:grid-cols-2 lg:grid-cols-3">
                   {tourData?.map((tour) => (
                     <TourCard key={tour.tour_id} tourData={tour} />
                   ))}

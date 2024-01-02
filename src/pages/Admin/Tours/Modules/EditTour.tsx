@@ -569,11 +569,6 @@ const EditTour = () => {
                       />
                     </FormControl>
                     <FormMessage />
-                    <div className="h-[200px] w-[400px] border border-dashed">
-                      <div className="flex h-full w-full items-center justify-center">
-                        <p className="text-neutral-400">Upload Tour Image</p>
-                      </div>
-                    </div>
                   </FormItem>
                 )}
               />

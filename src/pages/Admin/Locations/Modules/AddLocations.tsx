@@ -23,13 +23,10 @@ import { ReactNode, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
-import {
-  ICreateLocation,
-  createLocation,
-  getLocation,
-} from "@/utils/apis/location";
+import { ICreateLocation, createLocation } from "@/utils/apis/location";
 import { createLocationSchema } from "@/utils/apis/location/type";
 import useAdminStore from "@/utils/store/admin";
+import { getLocationAdmin } from "@/utils/apis/location/api";
 
 interface IProps {
   children: ReactNode;
@@ -56,9 +53,9 @@ const AddLocations = (props: IProps) => {
       formData.append("image", values.image[0]);
 
       const res = await createLocation(formData as any);
-      const fetchLocation = await getLocation();
+      const fetchLocation = await getLocationAdmin();
 
-      setLocationData(fetchLocation.data);
+      setLocationData(fetchLocation!.data);
 
       toast({
         description: <p className="capitalize">{res?.message}</p>,
@@ -79,7 +76,7 @@ const AddLocations = (props: IProps) => {
 
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-      <DialogTrigger className="flex h-8 items-center rounded-full bg-yellow-main px-2 text-black hover:bg-tyellow">
+      <DialogTrigger className="flex h-8 items-center rounded-full bg-yellow-main px-2 text-black hover:bg-tyellow w-fit">
         {children}
       </DialogTrigger>
       <DialogContent>

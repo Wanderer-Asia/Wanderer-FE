@@ -78,7 +78,7 @@ const AddAirlines = (props: IProps) => {
 
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-      <DialogTrigger className="flex h-8 items-center rounded-full bg-yellow-main px-2 text-black hover:bg-tyellow">
+      <DialogTrigger className="flex h-8 items-center rounded-full bg-yellow-main px-2 text-black hover:bg-tyellow w-fit">
         {children}
       </DialogTrigger>
       <DialogContent>
