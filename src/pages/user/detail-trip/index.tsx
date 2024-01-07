@@ -16,6 +16,7 @@ import { getBookingDetail, refundBooking } from "@/utils/apis/booking";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
+import { AlertDialogComponent } from "@/components/user/alert-dialog";
 import { BookingDetail } from "@/utils/apis/booking/type";
 import { Button } from "@/components/ui/button";
 import DetailTripHeader from "./detail-trip-header";
@@ -37,6 +38,7 @@ const DetailTrip = () => {
   const [trip, setTrip] = useState<TripDetail>();
   const [persons, setPersons] = useState<number>(1);
   const [bookingData, setBookingData] = useState<BookingDetail>();
+  const [isOnShow, setIsOnShow] = useState(false);
 
   useEffect(() => {
     fetchDetailTrip();
@@ -296,9 +298,9 @@ const DetailTrip = () => {
               <div className="flex flex-row gap-8">
                 <div className="flex flex-col gap-5">
                   <p className=" text-sm font-normal">Persons</p>
-                  <p className=" text-sm font-normal">Subtotal</p>
+                  <p className=" pt-1 text-sm font-normal">Subtotal</p>
                   <p className=" text-sm font-normal">Admin</p>
-                  <p className=" text-sm font-normal">Discount</p>
+                  <p className=" text-sm font-normal text-red-500">Discount</p>
                 </div>
                 <div className="flex flex-col gap-5">
                   <div className="flex flex-col">
@@ -330,7 +332,7 @@ const DetailTrip = () => {
                   <p className=" text-sm font-normal">
                     {formattedAmount(trip.admin_fee)}
                   </p>
-                  <p className=" text-sm font-normal">
+                  <p className=" tex-sm font-normal text-red-500">
                     {formattedAmount(trip.discount)}
                   </p>
                 </div>

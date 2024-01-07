@@ -34,6 +34,7 @@ export interface Review {
 interface User {
   fullname: string;
   image: string;
+  user_id: number;
 }
 interface Itinerary {
   location: string;
