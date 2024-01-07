@@ -26,7 +26,7 @@ const TripCard = (props: Props) => {
           <path d="M6.75 0C3.015 0 0 3.015 0 6.75C0 11.25 6.75 18 6.75 18C6.75 18 13.5 11.25 13.5 6.75C13.5 3.015 10.485 0 6.75 0ZM6.75 2.25C9.2475 2.25 11.25 4.275 11.25 6.75C11.25 9.2475 9.2475 11.25 6.75 11.25C4.275 11.25 2.25 9.2475 2.25 6.75C2.25 4.275 4.275 2.25 6.75 2.25Z" />
         </svg>
         <p>{data.location.name}</p>
-        <p className=" pl-3 text-red-900">Discount {data.discount}%</p>
+        <p className=" pl-3 text-lg text-red-500">Discount {data.discount}%</p>
       </div>
       <h1 className=" mt-3 text-justify text-lg">{data.title}</h1>
       <div className="mt-3 flex flex-row gap-4 text-xs">

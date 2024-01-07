@@ -55,8 +55,12 @@ const ReviewDialog = (props: Props) => {
         fetchTrip();
         setOpen(false);
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast({
+        description: error?.message,
+        variant: "destructive",
+      });
+      setOpen(false);
     }
   };
   return (
