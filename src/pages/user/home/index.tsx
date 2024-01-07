@@ -66,12 +66,13 @@ const Home = () => {
                 disableOnInteraction: false,
               }}
             >
-              {[1, 2].map((_item, index) => (
+              {[
+                "https://res.cloudinary.com/dypeyso0m/image/upload/v1703677326/homepage_d1cdw5.png",
+                "https://res.cloudinary.com/dypeyso0m/image/upload/v1704638651/20.300.000_1_2_tjqkdu.png",
+              ].map((item, index) => (
                 <SwiperSlide key={index}>
                   <img
-                    src={
-                      "https://res.cloudinary.com/dypeyso0m/image/upload/v1703677326/homepage_d1cdw5.png"
-                    }
+                    src={item}
                     alt="banner"
                     className="h-full w-full object-fill"
                   />
