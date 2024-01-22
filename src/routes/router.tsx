@@ -18,8 +18,8 @@ import ToursPage from "@/pages/Admin/Tours";
 import TransactionsPage from "@/pages/Admin/Transactions";
 import { createBrowserRouter } from "react-router-dom";
 import EditTour from "@/pages/Admin/Tours/Modules/EditTour";
-import ProtectedRoutes from "./ProtectedRoutes";
 import DetailTour from "@/pages/Admin/Tours/DetailTour";
+import ProtectedRoutes from "./protectedRoutes";
 
 export const router = createBrowserRouter([
   {
